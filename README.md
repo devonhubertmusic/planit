@@ -1,5 +1,17 @@
 # planit
-Repository for the CSE 115 "Plan-it" Project
+
+To run/test file, navigate to the planit repo folder on your console/terminal and type:
+ 
+	make
+
+and then:
+
+	java PlanitRunner
+
+to run the code.
+
+
+**************************************************************************************
 
 At its core, the program will attempt to create the best activity plan possible for a 
 user, given the specified resources: time and money. The end result would be a 
