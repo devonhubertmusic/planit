@@ -8,6 +8,21 @@ public class PlanitRunner
     public static void main(String[] args) {
         
         System.out.println("It Works!"); //Test
+        
+        Activity goShopping = new Activity();
+        goShopping.setName("Go Shopping");
+        goShopping.setMaxTime(120.00);
+        goShopping.setIdealTime(90.00);
+        
+        PlanGenerator planner = new PlanGenerator();
+        
+        Plan testPlan = planner.generatePlan();
+        
+        ArrayList<Activity> activityList = testPlan.activityList;
+        
+        activityList.add(goShopping);
+        
+        System.out.println(activityList);
 
     }
 
