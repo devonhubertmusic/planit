@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Activity {
 
 	//Fields
@@ -16,48 +18,73 @@ public class Activity {
 		this.idealTime = 0.0;
 		this.maxCost = 0.0;
 	}
+    //Methods
 	
+	//Housekeeping Methods
+    
+    //Returns true if this Activity is equivalent to another Activity
+    public boolean equals(Object x) {
+        Activity that;
+        if(x instanceof Activity) {
+            that = (Activity) x;
+        } else {
+            return false;
+        }
+        
+        if((this.name).equalsIgnoreCase(that.name) && this.maxTime == that.maxTime
+           && this.idealTime == that.idealTime && this.maxCost == that.maxCost) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    //Returns a new Activity that has the same fields as the current Activity
+    public Activity copy() {
+        Activity copy = new Activity();
+        copy.setName(this.name);
+        copy.setMaxTime(this.maxTime);
+        copy.setIdealTime(this.idealTime);
+        copy.setMaxCost(this.maxCost);
+        return copy;
+    }
 	
-	//Setters
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void setMaxTime(double maxTime) {
-		this.maxTime = maxTime;
-	}
-	
-	public void setIdealTime(double idealTime) {
-		this.idealTime = idealTime;
-	}
-	
-	public void setMaxCost(double maxCost) {
-		this.maxCost = maxCost;
-	}
-	
-	
-	//Getters
-	public String getName() {
-		return this.name;
-	}
-	
-	public double getMaxTime() {
-		return this.maxTime;
-	}
-	
-	public double getIdealTime() {
-		return this.idealTime;
-	}
-	
-	public double getMaxCost() {
-		return this.maxCost;
-	}
-	
-	//Other Methods
-	
+    //String representation of this Activity
 	public String toString() {
 		return this.name;
 	}
-	
+    
+    //Setters
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setMaxTime(double maxTime) {
+        this.maxTime = maxTime;
+    }
+    
+    public void setIdealTime(double idealTime) {
+        this.idealTime = idealTime;
+    }
+    
+    public void setMaxCost(double maxCost) {
+        this.maxCost = maxCost;
+    }
+    
+    //Getters
+    public String getName() {
+        return this.name;
+    }
+    
+    public double getMaxTime() {
+        return this.maxTime;
+    }
+    
+    public double getIdealTime() {
+        return this.idealTime;
+    }
+    
+    public double getMaxCost() {
+        return this.maxCost;
+    }
 }

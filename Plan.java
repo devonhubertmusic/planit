@@ -3,7 +3,9 @@ import java.util.*;
 public class Plan {
 
 	//Fields
-	ArrayList<Activity> activityList;
+    
+    //List of ordered Activities that make up the plan
+	private ArrayList<Activity> activityList;
 	
 	//Default Constructor
 	public Plan() {
@@ -13,17 +15,24 @@ public class Plan {
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
 	availableMoney){
-		this.activityList = new ArrayList<Activity>(); //replace with our algorithm
+        //replace with our algorithm
 		
 		double totalCost = 0.0;
 		double totalTime = 0.0;
 		
-		while(totalTime <= availableTime && totalCost <= availableMoney) {
+		//while(totalTime <= availableTime && totalCost <= availableMoney) {
 			//Add activity to this.activityList
-		}
+		//}
+        
+        System.out.println("Button Pressed"); //Test
 	}
 	
 	//Getters and setters
-	
-
+    public ArrayList<Activity> getActivityList() {
+        return this.activityList;
+    }
+    
+    public void setActivityList(ArrayList<Activity> activityList) {
+        this.activityList = activityList;
+    }
 }

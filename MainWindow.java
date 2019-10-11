@@ -8,9 +8,9 @@ import javax.swing.JLabel;
 
 public class MainWindow extends Frame implements WindowListener, ActionListener
 {
-    Button b;
-    TextField text = new TextField(25);
-    ArrayList<Activity> databaseCopy;
+    private Button b;
+    private TextField text = new TextField(25);
+    private ArrayList<Activity> databaseCopy;
     
     public MainWindow(String title) {
         super(title);
