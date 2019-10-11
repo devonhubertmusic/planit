@@ -26,13 +26,23 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
         add(picture);
         
+        //Must be a better way to do spacing, haha
+        JLabel label0 = new JLabel("                                  " +
+        "                                                             ");
+        add(label0);
+        
         Button b = new Button("Generate Activity Plan");
         add(b);
         b.addActionListener(this);
         
-        //JLabel label = new JLabel("\nDeveloped by Team Rocket");
-        //add(label);
-        //label.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        //Must be a better way to do spacing, haha
+        JLabel label1 = new JLabel("                                  " +
+        "                                                             ");
+        add(label1);
+        
+        JLabel label2 = new JLabel("Developed by Team Rocket");
+        add(label2);
+        label2.setFont(new Font("Helvetica", Font.PLAIN, 14));
     }
     
     public void updateDatabase(ArrayList<Activity> database) {
