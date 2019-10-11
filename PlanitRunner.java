@@ -2,7 +2,8 @@ import java.util.*;
 
 public class PlanitRunner
 {
-//Fields:
+	//Fields:
+	ArrayList<Activity> database = null;
 
 
     public static void main(String[] args) {
@@ -31,7 +32,22 @@ public class PlanitRunner
 
     }
 
-//Methods and stuff:
+//Methods
+
+	public void getInfo() {
+		this.database = new ArrayList<Activity>();
+		//Loop: prompt the user for each activity they like, along with data fields 
+		//for each activity (name, maxCost, maxTime, idealTime, etc.)
+	}
+	
+	public void loadData() { //throw...
+		//load data from existing database on user's computer (if it exists) 
+		//to this.database
+	}
+	
+	public void saveData() { //throw...
+		//save current data from database onto user's computer
+	}
 
 
 }
