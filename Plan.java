@@ -9,5 +9,10 @@ public class Plan {
 	public Plan() {
 		this.activityList = new ArrayList<Activity>();
 	}
+	
+	//Methods
+	public void generatePlan(){
+		this.activityList = new ArrayList<Activity>(); //replace with our algorithm
+	}
 
 }

@@ -14,9 +14,9 @@ public class PlanitRunner
         goShopping.setMaxTime(120.00);
         goShopping.setIdealTime(90.00);
         
-        PlanGenerator planner = new PlanGenerator();
+        Plan testPlan = new Plan();
         
-        Plan testPlan = planner.generatePlan();
+        testPlan.generatePlan();
         
         ArrayList<Activity> activityList = testPlan.activityList;
         
@@ -27,5 +27,6 @@ public class PlanitRunner
     }
 
 //Methods and stuff:
+
 
 }
