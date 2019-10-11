@@ -1,3 +1,4 @@
+import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.Component;
@@ -9,6 +10,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 {
     Button b;
     TextField text = new TextField(25);
+    ArrayList<Activity> databaseCopy;
     
     public MainWindow(String title) {
         super(title);
@@ -20,7 +22,6 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         text.setFont(new Font("Helvetica", Font.ITALIC, 30));
         text.setEditable(false);
         text.setText("        Welcome to Plan-it!");
-        
         
         JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
         add(picture);
@@ -34,9 +35,22 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         //label.setFont(new Font("Helvetica", Font.PLAIN, 18));
     }
     
+    public void updateDatabase(ArrayList<Activity> database) {
+    	this.databaseCopy = database;
+    }
+    
     //
     public void actionPerformed(ActionEvent e) {
+    	double availableTime = 0.0;
+    	double availableMoney = 0.0;
+    
+        //prompt user for current time and money available and update
+        //then...
         
+        Plan myPlan = new Plan();
+        myPlan.generatePlan(databaseCopy, availableTime, availableMoney);
+        
+        //then print result in new window
     }
     
     /**

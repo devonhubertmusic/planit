@@ -5,39 +5,29 @@ public class PlanitRunner
 	//Fields:
 	ArrayList<Activity> database = null;
 
-
     public static void main(String[] args) {
     
-    	MainWindow mainWindow = new MainWindow("Planit");
+    	//if no external file... run gatherInfo()
+    	//else, run loadData()
+        
+        MainWindow mainWindow = new MainWindow("Planit");
         mainWindow.setSize(500, 500);
         mainWindow.setResizable(false);
         mainWindow.setVisible(true);
-        
-        System.out.println("It Works!"); //Test
-        
-        Activity goShopping = new Activity();
-        goShopping.setName("Go Shopping");
-        goShopping.setMaxTime(120.00);
-        goShopping.setIdealTime(90.00);
-        
-        Plan testPlan = new Plan();
-        
-        testPlan.generatePlan();
-        
-        ArrayList<Activity> activityList = testPlan.activityList;
-        
-        activityList.add(goShopping);
-        
-        System.out.println(activityList);
 
     }
 
-//Methods
+	//Methods
 
-	public void getInfo() {
+	public void gatherInfo() {
+		//initialize new list of activities that form the database
 		this.database = new ArrayList<Activity>();
+		
 		//Loop: prompt the user for each activity they like, along with data fields 
 		//for each activity (name, maxCost, maxTime, idealTime, etc.)
+		
+		//updates the MainWindow with database data
+		//mainWindow.updateDatabase(this.database);
 	}
 	
 	public void loadData() { //throw...
