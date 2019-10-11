@@ -6,6 +6,11 @@ public class PlanitRunner
 
 
     public static void main(String[] args) {
+    
+    	MainWindow mainWindow = new MainWindow("Planit");
+        mainWindow.setSize(500, 500);
+        mainWindow.setResizable(false);
+        mainWindow.setVisible(true);
         
         System.out.println("It Works!"); //Test
         
