@@ -70,6 +70,9 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
      * @param e The WindowEvent triggered by closing the Main window
      */
     public void windowClosing(WindowEvent e) {
+        System.out.println("Saving data 1");
+        PlanitRunner.saveData();
+        System.out.println("Saving to file 5");
         dispose();
         System.exit(0);
     }

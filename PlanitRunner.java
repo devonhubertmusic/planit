@@ -5,7 +5,7 @@ public class PlanitRunner
 	//Fields
     
     //The main "database" of activities, collected from user input using gatherInfo()
-    private ArrayList<Activity> database;
+    private static ArrayList<Activity> database;
 
     public static void main(String[] args) {
     
@@ -13,7 +13,7 @@ public class PlanitRunner
         
     	//else, run loadData() to load in relevant data from "save file"
         
-        MainWindow mainWindow = new MainWindow("Planit");
+        MainWindow mainWindow = new MainWindow("Plan-it");
         mainWindow.setSize(500, 500);
         mainWindow.setResizable(false);
         mainWindow.setVisible(true);
@@ -42,8 +42,18 @@ public class PlanitRunner
 	}
 	
     //Create/overwrite "save file" with current database information
-	public void saveData() { //throw...
+	public static void saveData() { //throw...
 		//save current data from database onto user's computer
+        //if(database != null) {
+            String text = "Test";
+            FileWriter writer = new FileWriter();
+            try {
+                System.out.println("Saving data 2");
+                writer.writeToFile(text);
+            } catch (java.io.IOException e1) {
+                throw new RuntimeException(e1);
+            }
+        //}
 	}
 
 
