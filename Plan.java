@@ -21,10 +21,11 @@ public class Plan {
 		double totalTime = 0.0;
 		
 		//while(totalTime <= availableTime && totalCost <= availableMoney) {
-			//Add activity to this.activityList
+			//Add activities to this.activityList based on smart decisions
 		//}
         
-        System.out.println("Button Pressed"); //Test
+        System.out.println("Button Pressed"); //TEST *****
+        //End TEST *****
 	}
 	
 	//Getters and setters
