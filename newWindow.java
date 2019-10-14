@@ -20,7 +20,6 @@ public class newWindow extends Frame implements ActionListener {
       public void windowClosing(WindowEvent e)
       {
          dispose();
-         System.exit(0);
       }
       });
 
