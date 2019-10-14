@@ -5,28 +5,26 @@ public class PlanitRunner
 	//Fields
     
     //The main "database" of activities, collected from user input using gatherInfo()
-    private static ArrayList<Activity> database;
+    private static ArrayList<Activity> database = new ArrayList<Activity>();
     private static MainWindow mainWindow;
 
     public static void main(String[] args) {
-    
-    	//if no existing "save file" found, run gatherInfo() to prompt user
-        
-    	//else, run loadData() to load in relevant data from "save file"
-        
         mainWindow = new MainWindow("Plan-it");
         mainWindow.setSize(500, 500);
         mainWindow.setResizable(false);
         mainWindow.setVisible(true);
-
+    
+    	//if no existing "save file" found, run gatherInfo() to prompt user
+        gatherInfo();
+        
+    	//else, run loadData() to load in relevant data from "save file"
+        
+        
     }
 
 	//Methods
 	public static void gatherInfo() {
-		//initialize database as an empty list of activities
-		database = new ArrayList<Activity>();
-		
-		//Loop: prompt the user for each activity they like, along with data fields 
+		//Loop: prompt the user for each activity they like, along with data fields
 		//for each activity (name, maxCost, maxTime, idealTime, etc.)
 		
         //TEST ************************************
@@ -68,6 +66,7 @@ public class PlanitRunner
         
         
 		//updates the MainWindow with database data
+        //System.out.println(database);
         
 		mainWindow.updateDatabase(database);
         
@@ -83,11 +82,13 @@ public class PlanitRunner
 	}
 	
     //Overwrite "save file" with current database information
-	public static void saveData() { //throw...
-        //if(database != null) {
-        String text = "";
+	public static void saveData(ArrayList<Activity> database) { //throw...
         
-        /*
+        //System.out.println(database);
+        
+        if(database != null) {
+        String text = "TEST";
+        
         for(int i = 0; i < database.size(); i++) {
             Activity temp = database.get(i);
             
@@ -99,7 +100,6 @@ public class PlanitRunner
             
             System.out.println("Text is: \n" + text);
         }
-        */
         
             FileWriter writer = new FileWriter();
             try {
@@ -107,7 +107,7 @@ public class PlanitRunner
             } catch (java.io.IOException e) {
                 throw new RuntimeException(e);
             }
-        //}
+        }
 	}
 
 
