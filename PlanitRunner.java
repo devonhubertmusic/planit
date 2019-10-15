@@ -75,27 +75,27 @@ public class PlanitRunner
 	public static void saveData(ArrayList<Activity> database)
     throws UnsupportedEncodingException, FileNotFoundException, IOException
     {
-        
-        if(database != null) {
+        try {
+            if(database != null) {
             
-        String text = "\n";
-        for(int i = 0; i < database.size(); i++) {
-            Activity temp = database.get(i);
+                String text = "\n";
+                for(int i = 0; i < database.size(); i++) {
+                    Activity temp = database.get(i);
             
-            text += "\n" + temp.getName();
-            text += "\n" + temp.getMaxTime();
-            text += "\n" + temp.getIdealTime();
-            text += "\n" + temp.getMaxCost();
-            text += "\n";
-        }
+                    text += "\n" + temp.getName();
+                    text += "\n" + temp.getMaxTime();
+                    text += "\n" + temp.getIdealTime();
+                    text += "\n" + temp.getMaxCost();
+                    text += "\n";
+                }
         
-            try {
+            
                 Writer writer = new BufferedWriter(new OutputStreamWriter
                 (new FileOutputStream(("Database.txt"), false), "utf-8"));
                 writer.write(text);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 	}
 

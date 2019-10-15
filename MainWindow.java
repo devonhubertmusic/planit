@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.io.*;
 
 public class MainWindow extends Frame implements WindowListener, ActionListener
 {
@@ -72,12 +73,17 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
      *
      * @param e The WindowEvent triggered by closing the Main window
      */
-    public void windowClosing(WindowEvent e) {
-        System.out.println("Attempting to save data");
-        PlanitRunner.saveData(databaseCopy);
-        System.out.println("Data saved!");
-        dispose();
-        System.exit(0);
+    public void windowClosing(WindowEvent e)
+    {
+        try {
+            System.out.println("Attempting to save data");
+            PlanitRunner.saveData(databaseCopy);
+            System.out.println("Data saved!");
+            dispose();
+            System.exit(0);
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
     }
 
     public void windowOpened(WindowEvent e) {}
