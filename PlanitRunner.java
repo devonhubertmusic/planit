@@ -12,14 +12,18 @@ public class PlanitRunner
     public static void main(String[] args)
     throws UnsupportedEncodingException, FileNotFoundException, IOException
     {
-        mainWindow = new MainWindow("Plan-it");
-        mainWindow.setSize(500, 500);
-        mainWindow.setResizable(false);
-        mainWindow.setVisible(true);
+        try {
+            mainWindow = new MainWindow("Plan-it");
+            mainWindow.setSize(500, 500);
+            mainWindow.setResizable(false);
+            mainWindow.setVisible(true);
 
-        boolean dataLoaded = loadData(); //true if data loaded successfully
+            boolean dataLoaded = loadData(); //true if data loaded successfully
         
-        System.out.println(database);
+            System.out.println(database);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 	
@@ -30,35 +34,41 @@ public class PlanitRunner
     {
 		//load data from existing database on user's computer (if it exists) 
 		//to this.database
-        File file = new File("Database.txt");
-        if(file.exists()) {
-            Scanner scanner = new Scanner(file);
-            while(scanner.hasNextLine()) {
-                scanner.nextLine();
+        try {
+            File file = new File("Database.txt");
+            if(file.exists()) {
+                Scanner scanner = new Scanner(file);
+            
+                while(scanner.hasNextLine()) {
+                    scanner.nextLine();
                 
-                Activity temp = new Activity();
-                String name = scanner.nextLine();
-                //System.out.println(name);
-                temp.setName(name);
+                    Activity temp = new Activity();
+                    String name = scanner.nextLine();
+                    //System.out.println(name);
+                    temp.setName(name);
                 
-                double maxTime = Double.parseDouble(scanner.nextLine());
-                //System.out.println(maxTime);
-                temp.setMaxTime(maxTime);
+                    double maxTime = Double.parseDouble(scanner.nextLine());
+                    //System.out.println(maxTime);
+                    temp.setMaxTime(maxTime);
                 
-                double idealTime = Double.parseDouble(scanner.nextLine());
-                //System.out.println(idealTime);
-                temp.setIdealTime(idealTime);
+                    double idealTime = Double.parseDouble(scanner.nextLine());
+                    //System.out.println(idealTime);
+                    temp.setIdealTime(idealTime);
                 
-                double maxCost = Double.parseDouble(scanner.nextLine());
-                //System.out.println(maxCost);
-                temp.setMaxCost(maxCost);
+                    double maxCost = Double.parseDouble(scanner.nextLine());
+                    //System.out.println(maxCost);
+                    temp.setMaxCost(maxCost);
                 
-                database.add(temp);
+                    database.add(temp);
+                }
+                return true;
+            } else {
+                return false;
             }
-            return true;
-        } else {
-            return false;
-        }
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+        return false;
 	}
 	
     //Overwrite "save file" with current database information
@@ -79,10 +89,12 @@ public class PlanitRunner
             text += "\n";
         }
         
-            try (Writer writer = new BufferedWriter(new OutputStreamWriter
-            (new FileOutputStream(("Database.txt"), false), "utf-8")))
-            {
+            try {
+                Writer writer = new BufferedWriter(new OutputStreamWriter
+                (new FileOutputStream(("Database.txt"), false), "utf-8"));
                 writer.write(text);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 	}
