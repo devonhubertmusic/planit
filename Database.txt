@@ -1,1 +1,25 @@
-Test
+
+Walk the Dog
+60.0
+30.0
+0.0
+
+Go Shopping
+120.0
+60.0
+200.0
+
+Do Yoga
+90.0
+50.0
+0.0
+
+Go to the Movies
+200.0
+150.0
+30.0
+
+Go Whalewatching
+240.0
+200.0
+50.0

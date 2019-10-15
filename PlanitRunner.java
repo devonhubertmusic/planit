@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class PlanitRunner
 {
@@ -8,87 +9,66 @@ public class PlanitRunner
     private static ArrayList<Activity> database = new ArrayList<Activity>();
     private static MainWindow mainWindow;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    throws UnsupportedEncodingException, FileNotFoundException, IOException
+    {
         mainWindow = new MainWindow("Plan-it");
         mainWindow.setSize(500, 500);
         mainWindow.setResizable(false);
         mainWindow.setVisible(true);
-    
-    	//if no existing "save file" found, run gatherInfo() to prompt user
-        gatherInfo();
+
+        boolean dataLoaded = loadData(); //true if data loaded successfully
         
-    	//else, run loadData() to load in relevant data from "save file"
-        
-        
+        System.out.println(database);
     }
 
-	//Methods
-	public static void gatherInfo() {
-		//Loop: prompt the user for each activity they like, along with data fields
-		//for each activity (name, maxCost, maxTime, idealTime, etc.)
-		
-        //TEST ************************************
-        Activity test1 = new Activity();
-        test1.setName("Walk the Dog");
-        test1.setMaxTime(60.0);
-        test1.setIdealTime(30.0);
-        test1.setMaxCost(0.0);
-        database.add(test1);
-        
-        Activity test2 = new Activity();
-        test2.setName("Go Shopping");
-        test2.setMaxTime(120.0);
-        test2.setIdealTime(60.0);
-        test2.setMaxCost(200.0);
-        database.add(test2);
-        
-        Activity test3 = new Activity();
-        test3.setName("Do Yoga");
-        test3.setMaxTime(90.0);
-        test3.setIdealTime(50.0);
-        test3.setMaxCost(0.0);
-        database.add(test3);
-        
-        Activity test4 = new Activity();
-        test4.setName("Go to the Movies");
-        test4.setMaxTime(200.0);
-        test4.setIdealTime(150.0);
-        test4.setMaxCost(30.0);
-        database.add(test4);
-        
-        Activity test5 = new Activity();
-        test5.setName("Go Whalewatching");
-        test5.setMaxTime(240.0);
-        test5.setIdealTime(200.0);
-        test5.setMaxCost(50.0);
-        database.add(test5);
-        //END TEST ********************************
-        
-        
-		//updates the MainWindow with database data
-        //System.out.println(database);
-        
-		mainWindow.updateDatabase(database);
-        
-	}
 	
     //Check for existing "save file", and if found, load in data to create database
     //and return true, else return false
-	public static boolean loadData() { //throw fileNotFoundException
+	public static boolean loadData()
+    throws UnsupportedEncodingException, FileNotFoundException, IOException
+    {
 		//load data from existing database on user's computer (if it exists) 
 		//to this.database
-        
-        return false;
+        File file = new File("Database.txt");
+        if(file.exists()) {
+            Scanner scanner = new Scanner(file);
+            while(scanner.hasNextLine()) {
+                scanner.nextLine();
+                
+                Activity temp = new Activity();
+                String name = scanner.nextLine();
+                //System.out.println(name);
+                temp.setName(name);
+                
+                double maxTime = Double.parseDouble(scanner.nextLine());
+                //System.out.println(maxTime);
+                temp.setMaxTime(maxTime);
+                
+                double idealTime = Double.parseDouble(scanner.nextLine());
+                //System.out.println(idealTime);
+                temp.setIdealTime(idealTime);
+                
+                double maxCost = Double.parseDouble(scanner.nextLine());
+                //System.out.println(maxCost);
+                temp.setMaxCost(maxCost);
+                
+                database.add(temp);
+            }
+            return true;
+        } else {
+            return false;
+        }
 	}
 	
     //Overwrite "save file" with current database information
-	public static void saveData(ArrayList<Activity> database) { //throw...
-        
-        //System.out.println(database);
+	public static void saveData(ArrayList<Activity> database)
+    throws UnsupportedEncodingException, FileNotFoundException, IOException
+    {
         
         if(database != null) {
-        String text = "TEST";
-        
+            
+        String text = "\n";
         for(int i = 0; i < database.size(); i++) {
             Activity temp = database.get(i);
             
@@ -97,15 +77,12 @@ public class PlanitRunner
             text += "\n" + temp.getIdealTime();
             text += "\n" + temp.getMaxCost();
             text += "\n";
-            
-            System.out.println("Text is: \n" + text);
         }
         
-            FileWriter writer = new FileWriter();
-            try {
-                writer.writeToFile(text);
-            } catch (java.io.IOException e) {
-                throw new RuntimeException(e);
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter
+            (new FileOutputStream(("Database.txt"), false), "utf-8")))
+            {
+                writer.write(text);
             }
         }
 	}
