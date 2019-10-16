@@ -8,7 +8,7 @@ public class PlanitRunner
 	//Fields
     
     //The main "database" of activities, collected from user input using gatherInfo()
-    private static ArrayList<Activity> database = new ArrayList<Activity>();
+    public static ArrayList<Activity> database = new ArrayList<Activity>();
     private static MainWindow mainWindow;
 
     public static void main(String[] args)
@@ -25,7 +25,7 @@ public class PlanitRunner
 
             boolean dataLoaded = loadData(); //true if data loaded successfully
         
-            System.out.println(database);
+            //System.out.println(database);
         } catch (Exception e) {
             e.printStackTrace();
         }
