@@ -13,28 +13,33 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
     private Button b;
     private newWindow genWindow = new newWindow();
     private currentActivities curAct = new currentActivities();
-    private TextField text = new TextField(25);
+    //private TextField text = new TextField(25);
     private ArrayList<Activity> databaseCopy;
 
     public MainWindow(String title) {
         super(title);
-        setLayout(new FlowLayout());
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         addWindowListener(this);
+        JLabel text = new JLabel("Welcome to Plan-it!");
         add(text);
+        text.setOpaque(true);
         text.setBackground(Color.BLACK);
         text.setForeground(Color.WHITE);
         text.setFont(new Font("Helvetica", Font.ITALIC, 30));
-        text.setEditable(false);
-        text.setText("        Welcome to Plan-it!");
+        text.setMinimumSize(new Dimension(400, 100));
+        text.setPreferredSize(new Dimension(400, 100));
+        text.setMaximumSize(new Dimension(400, 100));
+        text.setAlignmentX(Component.CENTER_ALIGNMENT);
+        text.setHorizontalAlignment(SwingConstants.CENTER);
+        text.setVerticalAlignment(SwingConstants.CENTER);
+
+        add(Box.createVerticalGlue());
 
         JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
+        picture.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(picture);
 
-        //Must be a better way to do spacing, haha
-        JLabel label0 = new JLabel("                                  " +
-        "                                                             ");
-        add(label0);
-
+        add(Box.createVerticalGlue());
 
         //JFrame timeScroll = new JFrame("Test");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,8 +50,13 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         spinnerStart.setEditor(des);
         JLabel labelStart = new JLabel("Please select start time: ");
         add(labelStart);
+        labelStart.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelStart.setFont(new Font("Helvetica", Font.PLAIN, 16));
         add(spinnerStart);
+        spinnerStart.setAlignmentX(Component.CENTER_ALIGNMENT);
+        spinnerStart.setMinimumSize(new Dimension(100, 30));
+        spinnerStart.setPreferredSize(new Dimension(100, 30));
+        spinnerStart.setMaximumSize(new Dimension(100, 30));
         //setSize(100,100);
         //setVisible(true);
         // JLabel label3 = new JLabel("                                  "+
@@ -59,25 +69,27 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         spinnerFinish.setEditor(def);
         JLabel labelFinish = new JLabel("Please select end time: ");
         add(labelFinish);
+        labelFinish.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelFinish.setFont(new Font("Helvetica", Font.PLAIN, 16));
         add(spinnerFinish);
+        spinnerFinish.setAlignmentX(Component.CENTER_ALIGNMENT);
+        spinnerFinish.setMinimumSize(new Dimension(100, 30));
+        spinnerFinish.setPreferredSize(new Dimension(100, 30));
+        spinnerFinish.setMaximumSize(new Dimension(100, 30));
 
-        JLabel label1 = new JLabel("                                  " +
-        "                                                             ");
-        add(label1);
 
+        add(Box.createVerticalGlue());
 
-        Button b = new Button("Generate Activity Plan");
+        JButton b = new JButton("Generate Activity Plan");
+        b.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(b);
         b.addActionListener(this);
 
-        //Must be a better way to do spacing, haha
-        JLabel label2 = new JLabel("                                  " +
-        "                                                             ");
-        add(label2);
+        add(Box.createVerticalGlue());
 
         JLabel label3 = new JLabel("Developed by Team Rocket");
         add(label3);
+        label3.setAlignmentX(Component.CENTER_ALIGNMENT);
         label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
     }
 

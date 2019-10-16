@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.*;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 public class PlanitRunner
 {
@@ -13,9 +15,12 @@ public class PlanitRunner
     throws UnsupportedEncodingException, FileNotFoundException, IOException
     {
         try {
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int width = screenSize.width;
+            int height = screenSize.height;
             mainWindow = new MainWindow("Plan-it");
-            mainWindow.setSize(500, 500);
-            mainWindow.setResizable(false);
+            mainWindow.setSize(width, height);
+            mainWindow.setResizable(true);
             mainWindow.setVisible(true);
 
             boolean dataLoaded = loadData(); //true if data loaded successfully
