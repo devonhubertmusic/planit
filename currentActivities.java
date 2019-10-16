@@ -17,18 +17,46 @@ public class currentActivities {
         // Test Data to be displayed in the JTable
         int rowSize = database.size();
         int columnSize = 3;
+        
         String[][] data = new String[rowSize][columnSize];
+        
+        //Fill table with corresponding data from PlanitRunner.database
         for(int row = 0; row < rowSize; row++) {
 	    for(int column = 1; column <= columnSize; column++) {
                 Activity temp = database.get(row);
                 if(column == 1) {
 		    data[row][column - 1] = "" + temp.getName();
 		} else if(column == 2) {
-            data[row][column - 1] = "" +  temp.getIdealTime() + " minutes";
+            
+            //convert raw time in minutes to hours, minutes, etc.
+            String timeString = "";
+            double rawTime = temp.getIdealTime();
+            int hours = (int) (rawTime/60);
+            int minutes = (int) (rawTime % 60);
+            if(hours > 0) {
+                if(hours == 1) {
+                    timeString += "" + hours + " hour";
+                } else {
+                    timeString += "" + hours + " hours";
+                }
+                if(minutes != 0) {
+                    timeString += ", ";
+                }
+            }
+            if(minutes > 0) {
+                timeString += "" + minutes + " minutes";
+            }
+            
+            data[row][column - 1] = timeString;
 		} else if(column == 3) {
-                    data[row][column - 1] = "$" + temp.getMaxCost();
+            double cost = temp.getMaxCost();
+            if(cost == 0) {
+                data[row][column - 1] = "Free!";
+            } else {
+                data[row][column - 1] = "$" + cost;
+            }
 		} else {
-
+            System.out.println("Invalid Column Number");
 		}
 	    }
 	}
