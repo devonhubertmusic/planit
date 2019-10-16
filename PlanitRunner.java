@@ -25,7 +25,7 @@ public class PlanitRunner
 
             boolean dataLoaded = loadData(); //true if data loaded successfully
         
-            System.out.println(database);
+            //System.out.println(database);
         } catch (Exception e) {
             e.printStackTrace();
         }

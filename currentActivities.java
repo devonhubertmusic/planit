@@ -24,9 +24,9 @@ public class currentActivities {
                 if(column == 1) {
 		    data[row][column - 1] = "" + temp.getName();
 		} else if(column == 2) {
-                    data[row][column - 1] = "" +  temp.getIdealTime();
+            data[row][column - 1] = "" +  temp.getIdealTime() + " minutes";
 		} else if(column == 3) {
-                    data[row][column - 1] = "" + temp.getMaxCost();
+                    data[row][column - 1] = "$" + temp.getMaxCost();
 		} else {
 
 		}
