@@ -26,7 +26,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         text.setEditable(false);
         text.setText("        Welcome to Plan-it!");
 
-        JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
+ JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
         add(picture);
 
         //Must be a better way to do spacing, haha
@@ -34,22 +34,54 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         "                                                             ");
         add(label0);
 
+
+        //JFrame timeScroll = new JFrame("Test");
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Date dateStart = new Date();
+        SpinnerDateModel sdmStart = new SpinnerDateModel(dateStart, null, null, Calendar. HOUR_OF_DAY);
+        JSpinner spinnerStart = new JSpinner(sdmStart);
+        JSpinner.DateEditor des = new JSpinner.DateEditor(spinnerStart, "HH:mm");
+        spinnerStart.setEditor(des);
+        JLabel labelStart = new JLabel("Please select start time: ");
+        add(labelStart);
+        labelStart.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        add(spinnerStart);
+        //setSize(100,100);
+        //setVisible(true);
+        // JLabel label3 = new JLabel("                                  "+
+        // "                                                             ");
+        // add(label3);
+        Date dateFinish = new Date();
+        SpinnerDateModel sdmFinish = new SpinnerDateModel(dateFinish, null, null, Calendar. HOUR_OF_DAY);
+        JSpinner spinnerFinish = new JSpinner(sdmFinish);
+        JSpinner.DateEditor def = new JSpinner.DateEditor(spinnerFinish, "HH:mm");
+        spinnerFinish.setEditor(def);
+        JLabel labelFinish = new JLabel("Please select end time: ");
+        add(labelFinish);
+        labelFinish.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        add(spinnerFinish);
+
+        JLabel label1 = new JLabel("                                  " +
+        "                                                             ");
+        add(label1);
+
+
         Button b = new Button("Generate Activity Plan");
         add(b);
         b.addActionListener(this);
 
         //Must be a better way to do spacing, haha
-        JLabel label1 = new JLabel("                                  " +
+        JLabel label2 = new JLabel("                                  " +
         "                                                             ");
-        add(label1);
-
-        JLabel label2 = new JLabel("Developed by Team Rocket");
         add(label2);
-        label2.setFont(new Font("Helvetica", Font.PLAIN, 14));
+
+        JLabel label3 = new JLabel("Developed by Team Rocket");
+        add(label3);
+        label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
     }
 
     public void updateDatabase(ArrayList<Activity> database) {
-    	this.databaseCopy = database;
+        this.databaseCopy = database;
     }
 
     //
