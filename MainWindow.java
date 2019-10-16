@@ -12,6 +12,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 {
     private Button b;
     private newWindow genWindow = new newWindow();
+    private currentActivities curAct = new currentActivities();
     private TextField text = new TextField(25);
     private ArrayList<Activity> databaseCopy;
 
@@ -26,7 +27,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         text.setEditable(false);
         text.setText("        Welcome to Plan-it!");
 
- JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
+        JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
         add(picture);
 
         //Must be a better way to do spacing, haha
