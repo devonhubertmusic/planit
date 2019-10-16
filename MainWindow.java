@@ -35,7 +35,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 
         add(Box.createVerticalGlue());
 
-        JLabel picture = new JLabel(new ImageIcon("planit.jpg"));
+        JLabel picture = new JLabel(new ImageIcon("Planit.jpg"));
         picture.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(picture);
 
