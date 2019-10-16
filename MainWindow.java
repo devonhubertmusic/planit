@@ -12,6 +12,7 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 {
     private Button b;
     private newWindow genWindow = new newWindow();
+    private currentActivities genActivities = new currentActivities();
     private currentActivities curAct = new currentActivities();
     //private TextField text = new TextField(25);
     private ArrayList<Activity> databaseCopy;
@@ -84,6 +85,17 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         b.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(b);
         b.addActionListener(this);
+
+        add(Box.createVerticalGlue());
+
+        JButton vb = new JButton("View Current Activities");
+        vb.addActionListener( new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                genActivities.setVisible(true);
+            }
+        });
+        vb.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(vb);
 
         add(Box.createVerticalGlue());
 
