@@ -131,9 +131,9 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
     public void windowClosing(WindowEvent e)
     {
         try {
-            System.out.println("Attempting to save data");
+            //System.out.println("Attempting to save data");
             PlanitRunner.saveData(databaseCopy);
-            System.out.println("Data saved!");
+            //System.out.println("Data saved!");
             dispose();
             System.exit(0);
         } catch (Exception error) {

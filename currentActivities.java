@@ -1,20 +1,39 @@
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.util.*;
 
 public class currentActivities {
     JFrame f;
     JTable j;
+    ArrayList<Activity> database;
 
     currentActivities()
     {
         f = new JFrame();
         f.setTitle("Current Activities");
+	this.database = PlanitRunner.database;
 
         // Test Data to be displayed in the JTable
-        String[][] data = {
-            { "Picnic", "1:30", "25" },
-        };
+        int rowSize = database.size();
+        int columnSize = 3;
+        String[][] data = new String[rowSize][columnSize];
+        for(int row = 0; row < rowSize; row++) {
+	    for(int column = 1; column <= columnSize; column++) {
+                Activity temp = database.get(row);
+                if(column == 1) {
+		    data[row][column - 1] = "" + temp.getName();
+		} else if(column == 2) {
+                    data[row][column - 1] = "" +  temp.getIdealTime();
+		} else if(column == 3) {
+                    data[row][column - 1] = "" + temp.getMaxCost();
+		} else {
+
+		}
+	    }
+	}
+
+
         String[] columnNames = { "Activity", "Ideal Time", "Max Cost" };
 
         j = new JTable(data, columnNames);
