@@ -1,35 +1,28 @@
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.Component;
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
-public class currentActivities extends Frame implements ActionListener {
+public class currentActivities {
+    JFrame f;
+    JTable j;
 
-    public currentActivities(){
-        setLayout( new FlowLayout());
+    currentActivities()
+    {
+        f = new JFrame();
+        f.setTitle("Current Activities");
 
-        setTitle("Current Actiivies");
-        setSize(500, 350);
-        setVisible(false);
+        // Test Data to be displayed in the JTable
+        String[][] data = {
+            { "Picnic", "1:30", "25" },
+        };
+        String[] columnNames = { "Activity", "Ideal Time", "Max Cost" };
 
-        addWindowListener(new WindowAdapter()
-      {
-      public void windowClosing(WindowEvent e)
-      {
-         dispose();
-      }
-      });
+        j = new JTable(data, columnNames);
+        j.setBounds(30, 40, 200, 300);
 
-      JLabel label3 = new JLabel("All Activities");
-      add(label3);
-      label3.setFont(new Font("Helvetica", Font.PLAIN, 25));
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt){
-
+        JScrollPane sp = new JScrollPane(j);
+        f.add(sp);
+        f.setSize(500, 200);
+        f.setVisible(true);
     }
 }
