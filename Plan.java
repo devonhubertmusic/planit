@@ -17,15 +17,17 @@ public class Plan {
 	availableMoney){
         //replace with our algorithm
 		
-		double totalCost = 0.0;
-		double totalTime = 0.0;
+		//double totalCost = 0.0;
+		//double totalTime = 0.0;
 		
 		//while(totalTime <= availableTime && totalCost <= availableMoney) {
 			//Add activities to this.activityList based on smart decisions
 		//}
         
-        System.out.println("Button Pressed"); //TEST *****
+        //System.out.println("Button Pressed"); //TEST *****
         //End TEST *****
+        
+        this.activityList = database; //ACTIVITY PLAN IS WHOLE DATABASE, MUST CHANGE
 	}
 	
 	//Getters and setters

@@ -122,9 +122,6 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
     	double availableTime = 0.0;
     	double availableMoney = 0.0;
 
-        //prompt user for current time and money available and update
-        //then...
-
         Plan myPlan = new Plan();
         myPlan.generatePlan(databaseCopy, availableTime, availableMoney);
 
@@ -141,9 +138,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
     public void windowClosing(WindowEvent e)
     {
         try {
-            //System.out.println("Attempting to save data");
             PlanitRunner.saveData(databaseCopy);
-            //System.out.println("Data saved!");
             dispose();
             System.exit(0);
         } catch (Exception error) {

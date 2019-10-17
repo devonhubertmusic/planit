@@ -15,6 +15,8 @@ public class PlanitRunner
     throws UnsupportedEncodingException, FileNotFoundException, IOException
     {
         try {
+            boolean dataLoaded = loadData(); //true if data loaded successfully
+            
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             int width = screenSize.width;
             int height = screenSize.height;
@@ -23,8 +25,6 @@ public class PlanitRunner
             mainWindow.setResizable(true);
             mainWindow.setVisible(true);
 
-            boolean dataLoaded = loadData(); //true if data loaded successfully
-        
             //System.out.println(database);
         } catch (Exception e) {
             e.printStackTrace();

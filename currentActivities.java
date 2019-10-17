@@ -12,7 +12,7 @@ public class currentActivities {
     {
         f = new JFrame();
         f.setTitle("Current Activities");
-	this.database = PlanitRunner.database;
+	    this.database = PlanitRunner.database;
 
         // Test Data to be displayed in the JTable
         int rowSize = database.size();
@@ -21,6 +21,7 @@ public class currentActivities {
         String[][] data = new String[rowSize][columnSize];
         
         //Fill table with corresponding data from PlanitRunner.database
+        //REPLACE WITH DATA FROM MYSQL DATABASE
         for(int row = 0; row < rowSize; row++) {
 	    for(int column = 1; column <= columnSize; column++) {
                 Activity temp = database.get(row);
