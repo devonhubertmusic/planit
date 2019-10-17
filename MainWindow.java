@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.io.*;
 
-public class MainWindow extends Frame implements WindowListener, ActionListener
+public class MainWindow extends JFrame implements WindowListener, ActionListener
 {
     private Button b;
     private newWindow genWindow = new newWindow();
@@ -17,22 +17,29 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 
     public MainWindow(String title) {
         super(title);
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        try {
+            final Image backgroundImage = javax.imageio.ImageIO.read(new File("space.jpg"));
+            setContentPane(new JPanel(new BorderLayout()) {
+                @Override public void paintComponent(Graphics g) {
+                    Dimension d = getSize();
+                    g.drawImage(backgroundImage, 0, 0, d.width, d.height, null);
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         addWindowListener(this);
         JLabel text = new JLabel("Welcome to Plan-it!");
         add(text);
-        text.setOpaque(true);
-        text.setBackground(Color.BLACK);
         text.setForeground(Color.WHITE);
-        text.setFont(new Font("Helvetica", Font.ITALIC, 30));
-        text.setMinimumSize(new Dimension(400, 100));
-        text.setPreferredSize(new Dimension(400, 100));
-        text.setMaximumSize(new Dimension(400, 100));
+        text.setFont(new Font("Rockwell", Font.ITALIC + Font.BOLD, 35));
+        text.setMinimumSize(new Dimension(400, 150));
+        text.setPreferredSize(new Dimension(400, 150));
+        text.setMaximumSize(new Dimension(400, 150));
         text.setAlignmentX(Component.CENTER_ALIGNMENT);
         text.setHorizontalAlignment(SwingConstants.CENTER);
         text.setVerticalAlignment(SwingConstants.CENTER);
-
-        add(Box.createVerticalGlue());
 
         JLabel picture = new JLabel(new ImageIcon("Planit.jpg"));
         picture.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -42,17 +49,18 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
 
         //JFrame timeScroll = new JFrame("Test");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
         Date dateStart = new Date();
         SpinnerDateModel sdmStart = new SpinnerDateModel(dateStart, null, null, Calendar. HOUR_OF_DAY);
         JSpinner spinnerStart = new JSpinner(sdmStart);
         JSpinner.DateEditor des = new JSpinner.DateEditor(spinnerStart, "HH:mm");
         spinnerStart.setEditor(des);
         JLabel labelStart = new JLabel("Please select start time: ");
-        add(labelStart);
-        labelStart.setAlignmentX(Component.CENTER_ALIGNMENT);
+        inputPanel.add(labelStart);
+        labelStart.setForeground(Color.WHITE);
         labelStart.setFont(new Font("Helvetica", Font.PLAIN, 16));
-        add(spinnerStart);
-        spinnerStart.setAlignmentX(Component.CENTER_ALIGNMENT);
+        inputPanel.add(spinnerStart);
         spinnerStart.setMinimumSize(new Dimension(100, 30));
         spinnerStart.setPreferredSize(new Dimension(100, 30));
         spinnerStart.setMaximumSize(new Dimension(100, 30));
@@ -67,14 +75,16 @@ public class MainWindow extends Frame implements WindowListener, ActionListener
         JSpinner.DateEditor def = new JSpinner.DateEditor(spinnerFinish, "HH:mm");
         spinnerFinish.setEditor(def);
         JLabel labelFinish = new JLabel("Please select end time: ");
-        add(labelFinish);
-        labelFinish.setAlignmentX(Component.CENTER_ALIGNMENT);
+        inputPanel.add(labelFinish);
+        labelFinish.setForeground(Color.WHITE);
         labelFinish.setFont(new Font("Helvetica", Font.PLAIN, 16));
-        add(spinnerFinish);
-        spinnerFinish.setAlignmentX(Component.CENTER_ALIGNMENT);
+        inputPanel.add(spinnerFinish);
         spinnerFinish.setMinimumSize(new Dimension(100, 30));
         spinnerFinish.setPreferredSize(new Dimension(100, 30));
         spinnerFinish.setMaximumSize(new Dimension(100, 30));
+
+        add(inputPanel);
+        inputPanel.setOpaque(false);
 
 
         add(Box.createVerticalGlue());
