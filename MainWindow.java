@@ -8,12 +8,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.io.*;
 
-public class MainWindow extends JFrame implements WindowListener, ActionListener
+public class MainWindow extends JFrame implements WindowListener, ActionListener, ItemListener
 {
     private Button b;
     private newWindow genWindow = new newWindow();
     //private TextField text = new TextField(25);
     private ArrayList<Activity> databaseCopy;
+    private JComboBox c1, c2, c3; 
+    private JLabel max1, idealt1, maxc1;
 
     public MainWindow(String title) {
         super(title);
@@ -46,6 +48,91 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         add(picture);
 
         add(Box.createVerticalGlue());
+
+        //Get data for new activity
+        JLabel newActivity = new JLabel("Enter a new Activity:");
+        newActivity.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(newActivity);
+        newActivity.setForeground(Color.WHITE);
+        newActivity.setFont(new Font("Helvetica", Font.BOLD, 20));
+
+
+        JPanel inputName = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JTextField textField = new JTextField();
+        textField.setPreferredSize(new Dimension(150, 25));
+        JLabel activityField = new JLabel("Activity name:");
+        JLabel activityName = new JLabel("Activity is...");
+        inputName.add(activityField);
+        inputName.add(textField);
+        inputName.add(activityName);
+        activityField.setForeground(Color.WHITE);
+        activityField.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        activityName.setForeground(Color.WHITE);
+        activityName.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        add(inputName);
+        inputName.setOpaque(false);
+
+        String s1[] = { "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }; 
+        String[] n1 = new String[100];
+        for (int i = 0, j = 0; i < 100; ++i, j+=5) {
+            n1[i] = Integer.toString(j);
+        }
+        // create checkbox 
+        c1 = new JComboBox(s1); 
+        c2 = new JComboBox(s1);
+        c3 = new JComboBox(n1); 
+        // add ItemListener 
+        c1.addItemListener(this);
+        c2.addItemListener(this);
+        c3.addItemListener(this); 
+        // create labels 
+        JPanel inputMax = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel max = new JLabel("Max time for activity:"); 
+        max1 = new JLabel("0 selected"); 
+        inputMax.add(max);
+        inputMax.add(c1);
+        inputMax.add(max1);
+        max.setForeground(Color.WHITE);
+        max.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        max1.setForeground(Color.WHITE);
+        max1.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        add(inputMax);
+        inputMax.setOpaque(false);
+
+        JPanel inputIdeal = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel idealt = new JLabel("Ideal time for activity:"); 
+        idealt1 = new JLabel("0 selected"); 
+        inputIdeal.add(idealt);
+        inputIdeal.add(c2);
+        inputIdeal.add(idealt1);
+        idealt.setForeground(Color.WHITE);
+        idealt.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        idealt1.setForeground(Color.WHITE);
+        idealt1.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        add(inputIdeal);
+        inputIdeal.setOpaque(false);
+
+        JPanel inputCost = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel maxc = new JLabel("Max cost for activity:"); 
+        maxc1 = new JLabel("0 selected"); 
+        inputCost.add(maxc);
+        inputCost.add(c3);
+        inputCost.add(maxc1);
+        maxc.setForeground(Color.WHITE);
+        maxc.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        maxc1.setForeground(Color.WHITE);
+        maxc1.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        add(inputCost);
+        inputCost.setOpaque(false);
+
+        JButton saveb = new JButton("Save Current Activity");
+        saveb.addActionListener( new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                activityName.setText(textField.getText());
+            }
+        });
+        saveb.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(saveb);
 
         //JFrame timeScroll = new JFrame("Test");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,6 +214,23 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
 
         //then print result in new window
         genWindow.setVisible(true);
+    }
+
+    public void itemStateChanged(ItemEvent e) 
+    { 
+        // if the state combobox is changed 
+        if (e.getSource() == c1) { 
+  
+            max1.setText(c1.getSelectedItem() + " hours selected"); 
+        }
+        else if (e.getSource() == c2) { 
+  
+            idealt1.setText(c2.getSelectedItem() + " hours selected"); 
+        }
+        else if (e.getSource() == c3) { 
+  
+            maxc1.setText(c3.getSelectedItem() + " dollars selected"); 
+        } 
     }
 
     /**
