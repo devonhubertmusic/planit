@@ -41,7 +41,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         text.setHorizontalAlignment(SwingConstants.CENTER);
         text.setVerticalAlignment(SwingConstants.CENTER);
 
-        JLabel picture = new JLabel(new ImageIcon("Planit.jpg"));
+        JLabel picture = new JLabel(new ImageIcon("Planit.png"));
         picture.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(picture);
 
