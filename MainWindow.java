@@ -10,15 +10,22 @@ import java.io.*;
 
 public class MainWindow extends JFrame implements WindowListener, ActionListener, ItemListener
 {
-    private Button b;
+    //Activity plan window
     private activityPlan genWindow = new activityPlan();
-    //private TextField text = new TextField(25);
+    
+    //copy of the database ArrayList, REPLACE WITH MySQL FUNCTIONALITY
     private ArrayList<Activity> databaseCopy;
-    private JComboBox c1, c2, c3, c4; 
+    
+    //Dropdown boxes for user input
+    private JComboBox c1, c2, c3, c4;
+    
+    //Labels to display maxTime, idealTime, maxCost, and availableMoney user input
     private JLabel max1, idealt1, maxc1, money;
 
     public MainWindow(String title) {
-        super(title);
+        super(title); //Add title to window
+        
+        //Set background image of window
         try {
             final Image backgroundImage = javax.imageio.ImageIO.read(new File("space.jpg"));
             setContentPane(new JPanel(new BorderLayout()) {
@@ -30,6 +37,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         addWindowListener(this);
         JLabel text = new JLabel("Welcome to Plan-it!");
@@ -72,6 +80,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         add(inputName);
         inputName.setOpaque(false);
 
+        //time options (in hours)
         String s1[] = { "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }; 
         String[] n1 = new String[100];
         for (int i = 0, j = 0; i < 100; ++i, j+=5) {
@@ -80,11 +89,13 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         // create checkbox 
         c1 = new JComboBox(s1); 
         c2 = new JComboBox(s1);
-        c3 = new JComboBox(n1); 
+        c3 = new JComboBox(n1);
+        
         // add ItemListener 
         c1.addItemListener(this);
         c2.addItemListener(this);
-        c3.addItemListener(this); 
+        c3.addItemListener(this);
+        
         // create labels 
         JPanel inputMax = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel max = new JLabel("Max time for activity:"); 
@@ -211,12 +222,12 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
 
  }
     public void updateDatabase(ArrayList<Activity> database) {
-        this.databaseCopy = database;
+        this.databaseCopy = database; //REPLACE WITH CALL TO MySQL
     }
 
     public void actionPerformed(ActionEvent e) {
-    	double availableTime = 0.0;
-    	double availableMoney = 0.0;
+    	double availableTime = 0.0; //TEMPORARY, DRAW FROM USER INPUT VARIABLES
+    	double availableMoney = 0.0; //TEMPORARY, DRAW FROM USER INPUT VARIABLES
 
         Plan myPlan = new Plan();
         myPlan.generatePlan(databaseCopy, availableTime, availableMoney);
@@ -227,21 +238,21 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
     public void itemStateChanged(ItemEvent e) 
     { 
         // if the state combobox is changed 
-        if (e.getSource() == c1) { 
-  
-            max1.setText(c1.getSelectedItem() + " hours selected"); 
+        if (e.getSource() == c1) {
+            max1.setText(c1.getSelectedItem() + " hours selected");
+            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
         }
-        else if (e.getSource() == c2) { 
-  
-            idealt1.setText(c2.getSelectedItem() + " hours selected"); 
+        else if (e.getSource() == c2) {
+            idealt1.setText(c2.getSelectedItem() + " hours selected");
+            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
         }
-        else if (e.getSource() == c3) { 
-  
-            maxc1.setText(c3.getSelectedItem() + " dollars selected"); 
+        else if (e.getSource() == c3) {
+            maxc1.setText(c3.getSelectedItem() + " dollars selected");
+            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
         }
-        else if (e.getSource() == c4) { 
-  
-            money.setText(c4.getSelectedItem() + " dollars selected"); 
+        else if (e.getSource() == c4) {
+            money.setText(c4.getSelectedItem() + " dollars selected");
+            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
         }
     }
 
@@ -254,9 +265,9 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
     public void windowClosing(WindowEvent e)
     {
         try {
-            PlanitRunner.saveData(databaseCopy);
-            dispose();
-            System.exit(0);
+            PlanitRunner.saveData(databaseCopy); //Update the database file with current database info
+            dispose(); //Close window
+            System.exit(0); //Exit program
         } catch (Exception error) {
             error.printStackTrace();
         }

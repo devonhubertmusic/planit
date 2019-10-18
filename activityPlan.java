@@ -10,12 +10,10 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JFrame; 
 
-public class activityPlan extends Frame //implements ActionListener
+public class activityPlan extends JFrame //implements ActionListener
 {
-
-	private Button b;
-	public activityPlan(){
-        setLayout( new FlowLayout());
+    public activityPlan(){
+        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         setTitle("Plan Generator");
         setSize(500, 600);
         setVisible(false);
@@ -29,19 +27,18 @@ public class activityPlan extends Frame //implements ActionListener
             });
         
         
-        //not sure what should be the title
-        JLabel header = new JLabel("Activity Plan");
+        //Title
+        JLabel header = new JLabel("My Activity Plan");
         add(header);
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
         
         
-        
         //***********************************************************************
         //Activity plan generation and display
         
-        double availableTime = 60.0; //FOR TESTING
-        double availableMoney = 20.0; //FOR TESTING
+        double availableTime = 60.0; //FOR TESTING, NEEDS TO DRAW FROM USER INPUT
+        double availableMoney = 20.0; //FOR TESTING, NEEDS TO DRAW FROM USER INPUT
         Plan myPlan = new Plan();
         myPlan.generatePlan(PlanitRunner.database, availableTime, availableMoney);
         ArrayList<Activity> myActivityList = myPlan.getActivityList();
@@ -50,10 +47,9 @@ public class activityPlan extends Frame //implements ActionListener
         int columnSize = 3;
         String[][] data = new String[rowSize][columnSize];
         
-        double totalTime = 0.0; //Keep track of total time of activity list, REPLACE WITH Plan.getTotalTime() method
-        double totalCost = 0.0; //Keep track of total cost of activity list, REPLACE WITH Plan.getTotalCost() method
+        double totalTime = 0.0; //Keep track of total time of activity list, REPLACE WITH Plan.getTotalTime() METHOD
+        double totalCost = 0.0; //Keep track of total cost of activity list, REPLACE WITH Plan.getTotalCost() METHOD
         
-        //System.out.println(myActivityList);
         
         //Fill table with data from generated activity plan
         for(int row = 0; row < rowSize; row++) {
@@ -107,15 +103,14 @@ public class activityPlan extends Frame //implements ActionListener
         JScrollPane sp = new JScrollPane(j);
         add(sp);
             
-        JLabel timeLabel = new JLabel("Total Time: " + totalTime + " Minutes                                                ");  //FIX SPACING
+        JLabel timeLabel = new JLabel("Total Time: " + totalTime + " Minutes");
         add(timeLabel);
-        timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        timeLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
         timeLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
             
-        JLabel costLabel = new JLabel("Total Cost: $" + totalCost + "                                                     "
-        + "                    "); //FIX SPACING
+        JLabel costLabel = new JLabel("Total Cost: $" + totalCost);
         add(costLabel);
-        costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        costLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
         costLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
             
         
