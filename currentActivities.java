@@ -21,10 +21,13 @@ public class currentActivities {
     {
         f.setLayout( new FlowLayout());
         f.setTitle("Current Activities");
+        JLabel allAct = new JLabel("All Actitivies");
+        f.add(allAct);
+        allAct.setFont(new Font("Helvetica", Font.PLAIN, 25));
+        allAct.setAlignmentY(Component.CENTER_ALIGNMENT);
         JButton edit = new JButton("Edit");
-		    edit.setBounds(100,100,140, 40);
-		    f.add(edit);
-	    this.database = PlanitRunner.database;
+        f.add(edit);
+	      this.database = PlanitRunner.database;
 
 
         // Test Data to be displayed in the JTable
@@ -75,7 +78,6 @@ public class currentActivities {
 	    }
 	}
 
-
         String[] columnNames = { "Activity", "Ideal Time", "Max Cost" };
 
         j = new JTable(data, columnNames);
@@ -83,7 +85,11 @@ public class currentActivities {
 
         JScrollPane sp = new JScrollPane(j);
         f.add(sp);
+
         f.setSize(500, 600);
         f.setVisible(true);
+    }
+    public void actionPerformed(ActionEvent evt){
+
     }
 }
