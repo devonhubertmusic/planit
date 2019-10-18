@@ -10,12 +10,11 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JFrame; 
 
-// //going to change the class name asap to activityPlan
-public class newWindow extends Frame //implements ActionListener
+public class activityPlan extends Frame //implements ActionListener
 {
 
 	private Button b;
-	public newWindow(){
+	public activityPlan(){
         setLayout( new FlowLayout());
         setTitle("Plan Generator");
         setSize(500, 600);
@@ -126,13 +125,9 @@ public class newWindow extends Frame //implements ActionListener
 
         //dummy buttons!
 	    JButton save = new JButton("Save Plan");
-        save.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         add(save);
-        //save.addActionListener();
-        add(Box.createVerticalGlue());
 	
         JButton print = new JButton("Print Plan");
-        print.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(print);
         
     }
