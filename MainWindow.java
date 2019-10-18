@@ -11,7 +11,7 @@ import java.io.*;
 public class MainWindow extends JFrame implements WindowListener, ActionListener, ItemListener
 {
     private Button b;
-    private newWindow genWindow = new newWindow();
+    private activityPlan genWindow = new activityPlan();
     //private TextField text = new TextField(25);
     private ArrayList<Activity> databaseCopy;
     private JComboBox c1, c2, c3, c4; 
