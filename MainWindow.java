@@ -14,8 +14,8 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
     private newWindow genWindow = new newWindow();
     //private TextField text = new TextField(25);
     private ArrayList<Activity> databaseCopy;
-    private JComboBox c1, c2, c3; 
-    private JLabel max1, idealt1, maxc1;
+    private JComboBox c1, c2, c3, c4; 
+    private JLabel max1, idealt1, maxc1, money;
 
     public MainWindow(String title) {
         super(title);
@@ -170,16 +170,25 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         spinnerFinish.setPreferredSize(new Dimension(100, 30));
         spinnerFinish.setMaximumSize(new Dimension(100, 30));
 
+        c4 = new JComboBox(n1); 
+        c4.addItemListener(this);
+        JLabel userMoney = new JLabel("Please select amount of money available:"); 
+        money = new JLabel("0 selected"); 
+        inputPanel.add(userMoney);
+        inputPanel.add(c4);
+        inputPanel.add(money);
+        userMoney.setForeground(Color.WHITE);
+        userMoney.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        money.setForeground(Color.WHITE);
+        money.setFont(new Font("Helvetica", Font.PLAIN, 16));
+
+        JButton b = new JButton("Generate Activity Plan");
+        inputPanel.add(b);
+        b.addActionListener(this);
+
         add(inputPanel);
         inputPanel.setOpaque(false);
 
-
-        add(Box.createVerticalGlue());
-
-        JButton b = new JButton("Generate Activity Plan");
-        b.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(b);
-        b.addActionListener(this);
 
         add(Box.createVerticalGlue());
 
@@ -230,7 +239,11 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         else if (e.getSource() == c3) { 
   
             maxc1.setText(c3.getSelectedItem() + " dollars selected"); 
-        } 
+        }
+        else if (e.getSource() == c4) { 
+  
+            money.setText(c4.getSelectedItem() + " dollars selected"); 
+        }
     }
 
     /**
