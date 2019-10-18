@@ -172,7 +172,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
 
         c4 = new JComboBox(n1); 
         c4.addItemListener(this);
-        JLabel userMoney = new JLabel("Please select amount of money available:"); 
+        JLabel userMoney = new JLabel("Please select budget:"); 
         money = new JLabel("0 selected"); 
         inputPanel.add(userMoney);
         inputPanel.add(c4);
@@ -181,39 +181,39 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         userMoney.setFont(new Font("Helvetica", Font.PLAIN, 16));
         money.setForeground(Color.WHITE);
         money.setFont(new Font("Helvetica", Font.PLAIN, 16));
-
-        JButton b = new JButton("Generate Activity Plan");
-        inputPanel.add(b);
-        b.addActionListener(this);
-
-        add(inputPanel);
-        inputPanel.setOpaque(false);
-
-
+ 
+       add(inputPanel);
+       inputPanel.setOpaque(false);
         add(Box.createVerticalGlue());
 
-        JButton vb = new JButton("View Current Activities");
-        vb.addActionListener( new ActionListener() {
+	JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	JButton b = new JButton("Generate Activity Plan");
+	b.addActionListener(this);
+	viewButtons.add(b);
+
+	JButton vb = new JButton("View Current Activities");	
+	vb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new currentActivities();
             }
         });
-        vb.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(vb);
 
+	viewButtons.add(vb);
+	add(viewButtons);
+	viewButtons.setOpaque(false);
         add(Box.createVerticalGlue());
 
         JLabel label3 = new JLabel("Developed by Team Rocket");
-        add(label3);
-        label3.setAlignmentX(Component.CENTER_ALIGNMENT);
+	add(label3);
+   	label3.setAlignmentX(Component.CENTER_ALIGNMENT);
         label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
-    }
+	add(Box.createVerticalGlue());
 
+ }
     public void updateDatabase(ArrayList<Activity> database) {
         this.databaseCopy = database;
     }
 
-    //
     public void actionPerformed(ActionEvent e) {
     	double availableTime = 0.0;
     	double availableMoney = 0.0;
@@ -221,7 +221,6 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         Plan myPlan = new Plan();
         myPlan.generatePlan(databaseCopy, availableTime, availableMoney);
 
-        //then print result in new window
         genWindow.setVisible(true);
     }
 
