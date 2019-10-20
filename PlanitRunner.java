@@ -17,21 +17,19 @@ public class PlanitRunner
         try {
             boolean dataLoaded = loadData(); //true if data loaded successfully
             
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int width = screenSize.width;
-            int height = screenSize.height;
-            mainWindow = new MainWindow("Plan-it");
-            mainWindow.setSize(width, height);
-            mainWindow.setResizable(true);
-            mainWindow.setVisible(true);
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets user's screen size
+            int width = screenSize.width; //width of user's screen
+            int height = screenSize.height; //height of user's screen
+            mainWindow = new MainWindow("Plan-it"); //creates main window for user
+            mainWindow.setSize(width, height); //sets size of main window
+            mainWindow.setResizable(true); //allows user to resize main window
+            mainWindow.setVisible(true); //makes main window visible
 
-            //System.out.println(database);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-	
     //Check for existing "save file", and if found, load in data to create database
     //and return true, else return false
 	public static boolean loadData()
@@ -49,19 +47,15 @@ public class PlanitRunner
                 
                     Activity temp = new Activity();
                     String name = scanner.nextLine();
-                    //System.out.println(name);
                     temp.setName(name);
                 
                     double maxTime = Double.parseDouble(scanner.nextLine());
-                    //System.out.println(maxTime);
                     temp.setMaxTime(maxTime);
                 
                     double idealTime = Double.parseDouble(scanner.nextLine());
-                    //System.out.println(idealTime);
                     temp.setIdealTime(idealTime);
                 
                     double maxCost = Double.parseDouble(scanner.nextLine());
-                    //System.out.println(maxCost);
                     temp.setMaxCost(maxCost);
                 
                     database.add(temp);

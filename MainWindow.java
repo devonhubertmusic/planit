@@ -8,10 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.io.*;
 
-public class MainWindow extends JFrame implements WindowListener, ActionListener, ItemListener
+public class MainWindow extends JFrame implements WindowListener, ItemListener
 {
-    //Activity plan window
-    private activityPlan genWindow = new activityPlan();
     
     //copy of the database ArrayList, REPLACE WITH MySQL FUNCTIONALITY
     private ArrayList<Activity> databaseCopy;
@@ -99,7 +97,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         // create labels 
         JPanel inputMax = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel max = new JLabel("Max time for activity:"); 
-        max1 = new JLabel("0 selected"); 
+        max1 = new JLabel("half hour selected"); 
         inputMax.add(max);
         inputMax.add(c1);
         inputMax.add(max1);
@@ -112,7 +110,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
 
         JPanel inputIdeal = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel idealt = new JLabel("Ideal time for activity:"); 
-        idealt1 = new JLabel("0 selected"); 
+        idealt1 = new JLabel("half hour selected");
         inputIdeal.add(idealt);
         inputIdeal.add(c2);
         inputIdeal.add(idealt1);
@@ -125,7 +123,7 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
 
         JPanel inputCost = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel maxc = new JLabel("Max cost for activity:"); 
-        maxc1 = new JLabel("0 selected"); 
+        maxc1 = new JLabel("0 selected");
         inputCost.add(maxc);
         inputCost.add(c3);
         inputCost.add(maxc1);
@@ -145,8 +143,6 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
         saveb.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(saveb);
 
-        //JFrame timeScroll = new JFrame("Test");
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         Date dateStart = new Date();
@@ -197,53 +193,71 @@ public class MainWindow extends JFrame implements WindowListener, ActionListener
        inputPanel.setOpaque(false);
         add(Box.createVerticalGlue());
 
-	JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-	JButton b = new JButton("Generate Activity Plan");
-	b.addActionListener(this);
-	viewButtons.add(b);
+        JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
+        JButton b = new JButton("Generate Activity Plan");
+        b.addActionListener( new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new activityPlan();
+            }
+        });
+        viewButtons.add(b);
 
-	JButton vb = new JButton("View Current Activities");	
-	vb.addActionListener( new ActionListener() {
+        JButton vb = new JButton("View Current Activities");
+        vb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new currentActivities();
             }
         });
-
-	viewButtons.add(vb);
-	add(viewButtons);
-	viewButtons.setOpaque(false);
-        add(Box.createVerticalGlue());
+        viewButtons.add(vb);
+        
+        add(viewButtons);
+        
+        viewButtons.setOpaque(false);
+            add(Box.createVerticalGlue());
 
         JLabel label3 = new JLabel("Developed by Team Rocket");
-	add(label3);
-   	label3.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(label3);
+        label3.setAlignmentX(Component.CENTER_ALIGNMENT);
         label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
-	add(Box.createVerticalGlue());
-
- }
+        add(Box.createVerticalGlue());
+    }
+    
     public void updateDatabase(ArrayList<Activity> database) {
         this.databaseCopy = database; //REPLACE WITH CALL TO MySQL
-    }
-
-    public void actionPerformed(ActionEvent e) {
-    	double availableTime = 0.0; //TEMPORARY, DRAW FROM USER INPUT VARIABLES
-    	double availableMoney = 0.0; //TEMPORARY, DRAW FROM USER INPUT VARIABLES
-
-        Plan myPlan = new Plan();
-        myPlan.generatePlan(databaseCopy, availableTime, availableMoney);
-
-        genWindow.setVisible(true);
     }
 
     public void itemStateChanged(ItemEvent e) 
     { 
         // if the state combobox is changed 
         if (e.getSource() == c1) {
-            max1.setText(c1.getSelectedItem() + " hours selected");
+            String selection = "" + c1.getSelectedItem();
+            double selectionDouble = Double.parseDouble(selection);
+            String hours = "";
+            if(selectionDouble == 1.0) {
+                hours = "hour";
+            } else if(selectionDouble == 0.5) {
+                selection = "";
+                hours = "half hour";
+            } else {
+                hours = "hours";
+            }
+            max1.setText(selection + " " + hours + " selected");
             //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
         }
         else if (e.getSource() == c2) {
-            idealt1.setText(c2.getSelectedItem() + " hours selected");
+            String selection = "" + c2.getSelectedItem();
+            double selectionDouble = Double.parseDouble(selection);
+            String hours = "";
+            if(selectionDouble == 1.0) {
+                hours = "hour";
+            } else if(selectionDouble == 0.5) {
+                selection = "";
+                hours = "half hour";
+            } else {
+                hours = "hours";
+            }
+            idealt1.setText(selection + " " + hours + " selected");
             //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
         }
         else if (e.getSource() == c3) {

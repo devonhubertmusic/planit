@@ -10,33 +10,25 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JFrame; 
 
-public class activityPlan extends JFrame //implements ActionListener
+public class activityPlan
 {
+    JFrame f;
+    
     public activityPlan(){
-        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-        setTitle("Plan Generator");
-        setSize(500, 600);
-        setVisible(false);
-	
-            addWindowListener(new WindowAdapter()
-            {
-                    public void windowClosing(WindowEvent e)
-                {
-                    dispose();
-                }
-            });
-        
+        f = new JFrame(); //Window
+        f.setLayout(new FlowLayout()); //Layout
+        f.setTitle("Plan Generator"); //Window title
+        f.setSize(500, 600); //Size
         
         //Title
         JLabel header = new JLabel("My Activity Plan");
-        add(header);
+        f.add(header);
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
         
         
         //***********************************************************************
         //Activity plan generation and display
-        
         double availableTime = 60.0; //FOR TESTING, NEEDS TO DRAW FROM USER INPUT
         double availableMoney = 20.0; //FOR TESTING, NEEDS TO DRAW FROM USER INPUT
         Plan myPlan = new Plan();
@@ -50,7 +42,6 @@ public class activityPlan extends JFrame //implements ActionListener
         double totalTime = 0.0; //Keep track of total time of activity list, REPLACE WITH Plan.getTotalTime() METHOD
         double totalCost = 0.0; //Keep track of total cost of activity list, REPLACE WITH Plan.getTotalCost() METHOD
         
-        
         //Fill table with data from generated activity plan
         for(int row = 0; row < rowSize; row++) {
             for(int column = 1; column <= columnSize; column++) {
@@ -58,28 +49,7 @@ public class activityPlan extends JFrame //implements ActionListener
                 if(column == 1) {
                     data[row][column - 1] = "" + temp.getName();
                 } else if(column == 2) {
-                    
-                    //convert raw time in minutes to hours, minutes, etc.
-                    String timeString = "";
-                    double rawTime = temp.getIdealTime();
-                    totalTime += rawTime;
-                    int hours = (int) (rawTime/60);
-                    int minutes = (int) (rawTime % 60);
-                    if(hours > 0) {
-                        if(hours == 1) {
-                            timeString += "" + hours + " hour";
-                        } else {
-                            timeString += "" + hours + " hours";
-                        }
-                        if(minutes != 0) {
-                            timeString += ", ";
-                        }
-                    }
-                    if(minutes > 0) {
-                        timeString += "" + minutes + " minutes";
-                    }
-                    
-                    data[row][column - 1] = timeString;
+                    data[row][column - 1] = doubleToTime(temp.getIdealTime());
                 } else if(column == 3) {
                     double cost = temp.getMaxCost();
                     totalCost += cost;
@@ -92,8 +62,8 @@ public class activityPlan extends JFrame //implements ActionListener
                     System.out.println("Invalid Column Number");
                 }
                 
-            } //end for loop 2
-        } //end for loop 1
+            }
+        }
         
         String[] columnNames = { "Activity", "Time", "Cost" };
         
@@ -101,36 +71,51 @@ public class activityPlan extends JFrame //implements ActionListener
         j.setBounds(30, 40, 200, 300);
         
         JScrollPane sp = new JScrollPane(j);
-        add(sp);
+        f.add(sp);
             
         JLabel timeLabel = new JLabel("Total Time: " + totalTime + " Minutes");
-        add(timeLabel);
+        f.add(timeLabel);
         timeLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         timeLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
             
         JLabel costLabel = new JLabel("Total Cost: $" + totalCost);
-        add(costLabel);
+        f.add(costLabel);
         costLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         costLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
-            
-        
         //***********************************************************************
         
-     
 
         //dummy buttons!
 	    JButton save = new JButton("Save Plan");
-        add(save);
+        f.add(save);
 	
         JButton print = new JButton("Print Plan");
-        add(print);
+        f.add(print);
         
+        f.setVisible(true);
     }
-
-    //@Override
-    //public void actionPerformed(ActionEvent evt){
-        
-            
-    //}
     
+    //Converts a double time value in minutes to hours, minutes, etc.
+    public String doubleToTime(double rawTime){
+        String timeString = "";
+        int hours = (int) (rawTime/60);
+        int minutes = (int) (rawTime % 60);
+        if(hours > 0) {
+            if(hours == 1) {
+                timeString += "" + hours + " hour";
+            } else {
+                timeString += "" + hours + " hours";
+            }
+            if(minutes != 0) {
+                timeString += ", ";
+            }
+        }
+        if(minutes > 0) {
+            timeString += "" + minutes + " minutes";
+        }
+        
+        return timeString;
+    }
 }
