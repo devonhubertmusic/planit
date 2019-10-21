@@ -10,18 +10,34 @@ import java.io.*;
 
 public class MainWindow extends JFrame implements WindowListener, ItemListener
 {
+    public String newActName;
+    public double newActMaxTime;
+    public double newActIdealTime;
+    public double newActMaxCost;
+    
+    public double availableTime;
+    public double availableMoney;
     
     //copy of the database ArrayList, REPLACE WITH MySQL FUNCTIONALITY
     private ArrayList<Activity> databaseCopy;
     
     //Dropdown boxes for user input
-    private JComboBox c1, c2, c3, c4;
+    private JComboBox c1, c2, c3, c4, c5;
     
     //Labels to display maxTime, idealTime, maxCost, and availableMoney user input
-    private JLabel max1, idealt1, maxc1, money;
+    private JLabel max1, idealt1, maxc1, time, money;
 
     public MainWindow(String title) {
         super(title); //Add title to window
+        
+        //Initialize data fields
+        newActName = "";
+        newActMaxTime = 30.0;
+        newActIdealTime = 30.0;
+        newActMaxCost = 0.0;
+        
+        availableTime = 30.0;
+        availableMoney = 0.0;
         
         //Set background image of window
         try {
@@ -97,7 +113,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         // create labels 
         JPanel inputMax = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel max = new JLabel("Max time for activity:"); 
-        max1 = new JLabel("half hour selected"); 
+        max1 = new JLabel("half hour selected");
         inputMax.add(max);
         inputMax.add(c1);
         inputMax.add(max1);
@@ -137,14 +153,31 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JButton saveb = new JButton("Save Current Activity");
         saveb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                activityName.setText(textField.getText());
+                newActName = textField.getText();
+                
+                Activity temp = new Activity();
+                temp.setName(newActName);
+                temp.setMaxTime(newActMaxTime);
+                temp.setIdealTime(newActIdealTime);
+                temp.setMaxCost(newActMaxCost);
+                
+                if(PlanitRunner.database.contains(temp)) {
+                    activityName.setText("Activity has already been saved");
+                } else if(newActName != null && !newActName.isEmpty()) {
+                    PlanitRunner.database.add(temp);
+                    activityName.setText("Activity Saved!");
+                } else {
+                    activityName.setText("Please Enter a Name For Your Activity");
+                }
             }
         });
         saveb.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(saveb);
 
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
+        
+        /*
+        //Current activity boxes
         Date dateStart = new Date();
         SpinnerDateModel sdmStart = new SpinnerDateModel(dateStart, null, null, Calendar. HOUR_OF_DAY);
         JSpinner spinnerStart = new JSpinner(sdmStart);
@@ -158,11 +191,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         spinnerStart.setMinimumSize(new Dimension(100, 30));
         spinnerStart.setPreferredSize(new Dimension(100, 30));
         spinnerStart.setMaximumSize(new Dimension(100, 30));
-        //setSize(100,100);
-        //setVisible(true);
-        // JLabel label3 = new JLabel("                                  "+
-        // "                                                             ");
-        // add(label3);
         Date dateFinish = new Date();
         SpinnerDateModel sdmFinish = new SpinnerDateModel(dateFinish, null, null, Calendar. HOUR_OF_DAY);
         JSpinner spinnerFinish = new JSpinner(sdmFinish);
@@ -176,13 +204,26 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         spinnerFinish.setMinimumSize(new Dimension(100, 30));
         spinnerFinish.setPreferredSize(new Dimension(100, 30));
         spinnerFinish.setMaximumSize(new Dimension(100, 30));
-
-        c4 = new JComboBox(n1); 
+        */
+        
+        c4 = new JComboBox(s1);
         c4.addItemListener(this);
-        JLabel userMoney = new JLabel("Please select budget:"); 
+        JLabel userTime = new JLabel("Select amount of free time:");
+        time = new JLabel("half hour selected");
+        inputPanel.add(userTime);
+        inputPanel.add(c4);
+        inputPanel.add(time);
+        userTime.setForeground(Color.WHITE);
+        userTime.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        time.setForeground(Color.WHITE);
+        time.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        
+        c5 = new JComboBox(n1);
+        c5.addItemListener(this);
+        JLabel userMoney = new JLabel("     Select current budget:");
         money = new JLabel("0 selected"); 
         inputPanel.add(userMoney);
-        inputPanel.add(c4);
+        inputPanel.add(c5);
         inputPanel.add(money);
         userMoney.setForeground(Color.WHITE);
         userMoney.setFont(new Font("Helvetica", Font.PLAIN, 16));
@@ -243,7 +284,9 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
                 hours = "hours";
             }
             max1.setText(selection + " " + hours + " selected");
-            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
+            
+            //Update new activity maxTime variable based on current selection
+            newActMaxTime = 60.0 * Double.parseDouble("" + c1.getSelectedItem());
         }
         else if (e.getSource() == c2) {
             String selection = "" + c2.getSelectedItem();
@@ -258,15 +301,38 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
                 hours = "hours";
             }
             idealt1.setText(selection + " " + hours + " selected");
-            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
+            
+            //Update new activity idealTime variable based on current selection
+            newActIdealTime = 60.0 * Double.parseDouble("" + c2.getSelectedItem());
         }
         else if (e.getSource() == c3) {
             maxc1.setText(c3.getSelectedItem() + " dollars selected");
-            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
+            
+            //Update new activity maxCost variable based on current selection
+            newActMaxCost = Double.parseDouble("" + c3.getSelectedItem());
         }
         else if (e.getSource() == c4) {
-            money.setText(c4.getSelectedItem() + " dollars selected");
-            //NEED --> VARIABLE TO DRAW FROM WHEN addActivity() IS CALLED
+            String selection = "" + c4.getSelectedItem();
+            double selectionDouble = Double.parseDouble(selection);
+            String hours = "";
+            if(selectionDouble == 1.0) {
+                hours = "hour";
+            } else if(selectionDouble == 0.5) {
+                selection = "";
+                hours = "half hour";
+            } else {
+                hours = "hours";
+            }
+            time.setText(selection + " " + hours + " selected");
+            
+            //Update user's availableTime variable based on current selection
+            availableTime = 60.0 * Double.parseDouble("" + c4.getSelectedItem());
+        }
+        else if (e.getSource() == c5) {
+            money.setText(c5.getSelectedItem() + " dollars selected");
+            
+            //Update user's availableMoney variable based on current selection
+            availableMoney = Double.parseDouble("" + c5.getSelectedItem());
         }
     }
 
