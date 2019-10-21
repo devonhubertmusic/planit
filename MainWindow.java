@@ -83,7 +83,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JTextField textField = new JTextField();
         textField.setPreferredSize(new Dimension(150, 25));
         JLabel activityField = new JLabel("Activity name:");
-        JLabel activityName = new JLabel("Activity is...");
+        JLabel activityName = new JLabel("");
         inputName.add(activityField);
         inputName.add(textField);
         inputName.add(activityName);
@@ -166,6 +166,10 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
                 } else if(newActName != null && !newActName.isEmpty()) {
                     PlanitRunner.database.add(temp);
                     activityName.setText("Activity Saved!");
+                    c1.setSelectedIndex(0);
+                    c2.setSelectedIndex(0);
+                    c3.setSelectedIndex(0);
+                    textField.setText("");
                 } else {
                     activityName.setText("Please Enter a Name For Your Activity");
                 }
