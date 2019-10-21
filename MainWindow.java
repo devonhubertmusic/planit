@@ -72,7 +72,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         add(Box.createVerticalGlue());
 
         //Get data for new activity
-        JLabel newActivity = new JLabel("Enter a new Activity:");
+        JLabel newActivity = new JLabel("Enter a New Activity:");
         newActivity.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(newActivity);
         newActivity.setForeground(Color.WHITE);
@@ -205,6 +205,18 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         spinnerFinish.setPreferredSize(new Dimension(100, 30));
         spinnerFinish.setMaximumSize(new Dimension(100, 30));
         */
+        
+        JLabel spacer = new JLabel("                                      ");
+        spacer.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(spacer);
+        spacer.setForeground(Color.WHITE);
+        spacer.setFont(new Font("Helvetica", Font.BOLD, 20));
+        
+        JLabel newActivityPlan = new JLabel("Generate a New Activity Plan:");
+        newActivityPlan.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(newActivityPlan);
+        newActivityPlan.setForeground(Color.WHITE);
+        newActivityPlan.setFont(new Font("Helvetica", Font.BOLD, 20));
         
         c4 = new JComboBox(s1);
         c4.addItemListener(this);
