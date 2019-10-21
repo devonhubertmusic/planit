@@ -24,7 +24,6 @@ public class PlanitRunner
             mainWindow.setSize(width, height); //sets size of main window
             mainWindow.setResizable(true); //allows user to resize main window
             mainWindow.setVisible(true); //makes main window visible
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,8 +75,7 @@ public class PlanitRunner
     {
         try {
             if(database != null) {
-            
-                String text = "\n";
+                String text = "";
                 for(int i = 0; i < database.size(); i++) {
                     Activity temp = database.get(i);
             
@@ -87,16 +85,14 @@ public class PlanitRunner
                     text += "\n" + temp.getMaxCost();
                     text += "\n";
                 }
-        
-            
-                Writer writer = new BufferedWriter(new OutputStreamWriter
-                (new FileOutputStream(("Database.txt"), false), "utf-8"));
-                writer.write(text);
+                try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+                    ("Database.txt"), false), "utf-8"))) {
+                    writer.write(text);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 	}
-
 
 }

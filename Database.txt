@@ -1,65 +1,10 @@
 
 Walk the Dog
-60.0
-30.0
-0.0
-
-Go Shopping
-120.0
-60.0
-200.0
-
-Do Yoga
 90.0
-50.0
+30.0
 0.0
 
 Go to the Movies
-200.0
-150.0
-30.0
-
-Go Whale Watching
-240.0
-200.0
-50.0
-
-Walk Along the Beach
-240.0
-125.0
-0.0
-
-Eat Pizza
-60.0
-35.0
-15.0
-
-Clean the House
-400.0
-145.0
-20.0
-
-Do Gardening
-200.0
-150.0
-5.0
-
-Play Ice Hockey
-150.0
-140.0
-30.0
-
-Go to Disneyland
-400.0
-400.0
-300.0
-
-Ride a Jetski
-300.0
-125.0
-150.0
-
-Pick Berries
+180.0
 120.0
-60.0
-0.0
+25.0
