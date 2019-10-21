@@ -139,7 +139,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
 
         JPanel inputCost = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel maxc = new JLabel("Max cost for activity:"); 
-        maxc1 = new JLabel("0 selected");
+        maxc1 = new JLabel("0 dollars selected");
         inputCost.add(maxc);
         inputCost.add(c3);
         inputCost.add(maxc1);
@@ -221,7 +221,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         c5 = new JComboBox(n1);
         c5.addItemListener(this);
         JLabel userMoney = new JLabel("     Select current budget:");
-        money = new JLabel("0 selected"); 
+        money = new JLabel("0 dollars selected"); 
         inputPanel.add(userMoney);
         inputPanel.add(c5);
         inputPanel.add(money);
