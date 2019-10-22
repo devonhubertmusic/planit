@@ -58,3 +58,18 @@ Food at Taco Bell
 30.0
 30.0
 15.0
+
+Food at MacDonald's
+30.0
+30.0
+15.0
+
+Listen to AudioBook
+90.0
+60.0
+5.0
+
+Watch YouTube
+120.0
+30.0
+0.0
