@@ -2,9 +2,59 @@
 Go to the Movies
 180.0
 120.0
-30.0
+25.0
 
 Walk by the Beach
 120.0
 60.0
 0.0
+
+Mess Around in Cost Plus
+60.0
+30.0
+25.0
+
+Eat Sushi
+60.0
+30.0
+30.0
+
+Go to the Noodle Bar
+60.0
+30.0
+25.0
+
+Drive to Bonny Doon
+90.0
+60.0
+10.0
+
+Go to a Bar
+180.0
+90.0
+35.0
+
+Watch TV at Home
+240.0
+90.0
+0.0
+
+Clean Up Room
+360.0
+120.0
+0.0
+
+Drive Down by the Beach
+120.0
+60.0
+5.0
+
+Hang out in San Jose
+360.0
+300.0
+30.0
+
+Food at Taco Bell
+30.0
+30.0
+15.0
