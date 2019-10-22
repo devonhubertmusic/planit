@@ -13,8 +13,21 @@ import javax.swing.JFrame;
 public class activityPlan
 {
     JFrame f;
+    double availableTime;
+    double availableMoney;
     
-    public activityPlan(){
+    //Default constructor
+    public activityPlan() {
+        this.f = null;
+        this.availableTime = 0.0;
+        this.availableMoney = 0.0;
+    }
+    
+    //Explicit constructor
+    public activityPlan(double availableTime, double availableMoney){
+        this.availableTime = availableTime;
+        this.availableMoney = availableMoney;
+        
         f = new JFrame(); //Window
         f.setLayout(new FlowLayout()); //Layout
         f.setTitle("Plan Generator"); //Window title
@@ -26,13 +39,10 @@ public class activityPlan
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
         
-        
         //***********************************************************************
         //Activity plan generation and display
-        double availableTime = 60.0; //FOR TESTING, NEEDS TO DRAW FROM USER INPUT
-        double availableMoney = 20.0; //FOR TESTING, NEEDS TO DRAW FROM USER INPUT
         Plan myPlan = new Plan();
-        myPlan.generatePlan(PlanitRunner.database, availableTime, availableMoney);
+        myPlan.generatePlan(PlanitRunner.database, this.availableTime, this.availableMoney);
         ArrayList<Activity> myActivityList = myPlan.getActivityList();
         
         int rowSize = myActivityList.size();
@@ -49,7 +59,9 @@ public class activityPlan
                 if(column == 1) {
                     data[row][column - 1] = "" + temp.getName();
                 } else if(column == 2) {
-                    data[row][column - 1] = doubleToTime(temp.getIdealTime());
+                    double time = temp.getActualTime();
+                    totalTime += time;
+                    data[row][column - 1] = doubleToTime(time);
                 } else if(column == 3) {
                     double cost = temp.getMaxCost();
                     totalCost += cost;
@@ -61,7 +73,6 @@ public class activityPlan
                 } else {
                     System.out.println("Invalid Column Number");
                 }
-                
             }
         }
         
@@ -73,7 +84,7 @@ public class activityPlan
         JScrollPane sp = new JScrollPane(j);
         f.add(sp);
             
-        JLabel timeLabel = new JLabel("Total Time: " + totalTime + " Minutes");
+        JLabel timeLabel = new JLabel("Total Time: " + doubleToTime(totalTime));
         f.add(timeLabel);
         timeLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
         timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

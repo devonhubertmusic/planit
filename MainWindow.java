@@ -10,11 +10,13 @@ import java.io.*;
 
 public class MainWindow extends JFrame implements WindowListener, ItemListener
 {
+    //New activity information
     public String newActName;
     public double newActMaxTime;
     public double newActIdealTime;
     public double newActMaxCost;
     
+    //User availablity information
     public double availableTime;
     public double availableMoney;
     
@@ -52,6 +54,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
             throw new RuntimeException(e);
         }
         
+        //Create and format header
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         addWindowListener(this);
         JLabel text = new JLabel("Welcome to Plan-it!");
@@ -65,6 +68,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         text.setHorizontalAlignment(SwingConstants.CENTER);
         text.setVerticalAlignment(SwingConstants.CENTER);
 
+        //Add logo
         JLabel picture = new JLabel(new ImageIcon("Planit.png"));
         picture.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(picture);
@@ -77,7 +81,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         add(newActivity);
         newActivity.setForeground(Color.WHITE);
         newActivity.setFont(new Font("Helvetica", Font.BOLD, 20));
-
 
         JPanel inputName = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JTextField textField = new JTextField();
@@ -110,7 +113,9 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         c2.addItemListener(this);
         c3.addItemListener(this);
         
-        // create labels 
+        //LABELS:
+        
+        //maxTime input
         JPanel inputMax = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel max = new JLabel("Max time for activity:"); 
         max1 = new JLabel("half hour selected");
@@ -123,7 +128,8 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         max1.setFont(new Font("Helvetica", Font.PLAIN, 16));
         add(inputMax);
         inputMax.setOpaque(false);
-
+        
+        //idealTime input
         JPanel inputIdeal = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel idealt = new JLabel("Ideal time for activity:"); 
         idealt1 = new JLabel("half hour selected");
@@ -137,6 +143,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         add(inputIdeal);
         inputIdeal.setOpaque(false);
 
+        //maxCost input
         JPanel inputCost = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel maxc = new JLabel("Max cost for activity:"); 
         maxc1 = new JLabel("0 dollars selected");
@@ -150,11 +157,14 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         add(inputCost);
         inputCost.setOpaque(false);
 
+        //"Save Activity" Button
         JButton saveb = new JButton("Save Current Activity");
         saveb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //Activity name entered
                 newActName = textField.getText();
                 
+                //Create new activity, and set fields based on user input
                 Activity temp = new Activity();
                 temp.setName(newActName);
                 temp.setMaxTime(newActMaxTime);
@@ -162,55 +172,30 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
                 temp.setMaxCost(newActMaxCost);
                 
                 if(PlanitRunner.database.contains(temp)) {
+                    //Checks whether activity already exists in the database
                     activityName.setText("Activity has already been saved");
                 } else if(newActMaxTime < newActIdealTime) {
+                    //Ensures maxTime is larger than idealTime
                     activityName.setText("Max time must be larger than ideal time");
-                } else if(newActName != null && !newActName.isEmpty()) {
+                } else if(newActName == null || newActName.isEmpty()) {
+                    //Checks if user left the activity name field blank
+                    activityName.setText("Please Enter a Name For Your Activity");
+                } else {
+                    //Add Activity to the database!
                     PlanitRunner.database.add(temp);
                     activityName.setText("Activity Saved!");
                     c1.setSelectedIndex(0);
                     c2.setSelectedIndex(0);
                     c3.setSelectedIndex(0);
                     textField.setText("");
-                } else {
-                    activityName.setText("Please Enter a Name For Your Activity");
                 }
             }
         });
         saveb.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(saveb);
 
+        //Get user information to generate new activity plan
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        
-        /*
-        //Current activity boxes
-        Date dateStart = new Date();
-        SpinnerDateModel sdmStart = new SpinnerDateModel(dateStart, null, null, Calendar. HOUR_OF_DAY);
-        JSpinner spinnerStart = new JSpinner(sdmStart);
-        JSpinner.DateEditor des = new JSpinner.DateEditor(spinnerStart, "HH:mm");
-        spinnerStart.setEditor(des);
-        JLabel labelStart = new JLabel("Please select start time: ");
-        inputPanel.add(labelStart);
-        labelStart.setForeground(Color.WHITE);
-        labelStart.setFont(new Font("Helvetica", Font.PLAIN, 16));
-        inputPanel.add(spinnerStart);
-        spinnerStart.setMinimumSize(new Dimension(100, 30));
-        spinnerStart.setPreferredSize(new Dimension(100, 30));
-        spinnerStart.setMaximumSize(new Dimension(100, 30));
-        Date dateFinish = new Date();
-        SpinnerDateModel sdmFinish = new SpinnerDateModel(dateFinish, null, null, Calendar. HOUR_OF_DAY);
-        JSpinner spinnerFinish = new JSpinner(sdmFinish);
-        JSpinner.DateEditor def = new JSpinner.DateEditor(spinnerFinish, "HH:mm");
-        spinnerFinish.setEditor(def);
-        JLabel labelFinish = new JLabel("Please select end time: ");
-        inputPanel.add(labelFinish);
-        labelFinish.setForeground(Color.WHITE);
-        labelFinish.setFont(new Font("Helvetica", Font.PLAIN, 16));
-        inputPanel.add(spinnerFinish);
-        spinnerFinish.setMinimumSize(new Dimension(100, 30));
-        spinnerFinish.setPreferredSize(new Dimension(100, 30));
-        spinnerFinish.setMaximumSize(new Dimension(100, 30));
-        */
         
         JLabel spacer = new JLabel("                                      ");
         spacer.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -248,20 +233,22 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         money.setForeground(Color.WHITE);
         money.setFont(new Font("Helvetica", Font.PLAIN, 16));
  
-       add(inputPanel);
-       inputPanel.setOpaque(false);
+        add(inputPanel);
+        inputPanel.setOpaque(false);
         add(Box.createVerticalGlue());
 
         JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
+        //"Generate Activity Plan" button
         JButton b = new JButton("Generate Activity Plan");
         b.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new activityPlan();
+                new activityPlan(availableTime, availableMoney);
             }
         });
         viewButtons.add(b);
 
+        //"View Current Activities" button
         JButton vb = new JButton("View Current Activities");
         vb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -269,21 +256,18 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
             }
         });
         viewButtons.add(vb);
-        
+    
         add(viewButtons);
-        
+    
         viewButtons.setOpaque(false);
             add(Box.createVerticalGlue());
 
+        //Footer label
         JLabel label3 = new JLabel("Developed by Team Rocket");
         add(label3);
         label3.setAlignmentX(Component.CENTER_ALIGNMENT);
         label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
         add(Box.createVerticalGlue());
-    }
-    
-    public void updateDatabase(ArrayList<Activity> database) {
-        this.databaseCopy = database; //REPLACE WITH CALL TO MySQL
     }
 
     public void itemStateChanged(ItemEvent e) 
@@ -353,17 +337,17 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
             availableMoney = Double.parseDouble("" + c5.getSelectedItem());
         }
     }
+    
+    public void updateDatabase(ArrayList<Activity> database) {
+        this.databaseCopy = database; //REPLACE WITH CALL TO MySQL
+    }
 
-    /**
-     * Handles the closing of the Main window, re-setting settings to
-     * their defaults
-     *
-     * @param e The WindowEvent triggered by closing the Main window
-     */
+    //Handles the closing of the Main window, re-setting settings to their defaults
     public void windowClosing(WindowEvent e)
     {
         try {
             PlanitRunner.saveData(PlanitRunner.database); //Update the database file with current database info
+            //CHANGE TO MySQL^
             dispose(); //Close window
             System.exit(0); //Exit program
         } catch (Exception error) {
