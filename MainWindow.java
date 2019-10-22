@@ -163,6 +163,8 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
                 
                 if(PlanitRunner.database.contains(temp)) {
                     activityName.setText("Activity has already been saved");
+                } else if(newActMaxTime < newActIdealTime) {
+                    activityName.setText("Max time must be larger than ideal time");
                 } else if(newActName != null && !newActName.isEmpty()) {
                     PlanitRunner.database.add(temp);
                     activityName.setText("Activity Saved!");

@@ -6,6 +6,7 @@ public class Activity {
 	private String name; //Activity name
 	private double maxTime; //Maximum time activity can take (while still being fun)
 	private double idealTime; //Ideal time for the activity
+    private double actualTime; //Actual time activity will take
 	private double maxCost; //Upper bound of cost for this activity
 	
 	//Future field ideas: location, funLevel, etc.
@@ -16,6 +17,7 @@ public class Activity {
 		this.name = "";
 		this.maxTime = 0.0;
 		this.idealTime = 0.0;
+        this.actualTime = 0.0;
 		this.maxCost = 0.0;
 	}
     //Methods
@@ -32,7 +34,8 @@ public class Activity {
         }
         
         if((this.name).equalsIgnoreCase(that.name) && this.maxTime == that.maxTime
-           && this.idealTime == that.idealTime && this.maxCost == that.maxCost) {
+           && this.idealTime == that.idealTime && this.actualTime == that.actualTime
+           && this.maxCost == that.maxCost) {
             return true;
         } else {
             return false;
@@ -67,6 +70,10 @@ public class Activity {
         this.idealTime = idealTime;
     }
     
+    public void setActualTime(double actualTime) {
+        this.actualTime = actualTime;
+    }
+    
     public void setMaxCost(double maxCost) {
         this.maxCost = maxCost;
     }
@@ -82,6 +89,14 @@ public class Activity {
     
     public double getIdealTime() {
         return this.idealTime;
+    }
+    
+    public double getActualTime() {
+        return this.actualTime;
+    }
+    
+    public double getTimeGap() {
+        return (this.maxTime - this.idealTime);
     }
     
     public double getMaxCost() {

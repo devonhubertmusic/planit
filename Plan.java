@@ -15,19 +15,50 @@ public class Plan {
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
 	availableMoney){
-        //replace with our algorithm
-		
-		//double totalCost = 0.0;
-		//double totalTime = 0.0;
-		
-		//while(totalTime <= availableTime && totalCost <= availableMoney) {
-			//Add activities to this.activityList based on smart decisions
-		//}
+        /*******************_MAIN_ALGORITHM_PSEUDOCODE_*********************/
+        /*
+         
+        ArrayList<Activity> databaseCopy = DEEP COPY OF DATABASE LIST;
+        ArrayList<Activity> timeSorted = DATABASE LIST, SORTED BY IDEAL TIME; >>NEEDED?
+         
+        double totalTime = 0.0;
+        double totalCost = 0.0;
+         
+        while(DATABASE LIST COPY IS NOT EMPTY) {
+            double remainingTime = availableTime - totalTime;
+            double remainingMoney = availableMoney - totalCost;
+         
+            Activity currentActivity = RANDOM ACTIVITY FROM DATABASE LIST COPY
+            if(currentActivity.getIdealTime() <= remainingTime
+               && currentActivity.getMaxCost() <= remainingMoney) {
+                activityList.add(currentActivity);
+                totalTime += currentActivity.getIdealTime();
+                totalCost += currentActivity.getMaxCost();
+            }
+            REMOVE CURRENT ACTIVITY FROM DATABASE LIST COPY
+        }
+        (Database list copy is now empty)
+         
+        double potentialStretch = 0.0;
+        for(int i = 0; i < activityList.size(); i++) {
+            Activity temp = activityList.get(i);
+            potentialStretch += temp.getTimeGap();
+        }
         
-        //System.out.println("Button Pressed"); //TEST *****
-        //End TEST *****
+        double maxStretch = 0.25 * potentialStretch; //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
+         
+        if(maxStretch >= remainingTime) {
+            double stretchPercent = remainingTime/potentialStretch;
+            for(int i = 0; i < activityList.size(); i++) {
+                Activity temp = activityList.get(i);
+                temp.setActualTime(temp.getIdealTime() + (stretchPercent * temp.getTimeGap()));
+            }
+        } else {
+            REMOVE MOST EXPENSIVE ACTIVITY AND REPEAT ALGORITHM ON DATABASE - ACTIVITY REMOVED >> Make Recursive? Maybe...
+        }
+       */
+       /**************************_END_PSEUDOCODE_**************************/
         
-        this.activityList = database; //ACTIVITY PLAN IS WHOLE DATABASE, MUST CHANGE
 	}
 	
 	//Getters and setters
