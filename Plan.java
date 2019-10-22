@@ -6,58 +6,66 @@ public class Plan {
     
     //List of ordered Activities that make up the plan
 	private ArrayList<Activity> activityList;
+    private int tryCounter;
 	
 	//Default Constructor
 	public Plan() {
 		this.activityList = new ArrayList<Activity>();
+        this.tryCounter = 0;
 	}
 	
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
 	availableMoney){
         this.activityList = new ArrayList<Activity>();
-        ArrayList<Activity> databaseCopy = copyDatabase(database);
+        if(this.tryCounter > PlanitRunner.database.size()) {
+            Activity temp = new Activity();
+            temp.setName("Unable to generate plan");
+            this.activityList.add(temp);
+        } else {
+            ArrayList<Activity> databaseCopy = copyDatabase(database);
         
-        double totalTime = 0.0;
-        double totalCost = 0.0;
+            double totalTime = 0.0;
+            double totalCost = 0.0;
          
-        while(databaseCopy.size() > 0) {
-            double remainingTime = availableTime - totalTime;
-            double remainingMoney = availableMoney - totalCost;
+            while(databaseCopy.size() > 0) {
+                double remainingTime = availableTime - totalTime;
+                double remainingMoney = availableMoney - totalCost;
          
-            Random rn = new Random();
-            int randomIndex = rn.nextInt(databaseCopy.size());
-            Activity currentActivity = databaseCopy.get(randomIndex);
-            if(currentActivity.getIdealTime() <= remainingTime
-               && currentActivity.getMaxCost() <= remainingMoney) {
-                activityList.add(currentActivity);
-                totalTime += currentActivity.getIdealTime();
-                totalCost += currentActivity.getMaxCost();
+                Random rn = new Random();
+                int randomIndex = rn.nextInt(databaseCopy.size());
+                Activity currentActivity = databaseCopy.get(randomIndex);
+                if(currentActivity.getIdealTime() <= remainingTime
+                && currentActivity.getMaxCost() <= remainingMoney) {
+                    activityList.add(currentActivity);
+                    totalTime += currentActivity.getIdealTime();
+                    totalCost += currentActivity.getMaxCost();
+                }
+                databaseCopy.remove(randomIndex);
             }
-            databaseCopy.remove(randomIndex);
-        }
-        //(Database list copy is now empty)
-        double remainingTime = availableTime - totalTime;
+            //(Database list copy is now empty)
+            double remainingTime = availableTime - totalTime;
         
-        double potentialStretch = 0.0;
-        for(int i = 0; i < activityList.size(); i++) {
-            Activity temp = activityList.get(i);
-            potentialStretch += temp.getTimeGap();
-        }
-        
-        double maxStretch = 0.25 * potentialStretch; //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
-         
-        if(maxStretch >= remainingTime) {
-            double stretchPercent = remainingTime/potentialStretch;
+            double potentialStretch = 0.0;
             for(int i = 0; i < activityList.size(); i++) {
                 Activity temp = activityList.get(i);
-                temp.setActualTime(temp.getIdealTime() + (stretchPercent * temp.getTimeGap()));
+                potentialStretch += temp.getTimeGap();
             }
-        } else {
-            //Try again!
-            generatePlan(database, availableTime, availableMoney);
-        }
         
+            double maxStretch = 0.25 * potentialStretch; //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
+         
+            if(maxStretch >= remainingTime) {
+                double stretchPercent = remainingTime/potentialStretch;
+                for(int i = 0; i < activityList.size(); i++) {
+                    Activity temp = activityList.get(i);
+                    temp.setActualTime(temp.getIdealTime() + (stretchPercent * temp.getTimeGap()));
+                }
+            } else {
+                //Try again!
+                this.tryCounter++;
+                generatePlan(database, availableTime, availableMoney);
+            }
+        }
 	}
     
     //Makes a deep copy of an Arraylist<Activity>
