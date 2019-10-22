@@ -15,30 +15,30 @@ public class Plan {
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
 	availableMoney){
-        /*******************_MAIN_ALGORITHM_PSEUDOCODE_*********************/
-        /*
-         
-        ArrayList<Activity> databaseCopy = DEEP COPY OF DATABASE LIST;
-        ArrayList<Activity> timeSorted = DATABASE LIST, SORTED BY IDEAL TIME; >>NEEDED?
-         
+        this.activityList = new ArrayList<Activity>();
+        ArrayList<Activity> databaseCopy = copyDatabase(database);
+        
         double totalTime = 0.0;
         double totalCost = 0.0;
          
-        while(DATABASE LIST COPY IS NOT EMPTY) {
+        while(databaseCopy.size() > 0) {
             double remainingTime = availableTime - totalTime;
             double remainingMoney = availableMoney - totalCost;
          
-            Activity currentActivity = RANDOM ACTIVITY FROM DATABASE LIST COPY
+            Random rn = new Random();
+            int randomIndex = rn.nextInt(databaseCopy.size());
+            Activity currentActivity = databaseCopy.get(randomIndex);
             if(currentActivity.getIdealTime() <= remainingTime
                && currentActivity.getMaxCost() <= remainingMoney) {
                 activityList.add(currentActivity);
                 totalTime += currentActivity.getIdealTime();
                 totalCost += currentActivity.getMaxCost();
             }
-            REMOVE CURRENT ACTIVITY FROM DATABASE LIST COPY
+            databaseCopy.remove(randomIndex);
         }
-        (Database list copy is now empty)
-         
+        //(Database list copy is now empty)
+        double remainingTime = availableTime - totalTime;
+        
         double potentialStretch = 0.0;
         for(int i = 0; i < activityList.size(); i++) {
             Activity temp = activityList.get(i);
@@ -54,12 +54,28 @@ public class Plan {
                 temp.setActualTime(temp.getIdealTime() + (stretchPercent * temp.getTimeGap()));
             }
         } else {
-            REMOVE MOST EXPENSIVE ACTIVITY AND REPEAT ALGORITHM ON DATABASE - ACTIVITY REMOVED >> Make Recursive? Maybe...
+            //Try again!
+            generatePlan(database, availableTime, availableMoney);
         }
-       */
-       /**************************_END_PSEUDOCODE_**************************/
         
 	}
+    
+    //Makes a deep copy of an Arraylist<Activity>
+    public ArrayList<Activity> copyDatabase(ArrayList<Activity> database) {
+        ArrayList<Activity> databaseCopy = new ArrayList<Activity>();
+        for(int i = 0; i < database.size(); i++) {
+            Activity temp = database.get(i);
+            Activity tempCopy = new Activity();
+            tempCopy.setName(temp.getName());
+            tempCopy.setIdealTime(temp.getIdealTime());
+            tempCopy.setMaxTime(temp.getMaxTime());
+            tempCopy.setActualTime(temp.getActualTime());
+            tempCopy.setMaxCost(temp.getMaxCost());
+            
+            databaseCopy.add(tempCopy);
+        }
+        return databaseCopy;
+    }
 	
 	//Getters and setters
     public ArrayList<Activity> getActivityList() {
