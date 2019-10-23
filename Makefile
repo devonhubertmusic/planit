@@ -25,3 +25,6 @@ $(JARFILE): $(CLASSES)
 
 clean:
 	rm -f *.class $(JARFILE)
+
+run:
+	java PlanitRunner
