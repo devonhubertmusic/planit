@@ -73,3 +73,58 @@ Watch YouTube
 120.0
 30.0
 0.0
+
+Food at Michael;s
+90.0
+60.0
+20.0
+
+Hang out in San Juan Bautista
+90.0
+60.0
+20.0
+
+Throw Around Football
+60.0
+30.0
+0.0
+
+Arcade
+60.0
+30.0
+10.0
+
+Hang out in SLO
+360.0
+240.0
+80.0
+
+Solvang
+360.0
+360.0
+100.0
+
+Northridge Mall
+120.0
+60.0
+30.0
+
+Food at El Pollo Loco
+30.0
+30.0
+20.0
+
+Food at Pho Place (Watsonville)
+60.0
+30.0
+20.0
+
+Del Monte Mall
+90.0
+60.0
+20.0
+
+Drive to Big Sur
+150.0
+120.0
+15.0
