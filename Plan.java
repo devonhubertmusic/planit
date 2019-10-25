@@ -45,7 +45,8 @@ public class Plan {
             }
             //(Database list copy is now empty)
             double remainingTime = availableTime - totalTime;
-        
+            double remainingMoney = availableMoney - totalCost;
+
             double potentialStretch = 0.0;
             for(int i = 0; i < activityList.size(); i++) {
                 Activity temp = activityList.get(i);
@@ -62,6 +63,10 @@ public class Plan {
                 }
             } else {
                 //Try again!
+                //if there is remaining money but no remaining time, break from loop, this is ideal 
+                if(remainingMoney > 0 && availableTime == 0)
+                    return;
+                else
                 this.tryCounter++;
                 generatePlan(database, availableTime, availableMoney);
             }
