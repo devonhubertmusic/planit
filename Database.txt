@@ -74,7 +74,7 @@ Watch YouTube
 30.0
 0.0
 
-Food at Michael;s
+Food at Michael’s
 90.0
 60.0
 20.0
@@ -133,3 +133,164 @@ Hiking
 180.0
 90.0
 10.0
+
+Go to a Museum
+180.0
+120.0
+20.0
+
+Check out an Art gallery
+180.0
+120.0
+20.0
+
+Throw around a frisbee
+60.0
+30.0
+0.0
+
+Ride a Bike
+90.0
+60.0
+0.0
+
+Paint with Bob Ross
+40.0
+20.0
+0.0
+
+Learn a song on piano
+60.0
+30.0
+0.0
+
+Play video games
+120.0
+60.0
+0.0
+
+Go to the library
+120.0
+90.0
+0.0
+
+Call a friend
+150.0
+30.0
+0.0
+
+Learn how to play guitar
+360.0
+120.0
+150.0
+
+Get coffee
+60.0
+30.0
+5.0
+
+Play a board game
+120.0
+60.0
+0.0
+
+Cook a meal
+120.0
+60.0
+15.0
+
+Learn to juggle
+90.0
+30.0
+0.0
+
+Do origami
+60.0
+15.0
+0.0
+
+Go to a spa
+80.0
+50.0
+50.0
+
+Go to an open mic night
+90.0
+60.0
+0.0
+
+Volunteer
+120.0
+60.0
+0.0
+
+Fly a kite
+60.0
+30.0
+0.0
+
+Go to the zoo
+120.0
+100.0
+15.0
+
+Learn a magic trick
+90.0
+30.0
+0.0
+
+Bake cookies
+60.0
+30.0
+5.0
+
+Go dancing
+120.0
+60.0
+10.0
+
+Flip a water bottle
+30.0
+15.0
+0.0
+
+Have a picnic
+120.0
+80.0
+30.0
+
+Have a bonfire
+180.0
+120.0
+30.0
+
+Make a funny video
+90.0
+15.0
+0.0
+
+Play beer pong
+90.0
+60.0
+15.0
+
+Play basketball
+180.0
+30.0
+0.0
+
+Have a workout
+180.0
+60.0
+0.0
+
+Make a pillow fort
+50.0
+30.0
+0.0
+
+Learn how to code
+180.0
+90.0
+0.0
+
