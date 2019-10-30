@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.Component;
 import javax.swing.*;
+import javax.imageio.*;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -32,7 +33,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         
         //Set background image of window
         try {
-            final Image backgroundImage = javax.imageio.ImageIO.read(new File("space.jpg"));
+            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("space.jpg"));
             setContentPane(new JPanel(new BorderLayout()) {
                 @Override public void paintComponent(Graphics g) {
                     Dimension d = getSize();
@@ -58,9 +59,13 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         text.setVerticalAlignment(SwingConstants.CENTER);
 
         //Add logo
-        JLabel picture = new JLabel(new ImageIcon("Planit.png"));
+        try {
+        JLabel picture = new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("Planit.png"))));
         picture.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(picture);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         add(Box.createVerticalGlue());
 

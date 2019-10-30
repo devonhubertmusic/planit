@@ -13,6 +13,31 @@ public class Plan {
 		this.activityList = new ArrayList<Activity>();
         this.tryCounter = 0;
 	}
+    
+    /*
+     Connection con=null;
+     try
+     {
+     String url = "jdbc:mysql://206.189.165.197:3306/activity"+
+     "?verifyServerCertificate=false"+
+     "&useSSL=true"+
+     "&requireSSL=true";
+     String user = "user";
+     String pass = "password";
+     String sql = "INSERT INTO activities (name,maxtime,idealtime,maxcost) VALUES ('"
+     + newActName + "', " + newActMaxTime + ", " + newActIdealTime + ", " + newActMaxCost + ")";
+     
+     Class dbDriver = Class.forName("com.mysql.jdbc.Driver");
+     con = DriverManager.getConnection(url, user, pass);
+     
+     Statement st = con.createStatement();
+     int m = st.executeUpdate(sql);
+     }
+     catch(Exception ex)
+     {
+     ex.printStackTrace();
+     }
+     */
 	
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 

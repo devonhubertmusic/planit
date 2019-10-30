@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.Component;
 import java.awt.Container;
 import javax.swing.*;
+import javax.imageio.*;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,9 +39,10 @@ public class addActivity implements ItemListener {
 
         f = new JFrame(); //Window
 
+        
         //Set background image of window
         try {
-            final Image backgroundImage = javax.imageio.ImageIO.read(new File("space.jpg"));
+            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("space.jpg"));
             f.setContentPane(new JPanel(new BorderLayout()) {
                 @Override public void paintComponent(Graphics g) {
                     Dimension d = getSize();
@@ -50,6 +52,7 @@ public class addActivity implements ItemListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+       
 
         f.setLayout(new BoxLayout(f.getContentPane(), BoxLayout.PAGE_AXIS)); //Layout
         f.setTitle("New Activity"); //Window title
