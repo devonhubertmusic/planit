@@ -166,7 +166,8 @@ public class addActivity implements ItemListener {
                             "&requireSSL=true"; 
                         String user = "user"; 
                         String pass = "password";
-                        String sql = "INSERT INTO activities (name,maxtime,idealtime,maxcost) VALUES ('" + newActName + "', " + newActMaxTime + ", " + newActIdealTime + ", " + newActMaxCost + ")";
+                        String sql = "INSERT INTO activities (name,maxtime,idealtime,maxcost) VALUES ('"
+                        + newActName + "', " + newActMaxTime + ", " + newActIdealTime + ", " + newActMaxCost + ")";
 
                         Class dbDriver = Class.forName("com.mysql.jdbc.Driver");
                         con = DriverManager.getConnection(url, user, pass);

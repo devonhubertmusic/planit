@@ -27,4 +27,4 @@ clean:
 	rm -f *.class $(JARFILE)
 
 run:
-	java PlanitRunner
+	java -cp "/Users/devonhubert/Documents/mysql-connector-java-8.0.17.jar:." PlanitRunner

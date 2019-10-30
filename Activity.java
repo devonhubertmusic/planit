@@ -20,6 +20,15 @@ public class Activity {
         this.actualTime = 0.0;
 		this.maxCost = 0.0;
 	}
+    
+    public Activity(String name, int maxTime, int idealTime, int maxCost) {
+        this.actualTime = 0.0;
+        this.name = name;
+        this.maxTime = maxTime;
+        this.idealTime = idealTime;
+        this.maxCost = maxCost;
+    
+    }
     //Methods
 	
 	//Housekeeping Methods

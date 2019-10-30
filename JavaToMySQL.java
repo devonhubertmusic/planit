@@ -12,19 +12,29 @@ import javax.swing.table.*;
 public class JavaToMySQL {
     // java -cp "/Users/devonhubert/Documents/mysql-connector-java-8.0.17.jar:." test
     
-    private static final String url = "jdbc:mysql://localhost:3306/test"; //replace with server url
-    private static final String user = "root";
-    private static final String password = "planit";
+    private String url;
+    private String user;
+    private String password;
     
-    static JTable mysTable;
+    JTable mysTable;
     
-    private static Connection con;
-    private static Statement stmt1;
-    private static Statement stmt2;
-    private static ResultSet rs;
+    private Connection con;
+    private Statement stmt1;
+    private Statement stmt2;
+    private ResultSet rs;
     
+    public JavaToMySQL() {
+        this.url = "jdbc:mysql://localhost:3306/test"; //replace with server url
+        this.user = "root";
+        this.password = "planit";
+    }
     
-    public static void main(String[] args) {
+    public JavaToMySQL(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+        
+    /*
         String[] columnNames = {"ID", "Name", "Major"};
         
         mysTable = new JTable(21,4);
@@ -60,11 +70,13 @@ public class JavaToMySQL {
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         } finally {
-            try { con.close(); } catch(SQLException se) { /*can't do anything */}
-            try { stmt1.close(); } catch(SQLException se) { /*can't do anything */}
-            try { stmt2.close(); } catch(SQLException se) { /*can't do anything */}
-            try { rs.close(); } catch(SQLException se) { /*can't do anything */}
+            try { con.close(); } catch(SQLException se) {}
+            try { stmt1.close(); } catch(SQLException se) {}
+            try { stmt2.close(); } catch(SQLException se) {}
+            try { rs.close(); } catch(SQLException se) {}
             
         }
+    
+    */
     }
 }
