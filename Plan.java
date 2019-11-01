@@ -78,7 +78,7 @@ public class Plan {
                 potentialStretch += temp.getTimeGap();
             }
         
-            double maxStretch = 0.25 * potentialStretch; //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
+            double maxStretch = (1/activityList.size()) * potentialStretch; //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
          
             if(maxStretch >= remainingTime) {
                 double stretchPercent = remainingTime/potentialStretch;
