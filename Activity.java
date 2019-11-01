@@ -42,9 +42,9 @@ public class Activity {
             return false;
         }
         
-        if((this.name).equalsIgnoreCase(that.name) && this.maxTime == that.maxTime
+        if((this.name).equalsIgnoreCase(that.name) /*&& this.maxTime == that.maxTime
            && this.idealTime == that.idealTime && this.actualTime == that.actualTime
-           && this.maxCost == that.maxCost) {
+           && this.maxCost == that.maxCost */) {
             return true;
         } else {
             return false;

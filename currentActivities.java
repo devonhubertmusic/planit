@@ -84,6 +84,7 @@ public class currentActivities extends javax.swing.JFrame {
    {
        ArrayList<Activity> list = getactivityList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Activities.getModel();
+       //Add JScrollPane?
        Object[] row = new Object[4];
        for(int i = 0; i < list.size(); i++)
        {
