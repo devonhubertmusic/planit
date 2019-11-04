@@ -19,20 +19,10 @@ Eat Sushi
 30.0
 30.0
 
-Go to the Noodle Bar
-60.0
-30.0
-25.0
-
 Drive to Bonny Doon
 90.0
 60.0
 10.0
-
-Go to a Bar
-180.0
-90.0
-35.0
 
 Watch TV at Home
 240.0
@@ -268,11 +258,6 @@ Make a funny video
 90.0
 15.0
 0.0
-
-Play beer pong
-90.0
-60.0
-15.0
 
 Play basketball
 180.0
