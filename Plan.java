@@ -3,7 +3,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList; //
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -21,21 +20,6 @@ public class Plan {
 		this.activityList = new ArrayList<Activity>();
         this.tryCounter = 0;
 	}
-
-	/*
-	public Connection getConnection()
-	{
-       Connection con;
-       try {
-    	   con = DriverManager.getConnection("jdbc:mysql://206.189.165.197:3306/activity"+
-	         "?verifyServerCertificate=false&useSSL=true&requireSSL=true","user","password");
-	           return con;
-	       } catch (Exception e) {
-	           e.printStackTrace();
-	           return null;
-	       }
-	   }
-*/
 	
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
