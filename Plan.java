@@ -25,6 +25,7 @@ public class Plan {
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
 	availableMoney){
         this.activityList = new ArrayList<Activity>();
+        PlanitRunner.updateActivityList();
         if(this.tryCounter > PlanitRunner.database.size()) {
             Activity temp = new Activity();
             temp.setName("Unable to generate plan");
@@ -96,15 +97,12 @@ public class Plan {
         }
         return databaseCopy;
     }
-
     
 	//Getters and setters
     
     public ArrayList<Activity> getActivityList() {
         return this.activityList;
-   }
- 
- 	
+    }
     
     public void setActivityList(ArrayList<Activity> activityList) {
         this.activityList = activityList;

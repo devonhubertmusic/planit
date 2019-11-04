@@ -49,7 +49,7 @@ public class activityPlan
         myPlan.generatePlan(PlanitRunner.database, this.availableTime, this.availableMoney);
         ArrayList<Activity> myActivityList = myPlan.getActivityList();
         
-       int rowSize = myActivityList.size();
+        int rowSize = myActivityList.size();
         int columnSize = 3;
         String[][] data = new String[rowSize][columnSize];
         

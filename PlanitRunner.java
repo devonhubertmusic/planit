@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.sql.Connection;
@@ -11,13 +10,13 @@ public class PlanitRunner
 	//Fields
     
     //The main "database" of activities, collected from user input using gatherInfo()
-    public static ArrayList<Activity> database = getactivityList();
+    public static ArrayList<Activity> database;
 	private static MainWindow mainWindow;
 
     public static void main(String[] args)
-    throws UnsupportedEncodingException, FileNotFoundException, IOException
     {
         try {
+            updateActivityList();
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets user's screen size
             int width = screenSize.width; //width of user's screen
             int height = screenSize.height; //height of user's screen
@@ -30,7 +29,7 @@ public class PlanitRunner
         }
     }
 
-    // get the connection
+  // get the connection
   public static Connection getConnection()
   {
       Connection con;
@@ -44,10 +43,10 @@ public class PlanitRunner
       }
   }
 
-
 // get a list of activities from mysql database
-  public static ArrayList<Activity> getactivityList()
+  public static void updateActivityList()
   {
+      database = new ArrayList<Activity>();
       ArrayList<Activity> activityList = new ArrayList<Activity>();
       Connection connection = getConnection();
       
@@ -67,32 +66,6 @@ public class PlanitRunner
       } catch (Exception e) {
           e.printStackTrace();
       }
-      return activityList;
+      database = activityList;
   }
-    //Overwrite "save file" with current database information
-	public static void saveData(ArrayList<Activity> database)
-    throws UnsupportedEncodingException, FileNotFoundException, IOException
-    {
-        try {
-            if(database != null) {
-                String text = "";
-               for(int i = 0; i < database.size(); i++) {
-                    Activity temp = database.get(i);
-            
-                    text += "\n" + temp.getName();
-                    text += "\n" + temp.getMaxTime();
-                    text += "\n" + temp.getIdealTime();
-                    text += "\n" + temp.getMaxCost();
-                    text += "\n";
-                }
-                try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                    ("database.txt"), false), "utf-8"))) {
-                    writer.write(text);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

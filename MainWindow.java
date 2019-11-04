@@ -198,8 +198,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     public void windowClosing(WindowEvent e)
     {
         try {
-            PlanitRunner.saveData(PlanitRunner.database); //Update the database file with current database info
-            //CHANGE TO MySQL^
             dispose(); //Close window
             System.exit(0); //Exit program
         } catch (Exception error) {
