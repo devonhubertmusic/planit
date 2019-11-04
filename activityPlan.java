@@ -47,11 +47,8 @@ public class activityPlan
         //Activity plan generation and display
         Plan myPlan = new Plan();
         myPlan.generatePlan(PlanitRunner.database, this.availableTime, this.availableMoney);
-  //      System.out.println("AAAAAAAAAAAAA:" + PlanitRunner.database);
         ArrayList<Activity> myActivityList = myPlan.getActivityList();
-        //myPlan.generatePlan(myActivityList,this.availableTime,this.availableMoney);
         
-   
        int rowSize = myActivityList.size();
         int columnSize = 3;
         String[][] data = new String[rowSize][columnSize];

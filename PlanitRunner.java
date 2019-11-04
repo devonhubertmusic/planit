@@ -12,17 +12,12 @@ public class PlanitRunner
     
     //The main "database" of activities, collected from user input using gatherInfo()
     public static ArrayList<Activity> database = getactivityList();
-	//public static ArrayList<Activity> database = ;
-  //   database = getactivityList();
 	private static MainWindow mainWindow;
 
     public static void main(String[] args)
     throws UnsupportedEncodingException, FileNotFoundException, IOException
     {
         try {
-  //          boolean dataLoaded = loadData(); //true if data loaded successfully
-        
-         
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets user's screen size
             int width = screenSize.width; //width of user's screen
             int height = screenSize.height; //height of user's screen
@@ -74,45 +69,6 @@ public class PlanitRunner
       }
       return activityList;
   }
-    
-    
-		//load data from existing database on user's computer (if it exists) 
-		//to this.database
-       // try {
-          /*  File file = new File("Database.txt");
-            if(file.exists()) {
-                Scanner scanner = new Scanner(file);
-            
-                while(scanner.hasNextLine()) {
-                    scanner.nextLine();
-                
-                    Activity temp = new Activity();
-                    String name = scanner.nextLine();
-                    temp.setName(name);
-                
-                    double maxTime = Double.parseDouble(scanner.nextLine());
-                    temp.setMaxTime(maxTime);
-                
-                    double idealTime = Double.parseDouble(scanner.nextLine());
-                    temp.setIdealTime(idealTime);
-                
-                    double maxCost = Double.parseDouble(scanner.nextLine());
-                    temp.setMaxCost(maxCost);
-                
-                    database.add(temp);
-                }
-                return true;
-            } else {
-                return false;
-            }
-                } catch (Exception e) {
-                        e.printStackTrace();
-                }
-        return false;
-	}
-*/	
-	
-
     //Overwrite "save file" with current database information
 	public static void saveData(ArrayList<Activity> database)
     throws UnsupportedEncodingException, FileNotFoundException, IOException
