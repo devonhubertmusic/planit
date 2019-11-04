@@ -8,6 +8,8 @@ import javax.imageio.*;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -46,7 +48,7 @@ public class addActivity implements ItemListener {
             f.setContentPane(new JPanel(new BorderLayout()) {
                 @Override public void paintComponent(Graphics g) {
                     Dimension d = getSize();
-                    g.drawImage(backgroundImage, 0, 0, d.width, d.height, null);
+                    g.drawImage(backgroundImage, 1,1, d.width - 2, d.height- 2, null);
                 }
             });
         } catch (IOException e) {
@@ -56,7 +58,6 @@ public class addActivity implements ItemListener {
 
         f.setLayout(new BoxLayout(f.getContentPane(), BoxLayout.PAGE_AXIS)); //Layout
         f.setTitle("New Activity"); //Window title
-
         f.add(Box.createVerticalGlue());
 
         //Get data for new activity
