@@ -1,5 +1,13 @@
 import java.util.*;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList; //
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.awt.event.*;
 public class Plan {
 
 	//Fields
@@ -13,31 +21,21 @@ public class Plan {
 		this.activityList = new ArrayList<Activity>();
         this.tryCounter = 0;
 	}
-    
-    /*
-     Connection con=null;
-     try
-     {
-     String url = "jdbc:mysql://206.189.165.197:3306/activity"+
-     "?verifyServerCertificate=false"+
-     "&useSSL=true"+
-     "&requireSSL=true";
-     String user = "user";
-     String pass = "password";
-     String sql = "INSERT INTO activities (name,maxtime,idealtime,maxcost) VALUES ('"
-     + newActName + "', " + newActMaxTime + ", " + newActIdealTime + ", " + newActMaxCost + ")";
-     
-     Class dbDriver = Class.forName("com.mysql.jdbc.Driver");
-     con = DriverManager.getConnection(url, user, pass);
-     
-     Statement st = con.createStatement();
-     int m = st.executeUpdate(sql);
-     }
-     catch(Exception ex)
-     {
-     ex.printStackTrace();
-     }
-     */
+
+	/*
+	public Connection getConnection()
+	{
+       Connection con;
+       try {
+    	   con = DriverManager.getConnection("jdbc:mysql://206.189.165.197:3306/activity"+
+	         "?verifyServerCertificate=false&useSSL=true&requireSSL=true","user","password");
+	           return con;
+	       } catch (Exception e) {
+	           e.printStackTrace();
+	           return null;
+	       }
+	   }
+*/
 	
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
@@ -114,11 +112,15 @@ public class Plan {
         }
         return databaseCopy;
     }
-	
+
+    
 	//Getters and setters
+    
     public ArrayList<Activity> getActivityList() {
         return this.activityList;
-    }
+   }
+ 
+ 	
     
     public void setActivityList(ArrayList<Activity> activityList) {
         this.activityList = activityList;

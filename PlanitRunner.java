@@ -2,21 +2,27 @@ import java.util.*;
 import java.io.*;
 import java.awt.Toolkit;
 import java.awt.Dimension;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 public class PlanitRunner
 {
 	//Fields
     
     //The main "database" of activities, collected from user input using gatherInfo()
-    public static ArrayList<Activity> database = new ArrayList<Activity>();
-    private static MainWindow mainWindow;
+    public static ArrayList<Activity> database = getactivityList();
+	//public static ArrayList<Activity> database = ;
+  //   database = getactivityList();
+	private static MainWindow mainWindow;
 
     public static void main(String[] args)
     throws UnsupportedEncodingException, FileNotFoundException, IOException
     {
         try {
-            boolean dataLoaded = loadData(); //true if data loaded successfully
-            
+  //          boolean dataLoaded = loadData(); //true if data loaded successfully
+        
+         
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets user's screen size
             int width = screenSize.width; //width of user's screen
             int height = screenSize.height; //height of user's screen
@@ -29,15 +35,51 @@ public class PlanitRunner
         }
     }
 
-    //Check for existing "save file", and if found, load in data to create database
-    //and return true, else return false
-	public static boolean loadData()
-    throws UnsupportedEncodingException, FileNotFoundException, IOException
-    {
+    // get the connection
+  public static Connection getConnection()
+  {
+      Connection con;
+      try {
+          con = DriverManager.getConnection("jdbc:mysql://206.189.165.197:3306/activity"+
+           "?verifyServerCertificate=false&useSSL=true&requireSSL=true","user","password");
+          return con;
+      } catch (Exception e) {
+          e.printStackTrace();
+          return null;
+      }
+  }
+
+
+// get a list of activities from mysql database
+  public static ArrayList<Activity> getactivityList()
+  {
+      ArrayList<Activity> activityList = new ArrayList<Activity>();
+      Connection connection = getConnection();
+      
+      String query = "SELECT * FROM  activities";
+      Statement st;
+      ResultSet rs;
+
+      try {
+          st = connection.createStatement();
+          rs = st.executeQuery(query);
+          Activity activity;
+          while(rs.next())
+          {
+              activity = new Activity(rs.getString("name"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
+              activityList.add(activity);
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+      return activityList;
+  }
+    
+    
 		//load data from existing database on user's computer (if it exists) 
 		//to this.database
-        try {
-            File file = new File("Database.txt");
+       // try {
+          /*  File file = new File("Database.txt");
             if(file.exists()) {
                 Scanner scanner = new Scanner(file);
             
@@ -68,7 +110,9 @@ public class PlanitRunner
                 }
         return false;
 	}
+*/	
 	
+
     //Overwrite "save file" with current database information
 	public static void saveData(ArrayList<Activity> database)
     throws UnsupportedEncodingException, FileNotFoundException, IOException
@@ -76,7 +120,7 @@ public class PlanitRunner
         try {
             if(database != null) {
                 String text = "";
-                for(int i = 0; i < database.size(); i++) {
+               for(int i = 0; i < database.size(); i++) {
                     Activity temp = database.get(i);
             
                     text += "\n" + temp.getName();
@@ -86,13 +130,13 @@ public class PlanitRunner
                     text += "\n";
                 }
                 try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-                    ("Database.txt"), false), "utf-8"))) {
+                    ("database.txt"), false), "utf-8"))) {
                     writer.write(text);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-	}
+    }
 
 }

@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JFrame; 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class activityPlan
 {
@@ -43,9 +47,12 @@ public class activityPlan
         //Activity plan generation and display
         Plan myPlan = new Plan();
         myPlan.generatePlan(PlanitRunner.database, this.availableTime, this.availableMoney);
+  //      System.out.println("AAAAAAAAAAAAA:" + PlanitRunner.database);
         ArrayList<Activity> myActivityList = myPlan.getActivityList();
+        //myPlan.generatePlan(myActivityList,this.availableTime,this.availableMoney);
         
-        int rowSize = myActivityList.size();
+   
+       int rowSize = myActivityList.size();
         int columnSize = 3;
         String[][] data = new String[rowSize][columnSize];
         
@@ -73,7 +80,7 @@ public class activityPlan
                 } else {
                     System.out.println("Invalid Column Number");
                 }
-            }
+            } 
         }
         
         String[] columnNames = { "Activity", "Time", "Cost" };
@@ -96,20 +103,20 @@ public class activityPlan
         costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         costLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
         //***********************************************************************
-        
-
-        //dummy buttons!
-	    JButton save = new JButton("Save Plan");
+       
+        JButton save = new JButton("Save Plan");
         f.add(save);
 	
         JButton print = new JButton("Print Plan");
         f.add(print);
         
         f.setVisible(true);
-    }
     
+}       
+        //dummy buttons!
+
     //Converts a double time value in minutes to hours, minutes, etc.
-    public String doubleToTime(double rawTime){
+   public String doubleToTime(double rawTime){
         String timeString = "";
         int hours = (int) (rawTime/60);
         int minutes = (int) (rawTime % 60);
