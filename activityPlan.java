@@ -14,21 +14,21 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-public class activityPlan
+public class ActivityPlan
 {
     JFrame f;
     double availableTime;
     double availableMoney;
     
     //Default constructor
-    public activityPlan() {
+    public ActivityPlan() {
         this.f = null;
         this.availableTime = 0.0;
         this.availableMoney = 0.0;
     }
     
     //Explicit constructor
-    public activityPlan(double availableTime, double availableMoney){
+    public ActivityPlan(double availableTime, double availableMoney){
         this.availableTime = availableTime;
         this.availableMoney = availableMoney;
         

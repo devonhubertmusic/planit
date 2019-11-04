@@ -9,12 +9,12 @@ import javax.swing.table.TableModel;
 import java.awt.event.*;
 
 
-public class currentActivities extends javax.swing.JFrame {
+public class CurrentActivities extends javax.swing.JFrame {
 
   /**
    * @param args the command line arguments
    */
-    public currentActivities() {
+    public CurrentActivities() {
         initComponents();
         Show_Activities_In_JTable();
 
@@ -26,13 +26,13 @@ public class currentActivities extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(currentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(currentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(currentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(currentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         setVisible(true);
@@ -197,7 +197,7 @@ public class currentActivities extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable_Display_Activities);
 
         jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("icons/edit.png"))); // NOI18N
+        jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/edit.png"))); // NOI18N
         jButton_Update.setText("Edit");
         jButton_Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,7 +206,7 @@ public class currentActivities extends javax.swing.JFrame {
         });
 
         jButton_Delete.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("icons/trash.png"))); // NOI18N
+        jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/trash.png"))); // NOI18N
         jButton_Delete.setText("Delete");
         jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

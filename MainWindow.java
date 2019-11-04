@@ -33,7 +33,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         
         //Set background image of window
         try {
-            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("space.jpg"));
+            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("resources/images/space.jpg"));
             setContentPane(new JPanel(new BorderLayout()) {
                 @Override public void paintComponent(Graphics g) {
                     Dimension d = getSize();
@@ -60,7 +60,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
 
         //Add logo
         try {
-        JLabel picture = new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("Planit.png"))));
+        JLabel picture = new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("resources/images/Planit.png"))));
         picture.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(picture);
         } catch (IOException e) {
@@ -125,7 +125,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JButton addb = new JButton("Add New Activity");
         addb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new addActivity();
+                new AddActivity();
             }
         });
         viewButtons.add(addb);
@@ -134,7 +134,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JButton b = new JButton("Generate Activity Plan");
         b.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new activityPlan(availableTime, availableMoney);
+                new ActivityPlan(availableTime, availableMoney);
             }
         });
         viewButtons.add(b);
@@ -143,7 +143,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JButton vb = new JButton("View Current Activities");
         vb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new currentActivities();
+                new CurrentActivities();
             }
         });
         viewButtons.add(vb);

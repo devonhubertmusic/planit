@@ -16,7 +16,7 @@ import javax.swing.JButton;
 import java.sql.*;
 import java.io.*;
 
-public class addActivity implements ItemListener {
+public class AddActivity implements ItemListener {
 	
 	//New activity information
     String newActName;
@@ -31,7 +31,7 @@ public class addActivity implements ItemListener {
     //Labels to display maxTime, idealTime, maxCost, and availableMoney user input
     JLabel maxShow, idealShow, costShow;
 
-    addActivity()
+    public AddActivity()
     {
     	//Initialize data fields
         newActName = "";
@@ -44,7 +44,7 @@ public class addActivity implements ItemListener {
         
         //Set background image of window
         try {
-            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("space.jpg"));
+            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("resources/images/space.jpg"));
             f.setContentPane(new JPanel(new BorderLayout()) {
                 @Override public void paintComponent(Graphics g) {
                     Dimension d = getSize();
