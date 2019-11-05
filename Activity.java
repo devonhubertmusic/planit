@@ -22,6 +22,7 @@ public class Activity {
 	}
     
     public Activity(String name, int maxTime, int idealTime, int maxCost) {
+        //Set fields based on explicit data
         this.actualTime = 0.0;
         this.name = name;
         this.maxTime = maxTime;
@@ -29,9 +30,8 @@ public class Activity {
         this.maxCost = maxCost;
     
     }
-    //Methods
-	
-	//Housekeeping Methods
+    
+    //Methods:
     
     //Returns true if this Activity is equivalent to another Activity
     public boolean equals(Object x) {
@@ -66,7 +66,8 @@ public class Activity {
 		return this.name;
 	}
     
-    //Setters
+    //Setters:
+    
     public void setName(String name) {
         this.name = name;
     }
@@ -87,7 +88,8 @@ public class Activity {
         this.maxCost = maxCost;
     }
     
-    //Getters
+    //Getters:
+    
     public String getName() {
         return this.name;
     }

@@ -53,8 +53,8 @@ public class ActivityPlan
         int columnSize = 3;
         String[][] data = new String[rowSize][columnSize];
         
-        double totalTime = 0.0; //Keep track of total time of activity list, REPLACE WITH Plan.getTotalTime() METHOD
-        double totalCost = 0.0; //Keep track of total cost of activity list, REPLACE WITH Plan.getTotalCost() METHOD
+        double totalTime = 0.0;
+        double totalCost = 0.0;
         
         //Fill table with data from generated activity plan
         for(int row = 0; row < rowSize; row++) {
@@ -103,14 +103,10 @@ public class ActivityPlan
        
         JButton save = new JButton("Save Plan");
         f.add(save);
-	
-        JButton print = new JButton("Print Plan");
-        f.add(print);
         
         f.setVisible(true);
     
-}       
-        //dummy buttons!
+}
 
     //Converts a double time value in minutes to hours, minutes, etc.
    public String doubleToTime(double rawTime){

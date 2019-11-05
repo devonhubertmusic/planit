@@ -43,7 +43,7 @@ public class PlanitRunner
       }
   }
 
-// get a list of activities from mysql database
+// update current list of activities from mysql database
   public static void updateActivityList()
   {
       database = new ArrayList<Activity>();
