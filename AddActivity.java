@@ -152,8 +152,12 @@ public class AddActivity implements ItemListener {
             public void actionPerformed(ActionEvent e) {
                 //Activity name entered
                 newActName = textField.getText();
-                
-                if(newActMaxTime < newActIdealTime) {
+                Activity testAct = new Activity();
+                testAct.setName(newActName);
+                if(PlanitRunner.database.contains(testAct)) {
+                    //Ensures activity has not already been saved
+                    activityName.setText("Activity Already Saved!");
+                } else if(newActMaxTime < newActIdealTime) {
                     //Ensures maxTime is larger than idealTime
                     activityName.setText("Max time must be larger than ideal time");
                 } else if(newActName == null || newActName.isEmpty()) {
@@ -178,6 +182,7 @@ public class AddActivity implements ItemListener {
                         
                         Statement st = con.createStatement(); 
                         int m = st.executeUpdate(sql);
+                        PlanitRunner.updateActivityList();
                     } 
                     catch(Exception ex) 
                     { 
