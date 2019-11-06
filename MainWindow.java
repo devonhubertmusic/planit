@@ -15,9 +15,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     //User availablity information
     public double availableTime;
     public double availableMoney;
-    
-    //copy of the database ArrayList, REPLACE WITH MySQL FUNCTIONALITY
-    private ArrayList<Activity> databaseCopy;
 
     //Dropdown boxes for user input
     private JComboBox timeSelector, moneySelector;
@@ -159,10 +156,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         label3.setAlignmentX(Component.CENTER_ALIGNMENT);
         label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
         add(Box.createVerticalGlue());
-    }
-    
-    public void updateDatabase(ArrayList<Activity> database) {
-        this.databaseCopy = database; //REPLACE WITH CALL TO MySQL
     }
 
     public void itemStateChanged(ItemEvent e) 
