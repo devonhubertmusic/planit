@@ -355,13 +355,13 @@ public class CurrentActivities extends javax.swing.JFrame {
         String query = "INSERT INTO `activities` (name,maxtime,idealtime,maxcost) VALUES ('"
                         + jTextField_Name.getText() + "', " + jComboBox_MaxTime.getSelectedItem()
                         + ", " + jComboBox_IdealTime.getSelectedItem() + ", " + jComboBox_MaxCost.getSelectedItem() + ")";
-        System.out.println(query);
         String newActName = jTextField_Name.getText();
         double newActMaxTime = Double.parseDouble("" + jComboBox_MaxTime.getSelectedItem());
         double newActIdealTime = Double.parseDouble("" + jComboBox_IdealTime.getSelectedItem());
         Activity testAct = new Activity();
         testAct.setName(newActName);
-        if(PlanitRunner.database.contains(testAct)) {
+        ArrayList<Activity> list = getactivityList();
+        if(list.contains(testAct)) {
             //Ensures activity has not already been saved
             JOptionPane.showMessageDialog(null, "Activity Already Saved!");
         } else if(newActMaxTime < newActIdealTime) {
@@ -385,7 +385,6 @@ public class CurrentActivities extends javax.swing.JFrame {
         String query = "UPDATE `activities` SET `name`='"+jTextField_Name.getText()+"',`maxtime`='"
         +jComboBox_MaxTime.getSelectedItem()+"',`idealtime`='"+jComboBox_IdealTime.getSelectedItem()+"',`maxcost`='"
         +jComboBox_MaxCost.getSelectedItem()+"' WHERE `id` = "+currentID;
-        System.out.println(query);
        executeSQlQuery(query, "Updated");
     }
 
