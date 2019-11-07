@@ -18,23 +18,6 @@ public class CurrentActivities extends javax.swing.JFrame {
         initComponents();
         Show_Activities_In_JTable();
 
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
         setVisible(true);
 
     }
@@ -129,6 +112,14 @@ public class CurrentActivities extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
+        timeOption = new String[96];
+        for (int i = 0, j = 5; i < 96; ++i, j+=5) {
+            timeOption[i] = Double.toString((double)j);
+        }
+        costOption = new String[100];
+        for (int i = 0, j = 0; i < 100; ++i, j+=5) {
+            costOption[i] = Double.toString((double)j);
+        }
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -136,13 +127,15 @@ public class CurrentActivities extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField_Name = new javax.swing.JTextField();
-        jTextField_MaxTime = new javax.swing.JTextField();
-        jTextField_IdealTime = new javax.swing.JTextField();
-        jTextField_MaxCost = new javax.swing.JTextField();
+        jComboBox_MaxTime = new javax.swing.JComboBox(timeOption);
+        jComboBox_IdealTime = new javax.swing.JComboBox(timeOption);
+        jComboBox_MaxCost = new javax.swing.JComboBox(costOption);
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Display_Activities = new javax.swing.JTable();
         jButton_Update = new javax.swing.JButton();
         jButton_Delete = new javax.swing.JButton();
+        jButton_Create = new javax.swing.JButton();
+        
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -150,34 +143,31 @@ public class CurrentActivities extends javax.swing.JFrame {
         jLabel1.setText("Name:");
 
         jLabel2.setFont(new java.awt.Font("Helvetica", 0, 18));
-        jLabel2.setText("Max Time:");
+        jLabel2.setText("Max Time(minutes):");
 
         jLabel3.setFont(new java.awt.Font("Helvetica", 0, 18));
-        jLabel3.setText("Ideal Time:");
+        jLabel3.setText("Ideal Time(minutes):");
 
         jLabel4.setFont(new java.awt.Font("Helvetica", 0, 18));
-        jLabel4.setText("Max Cost:");
+        jLabel4.setText("Max Cost(dollars):");
 
         jTextField_Name.setFont(new java.awt.Font("Helvetica", 0, 14));
 
-        jTextField_MaxTime.setFont(new java.awt.Font("Helvetica", 0, 14));
-        jTextField_MaxTime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_MaxTimeActionPerformed(evt);
+        jComboBox_MaxTime.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_MaxTimeActionPerformed(evt);
             }
         });
 
-        jTextField_IdealTime.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-        jTextField_IdealTime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_IdealTimeActionPerformed(evt);
+        jComboBox_IdealTime.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_IdealTimeActionPerformed(evt);
             }
         });
 
-        jTextField_MaxCost.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-        jTextField_MaxCost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_MaxCostActionPerformed(evt);
+        jComboBox_MaxCost.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_MaxCostActionPerformed(evt);
             }
         });
 
@@ -195,6 +185,14 @@ public class CurrentActivities extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable_Display_Activities);
+
+        jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        jButton_Create.setText("+Create Activity");
+        jButton_Create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_CreateActionPerformed(evt);
+            }
+        });
 
         jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/edit.png"))); // NOI18N
@@ -235,12 +233,13 @@ public class CurrentActivities extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_MaxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_IdealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBox_MaxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_IdealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGap(18, 18, 18)
+                        .addComponent(jButton_Create)
                         .addComponent(jButton_Update)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(jButton_Delete)))
@@ -261,17 +260,18 @@ public class CurrentActivities extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField_MaxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox_MaxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField_IdealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox_IdealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_Create, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(192, 192, 192))
@@ -295,15 +295,15 @@ public class CurrentActivities extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    private void jTextField_MaxTimeActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jComboBox_MaxTimeActionPerformed(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void jTextField_IdealTimeActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jComboBox_IdealTimeActionPerformed(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void jTextField_MaxCostActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jComboBox_MaxCostActionPerformed(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
     }
 
@@ -317,19 +317,49 @@ public class CurrentActivities extends javax.swing.JFrame {
          // Display Slected Row In JTextFields
         jTextField_Name.setText(model.getValueAt(i,0).toString());
 
-        jTextField_MaxTime.setText(model.getValueAt(i,1).toString());
+        jComboBox_MaxTime.setSelectedItem(model.getValueAt(i,1).toString());
 
-        jTextField_IdealTime.setText(model.getValueAt(i,2).toString());
+        jComboBox_IdealTime.setSelectedItem(model.getValueAt(i,2).toString());
 
-        jTextField_MaxCost.setText(model.getValueAt(i,3).toString());
+        jComboBox_MaxCost.setSelectedItem(model.getValueAt(i,3).toString());
     }
 
+
+ // Button Create
+    private void jButton_CreateActionPerformed(java.awt.event.ActionEvent evt) {
+        String query = "INSERT INTO `activities` (name,maxtime,idealtime,maxcost) VALUES ('"
+                        + jTextField_Name.getText() + "', " + jComboBox_MaxTime.getSelectedItem()
+                        + ", " + jComboBox_IdealTime.getSelectedItem() + ", " + jComboBox_MaxCost.getSelectedItem() + ")";
+        System.out.println(query);
+        String newActName = jTextField_Name.getText();
+        double newActMaxTime = Double.parseDouble("" + jComboBox_MaxTime.getSelectedItem());
+        double newActIdealTime = Double.parseDouble("" + jComboBox_IdealTime.getSelectedItem());
+        Activity testAct = new Activity();
+        testAct.setName(newActName);
+        if(PlanitRunner.database.contains(testAct)) {
+            //Ensures activity has not already been saved
+            JOptionPane.showMessageDialog(null, "Activity Already Saved!");
+        } else if(newActMaxTime < newActIdealTime) {
+            //Ensures maxTime is larger than idealTime
+            JOptionPane.showMessageDialog(null, "Max time must be larger than ideal time");
+        } else if(newActName == null || newActName.isEmpty()) {
+            //Checks if user left the activity name field blank
+            JOptionPane.showMessageDialog(null, "Please Enter a Name For Your Activity");
+        } else {
+            //Add Activity to the database!
+            jComboBox_MaxTime.setSelectedIndex(0);
+            jComboBox_IdealTime.setSelectedIndex(0);
+            jComboBox_MaxCost.setSelectedIndex(0);
+            jTextField_Name.setText("");
+            executeSQlQuery(query, "Inserted");
+        }
+    }
 
  // Button Update
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
         String query = "UPDATE `activities` SET `name`='"+jTextField_Name.getText()+"',`maxtime`='"
-        +jTextField_MaxTime.getText()+"',`idealtime`='"+jTextField_IdealTime.getText()+"',`maxcost`='"
-        +jTextField_MaxCost.getText()+"' WHERE `name` = '"+jTextField_Name.getText() +"'";
+        +jComboBox_MaxTime.getSelectedItem()+"',`idealtime`='"+jComboBox_IdealTime.getSelectedItem()+"',`maxcost`='"
+        +jComboBox_MaxCost.getSelectedItem()+"' WHERE `name` = '"+jTextField_Name.getText() +"'";
         System.out.println(query);
        executeSQlQuery(query, "Updated");
     }
@@ -344,6 +374,7 @@ public class CurrentActivities extends javax.swing.JFrame {
     // Variables declaration - do not modify
     private javax.swing.JButton jButton_Delete;
     private javax.swing.JButton jButton_Update;
+    private javax.swing.JButton jButton_Create;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -351,10 +382,12 @@ public class CurrentActivities extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Display_Activities;
-    private javax.swing.JTextField jTextField_MaxCost;
-    private javax.swing.JTextField jTextField_MaxTime;
+    private javax.swing.JComboBox jComboBox_MaxCost;
+    private javax.swing.JComboBox jComboBox_MaxTime;
     private javax.swing.JTextField jTextField_Name;
-    private javax.swing.JTextField jTextField_IdealTime;
+    private javax.swing.JComboBox jComboBox_IdealTime;
+    private String[] timeOption;
+    private String[] costOption;
     // End of variables declaration
 
     public void actionPerformed(ActionEvent e){

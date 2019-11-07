@@ -27,6 +27,24 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         
         availableTime = 30.0;
         availableMoney = 0.0;
+
+        //Set Look and Feel
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         
         //Set background image of window
         try {
@@ -117,15 +135,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         add(Box.createVerticalGlue());
 
         JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        
-        //"Add Activity" button
-        JButton addb = new JButton("Add New Activity");
-        addb.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new AddActivity();
-            }
-        });
-        viewButtons.add(addb);
 
         //"Generate Activity Plan" button
         JButton b = new JButton("Generate Activity Plan");
