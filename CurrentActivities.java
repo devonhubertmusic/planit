@@ -41,6 +41,7 @@ public class CurrentActivities extends javax.swing.JFrame {
    public ArrayList<Activity> getactivityList()
    {
        ArrayList<Activity> activityList = new ArrayList<Activity>();
+       idList = new ArrayList<Integer>();
        Connection connection = getConnection();
        
        String query = "SELECT * FROM  activities";
@@ -55,6 +56,7 @@ public class CurrentActivities extends javax.swing.JFrame {
            {
                activity = new Activity(rs.getString("name"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
                activityList.add(activity);
+               idList.add(rs.getInt("id"));
            }
        } catch (Exception e) {
            e.printStackTrace();
@@ -68,16 +70,22 @@ public class CurrentActivities extends javax.swing.JFrame {
        ArrayList<Activity> list = getactivityList();
        DefaultTableModel model = (DefaultTableModel)jTable_Display_Activities.getModel();
        //Add JScrollPane?
-       Object[] row = new Object[4];
+       Object[] row = new Object[6];
        for(int i = 0; i < list.size(); i++)
        {
            row[0] = list.get(i).getName();
            row[1] = list.get(i).getMaxTime();
            row[2] = list.get(i).getIdealTime();
            row[3] = list.get(i).getMaxCost();
+           row[4] = "Edit";
+           row[5] = "Delete";
 
            model.addRow(row);
        }
+       jTable_Display_Activities.getColumnModel().getColumn(0).setPreferredWidth(200);
+
+       editButtonColumn = new ButtonColumn(jTable_Display_Activities, edit_action, 4);
+       deleteButtonColumn = new ButtonColumn(jTable_Display_Activities, delete_action, 5);
     }
 
    // Execute The Insert Update And Delete Querys
@@ -133,8 +141,19 @@ public class CurrentActivities extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Display_Activities = new javax.swing.JTable();
         jButton_Update = new javax.swing.JButton();
-        jButton_Delete = new javax.swing.JButton();
         jButton_Create = new javax.swing.JButton();
+
+        edit_action = new javax.swing.AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+              jTable_Display_ActivitiesButtonClicked(e);
+            }
+        };
+        delete_action = new javax.swing.AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+              jTable_Display_ActivitiesButtonClicked(e);
+              jButton_DeleteActionPerformed(e);
+            }
+        };
         
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -176,7 +195,7 @@ public class CurrentActivities extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Max Time", "Ideal Time", "Max Cost"
+                "Name", "Max Time", "Ideal Time", "Max Cost", "", ""
             }
         ));
         jTable_Display_Activities.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,19 +215,10 @@ public class CurrentActivities extends javax.swing.JFrame {
 
         jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/edit.png"))); // NOI18N
-        jButton_Update.setText("Edit");
+        jButton_Update.setText("Update Activity");
         jButton_Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_UpdateActionPerformed(evt);
-            }
-        });
-
-        jButton_Delete.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/trash.png"))); // NOI18N
-        jButton_Delete.setText("Delete");
-        jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_DeleteActionPerformed(evt);
             }
         });
 
@@ -241,10 +251,9 @@ public class CurrentActivities extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton_Create)
                         .addComponent(jButton_Update)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                        .addComponent(jButton_Delete)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -272,12 +281,11 @@ public class CurrentActivities extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_Create, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(192, 192, 192))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -311,6 +319,23 @@ public class CurrentActivities extends javax.swing.JFrame {
     private void jTable_Display_ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {
        // Get The Index Of The Slected Row
         int i = jTable_Display_Activities.getSelectedRow();
+
+        TableModel model = jTable_Display_Activities.getModel();
+
+         // Display Slected Row In JTextFields
+        jTextField_Name.setText(model.getValueAt(i,0).toString());
+
+        jComboBox_MaxTime.setSelectedItem(model.getValueAt(i,1).toString());
+
+        jComboBox_IdealTime.setSelectedItem(model.getValueAt(i,2).toString());
+
+        jComboBox_MaxCost.setSelectedItem(model.getValueAt(i,3).toString());
+    }
+// show jtable row data in jtextfields in the button clicked event
+    private void jTable_Display_ActivitiesButtonClicked(java.awt.event.ActionEvent evt) {
+       // Get The Index Of The Slected Row
+        int i = Integer.valueOf( evt.getActionCommand() );
+        currentID = idList.get(i);
 
         TableModel model = jTable_Display_Activities.getModel();
 
@@ -359,7 +384,7 @@ public class CurrentActivities extends javax.swing.JFrame {
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
         String query = "UPDATE `activities` SET `name`='"+jTextField_Name.getText()+"',`maxtime`='"
         +jComboBox_MaxTime.getSelectedItem()+"',`idealtime`='"+jComboBox_IdealTime.getSelectedItem()+"',`maxcost`='"
-        +jComboBox_MaxCost.getSelectedItem()+"' WHERE `name` = '"+jTextField_Name.getText() +"'";
+        +jComboBox_MaxCost.getSelectedItem()+"' WHERE `id` = "+currentID;
         System.out.println(query);
        executeSQlQuery(query, "Updated");
     }
@@ -367,12 +392,11 @@ public class CurrentActivities extends javax.swing.JFrame {
 
  // Button Delete
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        String query = "DELETE FROM `activities` WHERE name = '"+jTextField_Name.getText() + "'";
+        String query = "DELETE FROM `activities` WHERE id = "+currentID;
          executeSQlQuery(query, "Deleted");
     }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton jButton_Delete;
     private javax.swing.JButton jButton_Update;
     private javax.swing.JButton jButton_Create;
     private javax.swing.JLabel jLabel1;
@@ -388,6 +412,12 @@ public class CurrentActivities extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox_IdealTime;
     private String[] timeOption;
     private String[] costOption;
+    private ButtonColumn editButtonColumn;
+    private ButtonColumn deleteButtonColumn;
+    private javax.swing.Action edit_action;
+    private javax.swing.Action delete_action;
+    private ArrayList<Integer> idList;
+    private int currentID;
     // End of variables declaration
 
     public void actionPerformed(ActionEvent e){
