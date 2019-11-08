@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,18 +24,18 @@ public class Plan {
 	
 	//Methods
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
-	availableMoney){
+	availableMoney, double costPercent){
         this.activityList = new ArrayList<Activity>();
         PlanitRunner.updateActivityList();
-        if(this.tryCounter > PlanitRunner.database.size()) {
+        if(this.tryCounter > PlanitRunner.database.size() || costPercent == 0) {
             Activity temp = new Activity();
             temp.setName("Unable to generate plan");
             this.activityList.add(temp);
         } else {
             ArrayList<Activity> databaseCopy = copyDatabase(database);
-        
             double totalTime = 0.0;
             double totalCost = 0.0;
+            double minCost = costPercent * availableMoney;
          
             while(databaseCopy.size() > 0) {
                 double remainingTime = availableTime - totalTime;
@@ -61,22 +62,22 @@ public class Plan {
                 potentialStretch += temp.getTimeGap();
             }
         
-            double maxStretch = (1/activityList.size()) * potentialStretch; //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
+            //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
+            double maxStretch = (1/activityList.size()) * potentialStretch;
          
-            if(maxStretch >= remainingTime) {
+            if(maxStretch >= remainingTime && totalCost >= minCost) {
                 double stretchPercent = remainingTime/potentialStretch;
                 for(int i = 0; i < activityList.size(); i++) {
                     Activity temp = activityList.get(i);
                     temp.setActualTime(temp.getIdealTime() + (stretchPercent * temp.getTimeGap()));
                 }
+            } else if(totalCost < minCost) {
+                //Try again!
+                generatePlan(database, availableTime, availableMoney, Math.abs(costPercent - 0.05)); //make more modular
             } else {
                 //Try again!
-                //if there is remaining money but no remaining time, break from loop, this is ideal 
-                if(remainingMoney > 0 && availableTime == 0)
-                    return;
-                else
-                this.tryCounter++;
-                generatePlan(database, availableTime, availableMoney);
+                this.tryCounter++; //Find a better way...
+                generatePlan(database, availableTime, availableMoney, costPercent);
             }
         }
 	}
