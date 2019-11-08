@@ -162,13 +162,13 @@ public class CurrentActivities extends javax.swing.JFrame {
         jLabel1.setText("Name:");
 
         jLabel2.setFont(new java.awt.Font("Helvetica", 0, 18));
-        jLabel2.setText("Max Time(minutes):");
+        jLabel2.setText("Max Time (minutes):");
 
         jLabel3.setFont(new java.awt.Font("Helvetica", 0, 18));
-        jLabel3.setText("Ideal Time(minutes):");
+        jLabel3.setText("Ideal Time (minutes):");
 
         jLabel4.setFont(new java.awt.Font("Helvetica", 0, 18));
-        jLabel4.setText("Max Cost(dollars):");
+        jLabel4.setText("Max Cost (dollars):");
 
         jTextField_Name.setFont(new java.awt.Font("Helvetica", 0, 14));
 
