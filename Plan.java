@@ -65,7 +65,7 @@ public class Plan {
             //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
             double maxStretch = (1/activityList.size()) * potentialStretch;
          
-            if(maxStretch >= remainingTime && totalCost >= minCost) {
+            if(maxStretch >= remainingTime && (totalCost >= minCost || availableMoney == 0)) {
                 double stretchPercent = remainingTime/potentialStretch;
                 for(int i = 0; i < activityList.size(); i++) {
                     Activity temp = activityList.get(i);
