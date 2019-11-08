@@ -71,7 +71,7 @@ public class Plan {
                     Activity temp = activityList.get(i);
                     temp.setActualTime(temp.getIdealTime() + (stretchPercent * temp.getTimeGap()));
                 }
-            } else if(totalCost < minCost) {
+            } else if((totalCost < minCost) && costPercent != 0 && availableMoney != 0) {
                 //Try again!
                 generatePlan(database, availableTime, availableMoney, Math.abs(costPercent - 0.05)); //make more modular
             } else {

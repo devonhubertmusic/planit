@@ -113,4 +113,8 @@ public class Activity {
     public double getMaxCost() {
         return this.maxCost;
     }
+    
+    public double getCostPerHour() {
+        return (this.maxCost/this.idealTime)/60.0; //ideal??
+    }
 }
