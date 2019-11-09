@@ -43,7 +43,7 @@ public class CurrentActivities extends javax.swing.JFrame {
        ArrayList<Activity> activityList = new ArrayList<Activity>();
        idList = new ArrayList<Integer>();
        Connection connection = getConnection();
-       
+
        String query = "SELECT * FROM  activities";
        Statement st;
        ResultSet rs;
@@ -154,7 +154,7 @@ public class CurrentActivities extends javax.swing.JFrame {
               jButton_DeleteActionPerformed(e);
             }
         };
-        
+
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -206,7 +206,8 @@ public class CurrentActivities extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable_Display_Activities);
 
         jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jButton_Create.setText("+Create Activity");
+        jButton_Create.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/add.png")));
+        jButton_Create.setText("Create Activity");
         jButton_Create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_CreateActionPerformed(evt);
