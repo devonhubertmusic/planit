@@ -10,6 +10,15 @@ and then:
 
 to run the code.
 
+To build maven project, navigate to the planit folder with pom.xml file and on your console/terminal and type:
+ 
+	mvn clean compile assembly:single
+
+and then:
+
+	java -jar target/planit-1.0-SNAPSHOT-jar-with-dependencies.jar 
+
+to run the jar file.
 
 **************************************************************************************
 
