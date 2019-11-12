@@ -1,3 +1,5 @@
+package planit;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -213,7 +215,7 @@ public class CurrentActivities extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable_Display_Activities);
 
         jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jButton_Create.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/add.png")));
+        jButton_Create.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png")));
         jButton_Create.setText("Create Activity");
         jButton_Create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +224,7 @@ public class CurrentActivities extends javax.swing.JFrame {
         });
 
         jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("resources/icons/edit.png"))); // NOI18N
+        jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
         jButton_Update.setText("Update Activity");
         jButton_Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
