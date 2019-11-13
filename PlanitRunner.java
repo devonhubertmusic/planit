@@ -60,7 +60,7 @@ public class PlanitRunner
           Activity activity;
           while(rs.next())
           {
-              activity = new Activity(rs.getString("name"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
+              activity = new Activity(rs.getString("name"),rs.getString("activityType"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
               activityList.add(activity);
           }
       } catch (Exception e) {
