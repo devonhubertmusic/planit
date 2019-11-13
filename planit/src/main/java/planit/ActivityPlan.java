@@ -15,7 +15,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.net.URL;
 
+/*import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Image;
+*/
 public class ActivityPlan
 {
     JFrame activityPlanFrame;
@@ -119,6 +130,11 @@ public class ActivityPlan
     //Adds final buttons to the main window, and makes the window visible
     public void completeWindow() {
         JButton save = new JButton("Save Plan");
+        save.addActionListener( new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+            	new JavaPDF();
+            }	
+            });
         this.activityPlanFrame.add(save);
         this.activityPlanFrame.setVisible(true);
     }
