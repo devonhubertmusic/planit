@@ -1,20 +1,6 @@
 package planit;
 
 import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.Component;
-import java.awt.Container;
-import javax.swing.*;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.sql.ResultSet;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;

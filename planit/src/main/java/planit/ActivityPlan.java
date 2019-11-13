@@ -15,18 +15,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.net.URL;
 
-/*import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.Image;
-*/
 public class ActivityPlan
 {
     JFrame activityPlanFrame;
