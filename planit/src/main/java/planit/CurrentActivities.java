@@ -136,10 +136,12 @@ public class CurrentActivities extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jTextField_Name = new javax.swing.JTextField();
         jComboBox_MaxTime = new javax.swing.JComboBox(timeOption);
         jComboBox_IdealTime = new javax.swing.JComboBox(timeOption);
         jComboBox_MaxCost = new javax.swing.JComboBox(costOption);
+        jComboBox_ActivityType = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Display_Activities = new javax.swing.JTable();
         jButton_Update = new javax.swing.JButton();
@@ -172,6 +174,9 @@ public class CurrentActivities extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel4.setText("Max Cost (dollars):");
 
+        jLabel5.setFont(new java.awt.Font("Helvetica", 0, 18));
+        jLabel5.setText("Activity Type:");
+
         jTextField_Name.setFont(new java.awt.Font("Helvetica", 0, 14));
 
         jComboBox_MaxTime.addItemListener(new java.awt.event.ItemListener() {
@@ -189,6 +194,12 @@ public class CurrentActivities extends javax.swing.JFrame {
         jComboBox_MaxCost.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_MaxCostActionPerformed(evt);
+            }
+        });
+
+        jComboBox_ActivityType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_ActivityTypeActionPerformed(evt);
             }
         });
 
@@ -243,6 +254,7 @@ public class CurrentActivities extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3))
                                 .addGap(12, 12, 12))
@@ -255,7 +267,9 @@ public class CurrentActivities extends javax.swing.JFrame {
                             .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_MaxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_IdealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jComboBox_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_ActivityType, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            ))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGap(18, 18, 18)
@@ -288,12 +302,16 @@ public class CurrentActivities extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jComboBox_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(75, 75, 75)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox_ActivityType, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(90, 90, 90)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_Create, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(192, 192, 192))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -322,6 +340,10 @@ public class CurrentActivities extends javax.swing.JFrame {
     }
 
     private void jComboBox_MaxCostActionPerformed(java.awt.event.ItemEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jComboBox_ActivityTypeActionPerformed(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
     }
 
@@ -422,15 +444,18 @@ public class CurrentActivities extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Display_Activities;
     private javax.swing.JComboBox jComboBox_MaxCost;
+    private javax.swing.JComboBox jComboBox_ActivityType;
     private javax.swing.JComboBox jComboBox_MaxTime;
     private javax.swing.JTextField jTextField_Name;
     private javax.swing.JComboBox jComboBox_IdealTime;
     private String[] timeOption;
     private String[] costOption;
+    private String[] typeOption;
     private ButtonColumn editButtonColumn;
     private ButtonColumn deleteButtonColumn;
     private javax.swing.Action edit_action;
