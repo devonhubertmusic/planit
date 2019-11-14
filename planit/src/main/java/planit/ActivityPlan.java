@@ -126,7 +126,7 @@ public class ActivityPlan
             public void actionPerformed(ActionEvent evt) {
             	JavaPDF PlanPdf = new JavaPDF();
             	PlanPdf.printPdf(activityList);
-            	 JOptionPane.showMessageDialog(null, "Pdf Saved.");
+            	 JOptionPane.showMessageDialog(null, "PDF Saved.");
             }
             });
         this.activityPlanFrame.add(save);
