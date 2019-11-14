@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 public class ActivityPlan
 {
@@ -34,8 +35,9 @@ public class ActivityPlan
         this.availableTime = availableTime;
         this.availableMoney = availableMoney;
         this.activityPlanFrame = makeWindow();
-        makeAndDisplayPlanTable(getPlanList(0.75));
-        completeWindow();
+      ArrayList<Activity> myList = getPlanList(0.75);
+        makeAndDisplayPlanTable(myList);
+        completeWindow(myList);
     }
     
     //Returns a JFrame window with size, titles, and layout, etc. set
@@ -117,17 +119,19 @@ public class ActivityPlan
     }
     
     //Adds final buttons to the main window, and makes the window visible
-    public void completeWindow() {
+    public void completeWindow(final ArrayList<Activity> activityList) {
+     //   ArrayList<Activity> myActivityList = myPlan.getActivityList();
         JButton save = new JButton("Save Plan");
         save.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-            	new JavaPDF();
-            }	
+            	JavaPDF PlanPdf = new JavaPDF();
+            	PlanPdf.printPdf(activityList);
+            	 JOptionPane.showMessageDialog(null, "Pdf Saved.");
+            }
             });
         this.activityPlanFrame.add(save);
         this.activityPlanFrame.setVisible(true);
     }
-
     //Converts a double time value in minutes to hours, minutes, etc.
     public String doubleToTime(double rawTime){
         String timeString = "";
