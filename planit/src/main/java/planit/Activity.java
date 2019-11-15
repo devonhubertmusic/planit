@@ -2,7 +2,8 @@ package planit;
 
 import java.util.*;
 
-public class Activity {
+public class Activity implements Comparable<Activity>
+{
 
 	//Fields
 	private String name; //Activity name
@@ -117,6 +118,16 @@ public class Activity {
     }
     
     public double getCostPerHour() {
-        return (this.maxCost/this.idealTime)/60.0; //ideal??
+        return (this.maxCost/this.idealTime)/60.0;
+    }
+    
+    public int compareTo(Activity that) {
+        if (this.getCostPerHour() == that.getCostPerHour()) {
+            return 0;
+        } else if(this.getCostPerHour() > that.getCostPerHour()){
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }

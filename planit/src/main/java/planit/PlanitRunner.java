@@ -17,6 +17,7 @@ public class PlanitRunner
 
     public static void main(String[] args)
     {
+        
         try {
             updateActivityList();
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets user's screen size

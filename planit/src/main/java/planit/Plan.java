@@ -25,6 +25,73 @@ public class Plan {
 	}
 	
 	//Methods
+    public void generatePlan_New(ArrayList<Activity> database, double availableTime, double
+    availableMoney, double costPercent) {
+        initializeActivityListAndUpdate();
+        ArrayList<Activity> activitiesSortedByExpensiveness = sortByExpensiveness(copyDatabase(database)); //Do before calling?
+        double averageExpensiveness = findAverageExpensiveness(activitiesSortedByExpensiveness);
+        double desiredExpensiveness = availableMoney/availableTime;
+        
+        if(availableTime > findMaxPossibleActivityTime(activitiesSortedByExpensiveness)) {
+            displayErrorMessage("Unable to generate a long enough plan with the given activities");
+        } else if(availableMoney < findMinPossibleActivityCost(activitiesSortedByExpensiveness)){
+            displayErrorMessage("Not enough money for any given activity");
+        } else {
+            //Generate plan using the sorted list (will work on more tomorrow)
+        }
+    }
+    
+    public void displayErrorMessage(String errorMessage) {
+        Activity message = new Activity();
+        message.setName(errorMessage); //Replace with pop-up
+        this.activityList.add(message);
+    }
+    
+    public double findMaxPossibleActivityTime(ArrayList<Activity> activities) {
+        double totalTime = 0.0;
+        for(int index = 0; index < activities.size(); index++) {
+            Activity currentActivity = activities.get(index);
+            totalTime += currentActivity.getMaxTime();
+        }
+        return totalTime;
+    }
+    
+    public double findMinPossibleActivityCost(ArrayList<Activity> activities) {
+        double minCost = 1000000.0;
+        for(int index = 0; index < activities.size(); index++) {
+            Activity currentActivity = activities.get(index);
+            double cost = currentActivity.getMaxCost();
+            if(cost < minCost){
+                minCost = cost;
+            }
+        }
+        return minCost;
+    }
+    
+    public void initializeActivityListAndUpdate() {
+        this.activityList = new ArrayList<Activity>();
+        PlanitRunner.updateActivityList();
+    }
+    
+    public ArrayList<Activity> sortByExpensiveness(ArrayList<Activity> activities) {
+        Collections.sort(activities);
+        return activities;
+    }
+    
+    public double findAverageExpensiveness(ArrayList<Activity> activities) {
+        double totalExpense = 0.0;
+        for(int index = 0; index < activities.size(); index++) {
+            Activity currentActivity = activities.get(index);
+            totalExpense += currentActivity.getCostPerHour();
+        }
+        return totalExpense/activities.size();
+    }
+    
+    
+    
+    
+    
+    
 	public void generatePlan(ArrayList<Activity> database, double availableTime, double 
 	availableMoney, double costPercent){
         this.activityList = new ArrayList<Activity>();
