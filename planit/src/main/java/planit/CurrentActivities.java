@@ -131,6 +131,8 @@ public class CurrentActivities extends javax.swing.JFrame {
             costOption[i] = Double.toString((double)j);
         }
 
+        String items[] = {"Food", "Outdoor Adventures", "Fitness", "Music", "Games",};
+
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -141,7 +143,7 @@ public class CurrentActivities extends javax.swing.JFrame {
         jComboBox_MaxTime = new javax.swing.JComboBox(timeOption);
         jComboBox_IdealTime = new javax.swing.JComboBox(timeOption);
         jComboBox_MaxCost = new javax.swing.JComboBox(costOption);
-        jComboBox_ActivityType = new javax.swing.JComboBox();
+        jComboBox_ActivityType = new javax.swing.JComboBox(items);
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Display_Activities = new javax.swing.JTable();
         jButton_Update = new javax.swing.JButton();
@@ -456,6 +458,7 @@ public class CurrentActivities extends javax.swing.JFrame {
     private String[] timeOption;
     private String[] costOption;
     private String[] typeOption;
+    private String[] items;
     private ButtonColumn editButtonColumn;
     private ButtonColumn deleteButtonColumn;
     private javax.swing.Action edit_action;
