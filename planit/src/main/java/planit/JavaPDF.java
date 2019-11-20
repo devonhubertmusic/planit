@@ -18,17 +18,24 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.BaseColor;
 
 public class JavaPDF extends JComponent implements Accessible {
 
-	private ArrayList<Activity> myActivityList;
-	
-	public JavaPDF(){
-		this.myActivityList = new ArrayList<Activity>();
-	}
-	public void printPdf(ArrayList<Activity> myActivityList) {
-		
-		JFileChooser chooser = new JFileChooser();
+  private ArrayList<Activity> myActivityList;
+  private Activity myActivity;
+  
+  public JavaPDF(){
+    this.myActivityList = new ArrayList<Activity>();
+    this.myActivity = new Activity();
+  }
+  public void printPdf(ArrayList<Activity> myActivityList) {
+    
+    JFileChooser chooser = new JFileChooser();
        chooser.setCurrentDirectory(new java.io.File("."));
        chooser.setDialogTitle("Save Backup");
        chooser.setApproveButtonText("Save");
@@ -38,13 +45,13 @@ public class JavaPDF extends JComponent implements Accessible {
        if(chooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
        
         Rectangle pagesize = new Rectangle(612, 792);
-		Document document = new Document(pagesize); //(PageSize.A4, 20, 20, 20,20)
+    Document document = new Document(pagesize); //(PageSize.A4, 20, 20, 20,20)
         try
         {
            Font fontSizeTitle =  FontFactory.getFont(FontFactory.TIMES, 30f);
            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "MyPlan.pdf")));//"MyPlan.pdf"));
            document.open();
-           
+
            Paragraph header = new Paragraph();
            header.setFont(fontSizeTitle);
            header.setAlignment(Paragraph.ALIGN_CENTER);
@@ -55,24 +62,66 @@ public class JavaPDF extends JComponent implements Accessible {
            logo.setAbsolutePosition(400, 50);
            logo.scaleAbsolute(160,100);
            document.add(logo);
-           int size = myActivityList.size();    
+           int size = myActivityList.size(); 
+
+
+        // a table with three columns
+        PdfPTable table = new PdfPTable(3);
+        // the cell object
+        PdfPCell cell;
+        // we add a cell with colspan 3
+        // now we add a cell with rowspan 2
+        cell = new PdfPCell(new Phrase("Activity"));
+        cell.setRowspan(2);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Activity Time"));
+        cell.setRowspan(2);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Activity Cost"));
+        cell.setRowspan(2);
+        table.addCell(cell);
+
+ 
+
+          //To avoid having the cell border and the content overlap, if you are having thick cell borders
+          //cell1.setUserBorderPadding(true);
+          //cell2.setUserBorderPadding(true);
+          //cell3.setUserBorderPadding(true);
+   
+          // table.addCell(cell1);
+          // table.addCell(cell2);
+          // table.addCell(cell3);
+          //table.addCell(tmp);
            for(int row = 0; row < size; row++) {
                    Activity temp = myActivityList.get(row);
-        			   String tmp = temp.toString();
-        			   document.add(new Paragraph(tmp));
+                 String tmp = temp.toString();
+                 table.addCell(tmp);
+                 //for(int col = 0; col < 2; col++){
+                  double tempTime = myActivityList.get(row).getActualTime();
+                  String tmpTime = Double.valueOf(tempTime).toString();
+                  table.addCell(tmpTime + " minutes");
+                  double tempCost = myActivityList.get(row).getMaxCost();
+                  String tmpCost = Double.valueOf(tempCost).toString();
+                  table.addCell("$" + tmpCost);
+                 //}
                }
+
+            document.add(table);
    //TO ADD : total time, type, and total cost
            //change formatting
            //maybe add tables?or list activi?
            //message box when pdf is currently open or 
            //make each pdf be named something differe
            //also pdf saved message should only pop up ONLY when the pdf is saved 
+
            document.close();
            writer.close();
         } catch (Exception e)
         { 
-        	e.printStackTrace();
+          e.printStackTrace();
         }
-	}
-	}
-	}
+  }
+  }
+  }
