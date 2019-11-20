@@ -7,6 +7,7 @@ public class Activity implements Comparable<Activity>
 
 	//Fields
 	private String name; //Activity name
+    private String activityType; //Activity type
 	private double maxTime; //Maximum time activity can take (while still being fun)
 	private double idealTime; //Ideal time for the activity
     private double actualTime; //Actual time activity will take
@@ -18,20 +19,32 @@ public class Activity implements Comparable<Activity>
 	public Activity() {
 		//Initialize fields
 		this.name = "";
+        this.activityType = "";
 		this.maxTime = 0.0;
 		this.idealTime = 0.0;
         this.actualTime = 0.0;
 		this.maxCost = 0.0;
 	}
     
-    public Activity(String name, int maxTime, int idealTime, int maxCost) {
+    public Activity(String name, String activityType, int maxTime, int idealTime, int maxCost) {
         //Set fields based on explicit data
+        this.actualTime = 0.0;
+        this.name = name;
+        this.activityType = activityType;
+        this.maxTime = maxTime;
+        this.idealTime = idealTime;
+        this.maxCost = maxCost;
+    
+    }
+
+    public Activity(String name, int maxTime, int idealTime, int maxCost){
+        //Set fields based on explicit data
+        //Overload for option without activityType
         this.actualTime = 0.0;
         this.name = name;
         this.maxTime = maxTime;
         this.idealTime = idealTime;
         this.maxCost = maxCost;
-    
     }
     
     //Methods:
@@ -95,6 +108,10 @@ public class Activity implements Comparable<Activity>
     
     public String getName() {
         return this.name;
+    }
+
+    public String getActivityType(){
+        return this.activityType;
     }
     
     public double getMaxTime() {

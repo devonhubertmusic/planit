@@ -69,8 +69,6 @@ public class JavaPDF extends JComponent implements Accessible {
         PdfPTable table = new PdfPTable(3);
         // the cell object
         PdfPCell cell;
-        // we add a cell with colspan 3
-        // now we add a cell with rowspan 2
         cell = new PdfPCell(new Phrase("Activity"));
         cell.setRowspan(2);
         table.addCell(cell);
@@ -85,27 +83,16 @@ public class JavaPDF extends JComponent implements Accessible {
 
  
 
-          //To avoid having the cell border and the content overlap, if you are having thick cell borders
-          //cell1.setUserBorderPadding(true);
-          //cell2.setUserBorderPadding(true);
-          //cell3.setUserBorderPadding(true);
-   
-          // table.addCell(cell1);
-          // table.addCell(cell2);
-          // table.addCell(cell3);
-          //table.addCell(tmp);
            for(int row = 0; row < size; row++) {
                    Activity temp = myActivityList.get(row);
                  String tmp = temp.toString();
                  table.addCell(tmp);
-                 //for(int col = 0; col < 2; col++){
                   double tempTime = myActivityList.get(row).getActualTime();
                   String tmpTime = Double.valueOf(tempTime).toString();
                   table.addCell(tmpTime + " minutes");
                   double tempCost = myActivityList.get(row).getMaxCost();
                   String tmpCost = Double.valueOf(tempCost).toString();
                   table.addCell("$" + tmpCost);
-                 //}
                }
 
             document.add(table);
