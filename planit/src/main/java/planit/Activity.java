@@ -87,6 +87,10 @@ public class Activity implements Comparable<Activity>
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setActivityType(String activityType){
+        this.activityType = activityType;
+    }
     
     public void setMaxTime(double maxTime) {
         this.maxTime = maxTime;
