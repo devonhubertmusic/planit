@@ -10,6 +10,7 @@ import java.awt.Container;
 import java.io.File;
 import javax.accessibility.*;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Document;
@@ -35,7 +36,7 @@ public class JavaPDF extends JComponent implements Accessible {
   }
   public void printPdf(ArrayList<Activity> myActivityList) {
     
-    JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser();
        chooser.setCurrentDirectory(new java.io.File("."));
        chooser.setDialogTitle("Save Backup");
        chooser.setApproveButtonText("Save");
@@ -48,6 +49,7 @@ public class JavaPDF extends JComponent implements Accessible {
     Document document = new Document(pagesize); //(PageSize.A4, 20, 20, 20,20)
         try
         {
+           JOptionPane.showMessageDialog(null, "PDF Saved.");
            Font fontSizeTitle =  FontFactory.getFont(FontFactory.TIMES, 30f);
            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "MyPlan.pdf")));//"MyPlan.pdf"));
            document.open();
