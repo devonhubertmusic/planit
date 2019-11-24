@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 
 public class CurrentActivities extends javax.swing.JFrame {
-    
+
     public boolean toggleTrue;
 
   /**
@@ -20,7 +20,7 @@ public class CurrentActivities extends javax.swing.JFrame {
    */
     public CurrentActivities() {
         toggleTrue = true;
-        
+
         initComponents();
         Show_Activities_In_JTable();
 
@@ -142,6 +142,7 @@ public class CurrentActivities extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jTextField_Name = new javax.swing.JTextField();
         jComboBox_MaxTime = new javax.swing.JComboBox(timeOption);
         jComboBox_IdealTime = new javax.swing.JComboBox(timeOption);
@@ -165,7 +166,7 @@ public class CurrentActivities extends javax.swing.JFrame {
                 }
             }
         };
-        
+
         //DELETE ACTION
         delete_action = new javax.swing.AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -191,6 +192,9 @@ public class CurrentActivities extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel5.setText("Activity Type:");
+
+        jLabel6.setFont(new java.awt.Font("Helvetica", 0, 18));
+        jLabel6.setText("Test:");
 
         jTextField_Name.setFont(new java.awt.Font("Helvetica", 0, 14));
 
@@ -233,7 +237,7 @@ public class CurrentActivities extends javax.swing.JFrame {
                }
             }
         );
-        
+
         jScrollPane1.setViewportView(jTable_Display_Activities);
 
         jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
@@ -245,8 +249,8 @@ public class CurrentActivities extends javax.swing.JFrame {
             }
         });
 
-        jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
+        jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14));
+        jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png")));
         jButton_Update.setText("Update Activity");
         jButton_Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,6 +280,7 @@ public class CurrentActivities extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_MaxTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_IdealTime, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_MaxCost, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -296,11 +301,11 @@ public class CurrentActivities extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36)))
+                .addGap(5, 5 , 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -357,13 +362,13 @@ public class CurrentActivities extends javax.swing.JFrame {
     private void jComboBox_ActivityTypeActionPerformed(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
     }
-    
+
 // show jtable row data in jtextfields in the button clicked event
     private void jTable_Display_ActivitiesButtonClicked(int actionIndex, boolean differentSelection) {
-        
+
         if(toggleTrue || differentSelection) {
             // Get The Index Of The Slected Row
-            
+
             TableModel model = jTable_Display_Activities.getModel();
 
              // Display Slected Row In JTextFields
@@ -374,21 +379,21 @@ public class CurrentActivities extends javax.swing.JFrame {
             jComboBox_IdealTime.setSelectedItem(model.getValueAt(actionIndex,2).toString());
 
             jComboBox_MaxCost.setSelectedItem(model.getValueAt(actionIndex,3).toString());
-            
+
             toggleTrue = false;
         } else {
             resetTextFields();
             toggleTrue = true;
         }
     }
-    
+
     public void resetTextFields() {
         jComboBox_MaxTime.setSelectedIndex(0);
-        
+
         jComboBox_IdealTime.setSelectedIndex(0);
-        
+
         jComboBox_MaxCost.setSelectedIndex(0);
-        
+
         jTextField_Name.setText("");
     }
 
@@ -450,6 +455,7 @@ public class CurrentActivities extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Display_Activities;
