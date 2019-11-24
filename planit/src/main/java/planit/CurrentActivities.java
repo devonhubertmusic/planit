@@ -131,7 +131,7 @@ public class CurrentActivities extends javax.swing.JFrame {
             costOption[i] = Double.toString((double)j);
         }
 
-        String items[] = {"Food", "Outdoor Adventures", "Fitness", "Music", "Games",};
+        String items[] = {"Food", "Outdoor Adventures", "Fitness", "Music", "Games", "Other"};
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
