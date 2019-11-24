@@ -108,7 +108,7 @@ public class CurrentActivities extends javax.swing.JFrame {
                Show_Activities_In_JTable();
 
                JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
-           }else{
+           } else {
                JOptionPane.showMessageDialog(null, "Data Not "+message);
            }
        }catch(Exception ex){
@@ -154,12 +154,19 @@ public class CurrentActivities extends javax.swing.JFrame {
 
         edit_action = new javax.swing.AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-              jTable_Display_ActivitiesButtonClicked(e);
+                int prevCurrentID = currentID;
+                int actionIndex = Integer.valueOf(e.getActionCommand());
+                currentID = idList.get(actionIndex);
+                if(prevCurrentID != currentID) {
+                    jTable_Display_ActivitiesButtonClicked(actionIndex, true);
+                } else {
+                    jTable_Display_ActivitiesButtonClicked(actionIndex, false);
+                }
             }
         };
         delete_action = new javax.swing.AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-              jTable_Display_ActivitiesButtonClicked(e);
+              jTable_Display_ActivitiesButtonClicked(0, false);
               jButton_DeleteActionPerformed(e);
             }
         };
@@ -349,23 +356,21 @@ public class CurrentActivities extends javax.swing.JFrame {
     }
     
 // show jtable row data in jtextfields in the button clicked event
-    private void jTable_Display_ActivitiesButtonClicked(java.awt.event.ActionEvent evt) {
+    private void jTable_Display_ActivitiesButtonClicked(int actionIndex, boolean differentSelection) {
         
-        if(toggleTrue) {
+        if(toggleTrue || differentSelection) {
             // Get The Index Of The Slected Row
-            int i = Integer.valueOf( evt.getActionCommand() );
-            currentID = idList.get(i);
-
+            
             TableModel model = jTable_Display_Activities.getModel();
 
              // Display Slected Row In JTextFields
-            jTextField_Name.setText(model.getValueAt(i,0).toString());
+            jTextField_Name.setText(model.getValueAt(actionIndex,0).toString());
 
-            jComboBox_MaxTime.setSelectedItem(model.getValueAt(i,1).toString());
+            jComboBox_MaxTime.setSelectedItem(model.getValueAt(actionIndex,1).toString());
 
-            jComboBox_IdealTime.setSelectedItem(model.getValueAt(i,2).toString());
+            jComboBox_IdealTime.setSelectedItem(model.getValueAt(actionIndex,2).toString());
 
-            jComboBox_MaxCost.setSelectedItem(model.getValueAt(i,3).toString());
+            jComboBox_MaxCost.setSelectedItem(model.getValueAt(actionIndex,3).toString());
             
             toggleTrue = false;
         } else {
