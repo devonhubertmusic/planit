@@ -148,7 +148,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         viewButtons.add(b);
 
         //"View Current Activities" button
-        JButton vb = new JButton("View Current Activities");
+        JButton vb = new JButton("Edit Activities");
         vb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new CurrentActivities();

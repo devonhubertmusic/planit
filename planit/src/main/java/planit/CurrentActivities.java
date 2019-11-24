@@ -107,9 +107,9 @@ public class CurrentActivities extends javax.swing.JFrame {
                model.setRowCount(0);
                Show_Activities_In_JTable();
 
-               JOptionPane.showMessageDialog(null, "Data "+message+" Succefully");
+               JOptionPane.showMessageDialog(null, "Activity "+message+"!");
            } else {
-               JOptionPane.showMessageDialog(null, "Data Not "+message);
+               JOptionPane.showMessageDialog(null, "Activity Not "+message);
            }
        }catch(Exception ex){
            ex.printStackTrace();
@@ -152,6 +152,7 @@ public class CurrentActivities extends javax.swing.JFrame {
         jButton_Update = new javax.swing.JButton();
         jButton_Create = new javax.swing.JButton();
 
+        //EDIT ACTION
         edit_action = new javax.swing.AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 int prevCurrentID = currentID;
@@ -164,9 +165,11 @@ public class CurrentActivities extends javax.swing.JFrame {
                 }
             }
         };
+        
+        //DELETE ACTION
         delete_action = new javax.swing.AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-              jTable_Display_ActivitiesButtonClicked(0, false);
+              resetTextFields();
               jButton_DeleteActionPerformed(e);
             }
         };
@@ -374,16 +377,19 @@ public class CurrentActivities extends javax.swing.JFrame {
             
             toggleTrue = false;
         } else {
-            jComboBox_MaxTime.setSelectedIndex(0);
-            
-            jComboBox_IdealTime.setSelectedIndex(0);
-            
-            jComboBox_MaxCost.setSelectedIndex(0);
-            
-            jTextField_Name.setText("");
-            
+            resetTextFields();
             toggleTrue = true;
         }
+    }
+    
+    public void resetTextFields() {
+        jComboBox_MaxTime.setSelectedIndex(0);
+        
+        jComboBox_IdealTime.setSelectedIndex(0);
+        
+        jComboBox_MaxCost.setSelectedIndex(0);
+        
+        jTextField_Name.setText("");
     }
 
 
@@ -400,10 +406,7 @@ public class CurrentActivities extends javax.swing.JFrame {
         ArrayList<Activity> list = getactivityList();
         if(list.contains(testAct)) {
             //Ensures activity has not already been saved
-            jComboBox_MaxTime.setSelectedIndex(0);
-            jComboBox_IdealTime.setSelectedIndex(0);
-            jComboBox_MaxCost.setSelectedIndex(0);
-            jTextField_Name.setText("");
+            resetTextFields();
             JOptionPane.showMessageDialog(null, "Activity Already Saved!");
         } else if(newActMaxTime < newActIdealTime) {
             //Ensures maxTime is larger than idealTime
@@ -415,10 +418,7 @@ public class CurrentActivities extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please Enter a Name For Your Activity");
         } else {
             //Add Activity to the database!
-            jComboBox_MaxTime.setSelectedIndex(0);
-            jComboBox_IdealTime.setSelectedIndex(0);
-            jComboBox_MaxCost.setSelectedIndex(0);
-            jTextField_Name.setText("");
+            resetTextFields();
             executeSQlQuery(query, "Inserted");
         }
     }
