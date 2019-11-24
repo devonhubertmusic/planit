@@ -12,16 +12,19 @@ import java.awt.event.*;
 
 
 public class CurrentActivities extends javax.swing.JFrame {
+    
+    public boolean toggleTrue;
 
   /**
    * @param args the command line arguments
    */
     public CurrentActivities() {
+        toggleTrue = true;
+        
         initComponents();
         Show_Activities_In_JTable();
 
         setVisible(true);
-
     }
 
      // get the connection
@@ -131,7 +134,7 @@ public class CurrentActivities extends javax.swing.JFrame {
             costOption[i] = Double.toString((double)j);
         }
 
-        String items[] = {"Food", "Outdoor Adventures", "Fitness", "Music", "Games", "Other"};
+        String items[] = {"Misc", "Food", "Outdoor Adventures", "Fitness", "Music", "Games"};
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -220,11 +223,7 @@ public class CurrentActivities extends javax.swing.JFrame {
                }
             }
         );
-        jTable_Display_Activities.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable_Display_ActivitiesMouseClicked(evt);
-            }
-        });
+        
         jScrollPane1.setViewportView(jTable_Display_Activities);
 
         jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
@@ -348,39 +347,38 @@ public class CurrentActivities extends javax.swing.JFrame {
     private void jComboBox_ActivityTypeActionPerformed(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
     }
-
- // show jtable row data in jtextfields in the mouse clicked event
-    private void jTable_Display_ActivitiesMouseClicked(java.awt.event.MouseEvent evt) {
-       // Get The Index Of The Slected Row
-        int i = jTable_Display_Activities.getSelectedRow();
-
-        TableModel model = jTable_Display_Activities.getModel();
-
-         // Display Slected Row In JTextFields
-        jTextField_Name.setText(model.getValueAt(i,0).toString());
-
-        jComboBox_MaxTime.setSelectedItem(model.getValueAt(i,1).toString());
-
-        jComboBox_IdealTime.setSelectedItem(model.getValueAt(i,2).toString());
-
-        jComboBox_MaxCost.setSelectedItem(model.getValueAt(i,3).toString());
-    }
+    
 // show jtable row data in jtextfields in the button clicked event
     private void jTable_Display_ActivitiesButtonClicked(java.awt.event.ActionEvent evt) {
-       // Get The Index Of The Slected Row
-        int i = Integer.valueOf( evt.getActionCommand() );
-        currentID = idList.get(i);
+        
+        if(toggleTrue) {
+            // Get The Index Of The Slected Row
+            int i = Integer.valueOf( evt.getActionCommand() );
+            currentID = idList.get(i);
 
-        TableModel model = jTable_Display_Activities.getModel();
+            TableModel model = jTable_Display_Activities.getModel();
 
-         // Display Slected Row In JTextFields
-        jTextField_Name.setText(model.getValueAt(i,0).toString());
+             // Display Slected Row In JTextFields
+            jTextField_Name.setText(model.getValueAt(i,0).toString());
 
-        jComboBox_MaxTime.setSelectedItem(model.getValueAt(i,1).toString());
+            jComboBox_MaxTime.setSelectedItem(model.getValueAt(i,1).toString());
 
-        jComboBox_IdealTime.setSelectedItem(model.getValueAt(i,2).toString());
+            jComboBox_IdealTime.setSelectedItem(model.getValueAt(i,2).toString());
 
-        jComboBox_MaxCost.setSelectedItem(model.getValueAt(i,3).toString());
+            jComboBox_MaxCost.setSelectedItem(model.getValueAt(i,3).toString());
+            
+            toggleTrue = false;
+        } else {
+            jComboBox_MaxTime.setSelectedIndex(0);
+            
+            jComboBox_IdealTime.setSelectedIndex(0);
+            
+            jComboBox_MaxCost.setSelectedIndex(0);
+            
+            jTextField_Name.setText("");
+            
+            toggleTrue = true;
+        }
     }
 
 
