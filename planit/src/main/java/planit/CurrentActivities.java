@@ -159,7 +159,6 @@ public class CurrentActivities extends javax.swing.JFrame {
                 int prevCurrentID = currentID;
                 int actionIndex = Integer.valueOf(e.getActionCommand());
                 currentID = idList.get(actionIndex);
-                jButton_Update.setEnabled(true);
                 if(prevCurrentID != currentID) {
                     jTable_Display_ActivitiesButtonClicked(actionIndex, true);
                 } else {
@@ -171,6 +170,8 @@ public class CurrentActivities extends javax.swing.JFrame {
         //DELETE ACTION
         delete_action = new javax.swing.AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+              int actionIndex = Integer.valueOf(e.getActionCommand());
+              currentID = idList.get(actionIndex);
               resetTextFields();
               jButton_DeleteActionPerformed(e);
             }
@@ -385,9 +386,13 @@ public class CurrentActivities extends javax.swing.JFrame {
             jComboBox_MaxCost.setSelectedItem(model.getValueAt(actionIndex,3).toString());
 
             toggleTrue = false;
+            jButton_Update.setEnabled(true);
+            jButton_Create.setEnabled(false);
         } else {
             resetTextFields();
             toggleTrue = true;
+            jButton_Update.setEnabled(false);
+            jButton_Create.setEnabled(true);
         }
     }
 
@@ -447,6 +452,8 @@ public class CurrentActivities extends javax.swing.JFrame {
 
  // Button Delete
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        jButton_Update.setEnabled(false);
+        jButton_Create.setEnabled(true);
         String query = "DELETE FROM `activities` WHERE id = "+currentID;
          executeSQlQuery(query, "Deleted");
     }

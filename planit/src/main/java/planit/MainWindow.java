@@ -110,27 +110,19 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         
         timeSelector = new JComboBox(timeOptions);
         timeSelector.addItemListener(this);
-        JLabel userTime = new JLabel("Select amount of free time:");
-        time = new JLabel();
+        JLabel userTime = new JLabel("Select amount of free hours:");
         inputPanel.add(userTime);
         inputPanel.add(timeSelector);
-        inputPanel.add(time);
         userTime.setForeground(Color.WHITE);
         userTime.setFont(new Font("Helvetica", Font.PLAIN, 16));
-        time.setForeground(Color.WHITE);
-        time.setFont(new Font("Helvetica", Font.PLAIN, 16));
         
         moneySelector = new JComboBox(costOptions);
         moneySelector.addItemListener(this);
-        JLabel userMoney = new JLabel("     Select current budget:");
-        money = new JLabel();
+        JLabel userMoney = new JLabel("     Select current budget  $");
         inputPanel.add(userMoney);
         inputPanel.add(moneySelector);
-        inputPanel.add(money);
         userMoney.setForeground(Color.WHITE);
         userMoney.setFont(new Font("Helvetica", Font.PLAIN, 16));
-        money.setForeground(Color.WHITE);
-        money.setFont(new Font("Helvetica", Font.PLAIN, 16));
  
         add(inputPanel);
         inputPanel.setOpaque(false);
@@ -176,9 +168,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
             //Update user's availableTime variable based on current selection
             availableTime = 60.0 * Double.parseDouble("" + timeSelector.getSelectedItem());
         }
-        else if (e.getSource() == moneySelector) {
-            money.setText(moneySelector.getSelectedItem() + " dollars selected");
-            
+        else if (e.getSource() == moneySelector) {            
             //Update user's availableMoney variable based on current selection
             availableMoney = Double.parseDouble("" + moneySelector.getSelectedItem());
         }
