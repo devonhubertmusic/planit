@@ -159,6 +159,7 @@ public class CurrentActivities extends javax.swing.JFrame {
                 int prevCurrentID = currentID;
                 int actionIndex = Integer.valueOf(e.getActionCommand());
                 currentID = idList.get(actionIndex);
+                jButton_Update.setEnabled(true);
                 if(prevCurrentID != currentID) {
                     jTable_Display_ActivitiesButtonClicked(actionIndex, true);
                 } else {
@@ -252,6 +253,7 @@ public class CurrentActivities extends javax.swing.JFrame {
         jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14));
         jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png")));
         jButton_Update.setText("Update Activity");
+        jButton_Update.setEnabled(false);
         jButton_Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_UpdateActionPerformed(evt);
