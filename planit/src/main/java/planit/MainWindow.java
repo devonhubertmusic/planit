@@ -111,7 +111,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         timeSelector = new JComboBox(timeOptions);
         timeSelector.addItemListener(this);
         JLabel userTime = new JLabel("Select amount of free time:");
-        time = new JLabel("half hour selected");
+        time = new JLabel();
         inputPanel.add(userTime);
         inputPanel.add(timeSelector);
         inputPanel.add(time);
@@ -123,7 +123,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         moneySelector = new JComboBox(costOptions);
         moneySelector.addItemListener(this);
         JLabel userMoney = new JLabel("     Select current budget:");
-        money = new JLabel("0 dollars selected"); 
+        money = new JLabel();
         inputPanel.add(userMoney);
         inputPanel.add(moneySelector);
         inputPanel.add(money);
@@ -173,19 +173,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     { 
         // if the state combobox is changed 
         if (e.getSource() == timeSelector) {
-            String selection = "" + timeSelector.getSelectedItem();
-            double selectionDouble = Double.parseDouble(selection);
-            String hours = "";
-            if(selectionDouble == 1.0) {
-                hours = "hour";
-            } else if(selectionDouble == 0.5) {
-                selection = "";
-                hours = "half hour";
-            } else {
-                hours = "hours";
-            }
-            time.setText(selection + " " + hours + " selected");
-            
             //Update user's availableTime variable based on current selection
             availableTime = 60.0 * Double.parseDouble("" + timeSelector.getSelectedItem());
         }
