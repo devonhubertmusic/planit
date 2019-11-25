@@ -176,6 +176,8 @@ public class CurrentActivities extends javax.swing.JFrame {
             }
         };
 
+        jTable_Display_Activities.setFont(new java.awt.Font("Helvetica", 0, 13));
+        jTable_Display_Activities.setRowHeight(30);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
