@@ -17,6 +17,8 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     //User availablity information
     public double availableTime;
     public double availableMoney;
+    //public boolean actWindowIsOpen;
+    public JButton windowLinker;
 
     //Dropdown boxes for user input
     private JComboBox timeSelector, moneySelector;
@@ -140,10 +142,16 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         viewButtons.add(b);
 
         //"View Current Activities" button
-        JButton vb = new JButton("Edit Activities");
+        final JButton vb = new JButton("Edit Activities");
         vb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CurrentActivities();
+                showCurrentActivities();
+               windowLinker = vb;
+               // actWindowIsOpen = true;
+               // if(actWindowIsOpen){
+               //      vb.setEnabled(false);
+               // }
+
             }
         });
         viewButtons.add(vb);
@@ -161,6 +169,14 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         add(Box.createVerticalGlue());
     }
 
+     public void enableMyButton(){
+        windowLinker.setEnabled(true);
+    }
+
+    public void disableMyButton(){
+        windowLinker.setEnabled(false);
+    }
+
     public void itemStateChanged(ItemEvent e) 
     { 
         // if the state combobox is changed 
@@ -174,6 +190,10 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         }
     }
 
+    public void showCurrentActivities(){
+        CurrentActivities a = new CurrentActivities(this);
+
+    }
 
     //Handles the closing of the Main window, re-setting settings to their defaults
     public void windowClosing(WindowEvent e)
