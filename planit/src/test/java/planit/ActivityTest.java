@@ -11,7 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
  
 //Run using mvn clean test
-public class AppTest 
+public class ActivityTest 
 {
     private static Activity activity;
  
