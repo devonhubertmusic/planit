@@ -11,20 +11,33 @@ import javax.swing.table.TableModel;
 import java.awt.event.*;
 
 
-public class CurrentActivities extends javax.swing.JFrame {
+public class CurrentActivities extends javax.swing.JFrame implements WindowListener{
 
     public boolean toggleTrue;
+   // public boolean windowIsOpen;
+    private MainWindow mWindow;
 
   /**
    * @param args the command line arguments
    */
-    public CurrentActivities() {
-        toggleTrue = true;
+    // public CurrentActivities() {
+    //     toggleTrue = true;
+    //     addWindowListener(this);
+    //     initComponents();
+    //     Show_Activities_In_JTable();
 
+    //     setVisible(true);
+    // }
+
+        public CurrentActivities(MainWindow mWindow) {
+        this.mWindow = mWindow;
+        toggleTrue = true;
+        addWindowListener(this);
         initComponents();
         Show_Activities_In_JTable();
 
         setVisible(true);
+
     }
 
      // get the connection
@@ -489,5 +502,27 @@ public class CurrentActivities extends javax.swing.JFrame {
 
     public void actionPerformed(ActionEvent e){
 
+    }
+
+        public void windowClosing(WindowEvent e)
+    {
+        try {
+            dispose(); //Close window
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+    }
+
+    public void windowOpened(WindowEvent e) {
+     // windowIsOpen = true;
+      this.mWindow.disableMyButton();
+    }
+    public void windowActivated(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {}
+    public void windowDeactivated(WindowEvent e) {}
+    public void windowClosed(WindowEvent e) {
+      //windowIsOpen = false;
+      this.mWindow.enableMyButton();
     }
 }
