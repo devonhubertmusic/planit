@@ -131,7 +131,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         //"Generate Activity Plan" button
-        JButton b = new JButton("Generate Activity Plan");
+        JButton b = new JButton("Generate Plan");
         b.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ActivityPlan(availableTime, availableMoney);

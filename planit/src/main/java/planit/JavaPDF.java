@@ -50,19 +50,19 @@ public class JavaPDF extends JComponent implements Accessible {
         try
         {
            JOptionPane.showMessageDialog(null, "PDF Saved.");
-           Font fontSizeTitle =  FontFactory.getFont(FontFactory.TIMES, 30f);
+           Font fontSizeTitle =  FontFactory.getFont(FontFactory.HELVETICA, 30f);
            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "MyPlan.pdf")));//"MyPlan.pdf"));
            document.open();
 
            Paragraph header = new Paragraph();
            header.setFont(fontSizeTitle);
            header.setAlignment(Paragraph.ALIGN_CENTER);
-           header.add("Activity Plan \n\n");
+           header.add("Activity Plan \n\n\n");
            document.add(header); 
            String logoUrl = "https://raw.githubusercontent.com/devonhubertmusic/planit/master/planit/src/main/resources/images/Planit.png";
            Image logo = Image.getInstance(new URL(logoUrl));
-           logo.setAbsolutePosition(400, 50);
-           logo.scaleAbsolute(160,100);
+           logo.setAbsolutePosition(420, 25);
+           logo.scaleAbsolute(160,125);
            document.add(logo);
            int size = myActivityList.size(); 
 
@@ -98,12 +98,10 @@ public class JavaPDF extends JComponent implements Accessible {
                }
 
             document.add(table);
-   //TO ADD : total time, type, and total cost
-           //change formatting
-           //maybe add tables?or list activi?
+         //TODO
            //message box when pdf is currently open or 
            //make each pdf be named something differe
-           //also pdf saved message should only pop up ONLY when the pdf is saved 
+           
 
            document.close();
            writer.close();

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.Component;
 import java.awt.Container;
+import javax.swing.GroupLayout.Alignment.*; //
 import javax.swing.*;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -22,36 +23,105 @@ public class ActivityPlan
     JFrame activityPlanFrame;
     double availableTime;
     double availableMoney;
+     double totalTime;
+     double totalCost;
     
     //Default constructor
     public ActivityPlan() {
         this.activityPlanFrame = null;
         this.availableTime = 0.0;
         this.availableMoney = 0.0;
+        double totalTime = 0.0;
+        double totalCost = 0.0;
+        
     }
     
     //Explicit constructor
     public ActivityPlan(double availableTime, double availableMoney){
         this.availableTime = availableTime;
         this.availableMoney = availableMoney;
-        this.activityPlanFrame = makeWindow();
+       
       ArrayList<Activity> myList = getPlanList(0.75);
-        makeAndDisplayPlanTable(myList);
-        completeWindow(myList);
+      this.activityPlanFrame = makeWindow(myList);
     }
     
     //Returns a JFrame window with size, titles, and layout, etc. set
-    public JFrame makeWindow() {
-        JFrame activityPlanFrame = new JFrame(); //Window
-        activityPlanFrame.setLayout(new FlowLayout()); //Layout
+    public JFrame makeWindow(final ArrayList<Activity> activityList) {
+  
+    	JFrame activityPlanFrame = new JFrame(); //Window
+    	activityPlanFrame.setLayout(new FlowLayout()); //Layout
         activityPlanFrame.setTitle("Plan Generator"); //Window title
-        activityPlanFrame.setSize(500, 600); //Size
+        activityPlanFrame.setSize(600, 700); //Size
         
         JLabel header = new JLabel("My Activity Plan"); //Title
-        activityPlanFrame.add(header);
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
+        JButton save = new JButton("Save Plan");
+        JLabel timeLabel = new JLabel("Total Time: " + doubleToTime(totalTime));
+        timeLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        String dataTable[][] = makeAndDisplayPlanTable(activityList);  
+    String[] columnNames = {"Activity", "Time", "Cost"};
         
+        JTable j = new JTable(dataTable, columnNames);
+       // j.setBounds(30, 40, 200, 300);
+
+        JScrollPane sp = new JScrollPane(j);
+        JLabel costLabel = new JLabel("Total Cost: $" + totalCost);
+        costLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        
+          save.addActionListener( new ActionListener() {
+              public void actionPerformed(ActionEvent evt) {
+              	JavaPDF PlanPdf = new JavaPDF();
+              	PlanPdf.printPdf(activityList);
+              }
+              });
+          
+        activityPlanFrame.setVisible(true);
+    
+    GroupLayout layout = new GroupLayout(activityPlanFrame.getContentPane());
+    activityPlanFrame.getContentPane().setLayout(layout);
+    
+    layout.setHorizontalGroup(
+    		layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+    		.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+    	       //      .addGap(25,25,25)
+    	             .addComponent(header))
+    			.addGroup(layout.createParallelGroup()
+    					.addGap(75,75,75)
+    					.addComponent(j))
+    			.addComponent(costLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
+    			.addGroup(layout.createParallelGroup()
+    					.addGap(75,75,75))
+    					//.addComponent(sp))
+    				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+    				.addComponent(save))
+    				//.addComponent(sp))
+    				);
+
+  //--NEED TO ADD SCROLL PANE STILL
+            layout.setVerticalGroup( 
+                layout.createSequentialGroup()
+                .addGroup(layout.createSequentialGroup()
+                		.addContainerGap()
+                        //.addGap(100,100,100)
+                .addComponent(header))
+                .addGroup(layout.createSequentialGroup()
+          	           //  .addGap(50,50,50)
+          	             .addComponent(j))
+                .addComponent(costLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
+                .addGroup(layout.createSequentialGroup()
+         	             .addGap(150,150,150))
+         	           //  .addComponent(sp))
+                .addGroup(layout.createSequentialGroup()
+                		.addGap(250,250,250)
+                 .addComponent(save))
+                //.addComponent(sp))
+            		);
+            
+            
+          //activityPlanFrame.pack();
+      //  activityPlan.getContentPane().setBackground(Color.GRAY);
+
         return activityPlanFrame;
     }
     
@@ -65,14 +135,11 @@ public class ActivityPlan
     
     //Given an activity plan ArrayList, creates and displays a formatted table of these activities,
     //along with their total time and cost
-    public void makeAndDisplayPlanTable(ArrayList<Activity> myActivityList) {
+    public String[][]  makeAndDisplayPlanTable(ArrayList<Activity> myActivityList) {
         int rowSize = myActivityList.size();
         int columnSize = 3;
         String[][] data = new String[rowSize][columnSize];
-        
-        double totalTime = 0.0;
-        double totalCost = 0.0;
-        
+  
         //Fill table with data from activity plan
         for(int row = 0; row < rowSize; row++) {
             for(int column = 1; column <= columnSize; column++) {
@@ -96,41 +163,9 @@ public class ActivityPlan
                 }
             }
         }
-        
-        String[] columnNames = {"Activity", "Time", "Cost"};
-        
-        JTable j = new JTable(data, columnNames);
-        j.setBounds(30, 40, 200, 300);
+        return data;
+    }     
 
-        JScrollPane sp = new JScrollPane(j);
-        this.activityPlanFrame.add(sp);
-        
-        JLabel timeLabel = new JLabel("Total Time: " + doubleToTime(totalTime));
-        this.activityPlanFrame.add(timeLabel);
-        timeLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
-        timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        timeLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
-        
-        JLabel costLabel = new JLabel("Total Cost: $" + totalCost);
-        this.activityPlanFrame.add(costLabel);
-        costLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
-        costLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        costLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
-    }
-    
-    //Adds final buttons to the main window, and makes the window visible
-    public void completeWindow(final ArrayList<Activity> activityList) {
-     //   ArrayList<Activity> myActivityList = myPlan.getActivityList();
-        JButton save = new JButton("Save Plan");
-        save.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-            	JavaPDF PlanPdf = new JavaPDF();
-            	PlanPdf.printPdf(activityList);
-            }
-            });
-        this.activityPlanFrame.add(save);
-        this.activityPlanFrame.setVisible(true);
-    }
     //Converts a double time value in minutes to hours, minutes, etc.
     public String doubleToTime(double rawTime){
         String timeString = "";
