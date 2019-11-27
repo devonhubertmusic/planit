@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.*;
 
-
 public class CurrentActivities extends javax.swing.JFrame implements WindowListener{
 
     public boolean toggleTrue;
@@ -36,6 +35,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         initComponents();
         Show_Activities_In_JTable();
 
+        setMinimumSize(getSize());
         setVisible(true);
 
     }
@@ -72,7 +72,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
            Activity activity;
            while(rs.next())
            {
-               activity = new Activity(rs.getString("name"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
+               activity = new Activity(rs.getString("name"),rs.getString("activityType"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
                activityList.add(activity);
                idList.add(rs.getInt("id"));
            }
@@ -92,9 +92,9 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
        for(int i = 0; i < list.size(); i++)
        {
            row[0] = list.get(i).getName();
-           row[1] = list.get(i).getMaxTime();
-           row[2] = list.get(i).getIdealTime();
-           row[3] = list.get(i).getMaxCost();
+           row[1] = (int)list.get(i).getMaxTime();
+           row[2] = (int)list.get(i).getIdealTime();
+           row[3] = (int)list.get(i).getMaxCost();
            row[4] = "Edit";
            row[5] = "Delete";
 
@@ -140,16 +140,27 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     private void initComponents() {
         timeOption = new String[96];
         for (int i = 0, j = 5; i < 96; ++i, j+=5) {
-            timeOption[i] = Double.toString((double)j);
+            timeOption[i] = Integer.toString(j);
         }
         costOption = new String[100];
         for (int i = 0, j = 0; i < 100; ++i, j+=5) {
-            costOption[i] = Double.toString((double)j);
+            costOption[i] = Integer.toString(j);
         }
 
         String items[] = {"Misc", "Food", "Outdoor Adventures", "Fitness", "Music", "Games"};
 
-        jPanel1 = new javax.swing.JPanel();
+        final java.awt.Image backgroundImage;
+        try {
+            backgroundImage = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/images/space.jpg"));
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+        jPanel1 = new javax.swing.JPanel() {
+          @Override public void paintComponent(java.awt.Graphics g) {
+            java.awt.Dimension d = getSize();
+            g.drawImage(backgroundImage, 2, 2, d.width-4, d.height-4, null);
+          }
+        };
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -193,22 +204,25 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         jTable_Display_Activities.setFont(new java.awt.Font("Helvetica", 0, 13));
         jTable_Display_Activities.setRowHeight(30);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-
         jLabel1.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel1.setText("Name:");
+        jLabel1.setForeground(java.awt.Color.WHITE);
 
         jLabel2.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel2.setText("Max Time (minutes):");
+        jLabel2.setForeground(java.awt.Color.WHITE);
 
         jLabel3.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel3.setText("Ideal Time (minutes):");
+        jLabel3.setForeground(java.awt.Color.WHITE);
 
         jLabel4.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel4.setText("Max Cost (dollars):");
+        jLabel4.setForeground(java.awt.Color.WHITE);
 
         jLabel5.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel5.setText("Activity Type:");
+        jLabel5.setForeground(java.awt.Color.WHITE);
 
         jLabel6.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel6.setText("Test:");
@@ -388,6 +402,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             // Get The Index Of The Slected Row
 
             TableModel model = jTable_Display_Activities.getModel();
+            ArrayList<Activity> list = getactivityList();
 
              // Display Slected Row In JTextFields
             jTextField_Name.setText(model.getValueAt(actionIndex,0).toString());
@@ -397,6 +412,8 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             jComboBox_IdealTime.setSelectedItem(model.getValueAt(actionIndex,2).toString());
 
             jComboBox_MaxCost.setSelectedItem(model.getValueAt(actionIndex,3).toString());
+
+            jComboBox_ActivityType.setSelectedItem(list.get(actionIndex).getActivityType());
 
             toggleTrue = false;
             jButton_Update.setEnabled(true);
@@ -416,15 +433,18 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
 
         jComboBox_MaxCost.setSelectedIndex(0);
 
+        jComboBox_ActivityType.setSelectedIndex(0);
+
         jTextField_Name.setText("");
     }
 
 
  // Button Create
     private void jButton_CreateActionPerformed(java.awt.event.ActionEvent evt) {
-        String query = "INSERT INTO `activities` (name,maxtime,idealtime,maxcost) VALUES ('"
+        String query = "INSERT INTO `activities` (name,maxtime,idealtime,maxcost,activityType) VALUES ('"
                         + jTextField_Name.getText() + "', " + jComboBox_MaxTime.getSelectedItem()
-                        + ", " + jComboBox_IdealTime.getSelectedItem() + ", " + jComboBox_MaxCost.getSelectedItem() + ")";
+                        + ", " + jComboBox_IdealTime.getSelectedItem() + ", " 
+                        + jComboBox_MaxCost.getSelectedItem() + ", '" + jComboBox_ActivityType.getSelectedItem() + "')";
         String newActName = jTextField_Name.getText();
         double newActMaxTime = Double.parseDouble("" + jComboBox_MaxTime.getSelectedItem());
         double newActIdealTime = Double.parseDouble("" + jComboBox_IdealTime.getSelectedItem());
@@ -454,11 +474,10 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
         String query = "UPDATE `activities` SET `name`='"+jTextField_Name.getText()+"',`maxtime`='"
         +jComboBox_MaxTime.getSelectedItem()+"',`idealtime`='"+jComboBox_IdealTime.getSelectedItem()+"',`maxcost`='"
-        +jComboBox_MaxCost.getSelectedItem()+"' WHERE `id` = "+currentID;
-        jComboBox_MaxTime.setSelectedIndex(0);
-        jComboBox_IdealTime.setSelectedIndex(0);
-        jComboBox_MaxCost.setSelectedIndex(0);
-        jTextField_Name.setText("");
+        +jComboBox_MaxCost.getSelectedItem()+"', `activityType`='"+jComboBox_ActivityType.getSelectedItem()+"' WHERE `id` = "+currentID;
+        resetTextFields();
+        jButton_Update.setEnabled(false);
+        jButton_Create.setEnabled(true);
         executeSQlQuery(query, "Updated");
     }
 

@@ -26,7 +26,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     //Labels to display maxTime, idealTime, maxCost, and availableMoney user input
     private JLabel time, money;
 
-    public MainWindow(String title) {
+    public MainWindow(String title, int screenHeight) {
         super(title); //Add title to window
         
         availableTime = 30.0;
@@ -64,6 +64,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         }
         
         //Create and format header
+        setMinimumSize(new Dimension(screenHeight, screenHeight));
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         addWindowListener(this);
         JLabel text = new JLabel("Welcome to Plan-it!");
@@ -134,6 +135,8 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
 
         //"Generate Activity Plan" button
         JButton b = new JButton("Generate Plan");
+        b.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        b.setPreferredSize(new Dimension(150, 50));
         b.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ActivityPlan(availableTime, availableMoney);
@@ -143,6 +146,8 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
 
         //"View Current Activities" button
         final JButton vb = new JButton("Edit Activities");
+        vb.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        vb.setPreferredSize(new Dimension(150, 50));
         vb.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showCurrentActivities();
