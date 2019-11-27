@@ -57,15 +57,20 @@ public class ActivityPlan
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
         JButton save = new JButton("Save Plan");
+        save.setFont(new Font("Helvetica", 1, 14));
+       save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png")));
         JLabel timeLabel = new JLabel("Total Time: " + doubleToTime(totalTime));
         timeLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
         String dataTable[][] = makeAndDisplayPlanTable(activityList);  
     String[] columnNames = {"Activity", "Time", "Cost"};
         
         JTable j = new JTable(dataTable, columnNames);
-       // j.setBounds(30, 40, 200, 300);
-
-        JScrollPane sp = new JScrollPane(j);
+        j.setFont(new java.awt.Font("Helvetica", Font.PLAIN,15));
+      //  j.setBackground(new java.awt.Color(40,40,40));
+        j.setRowHeight(30);
+        j.setBounds(30, 40, 200, 300);
+        JScrollPane scrollPane = new JScrollPane(j);
+     //  scrollPane.setViewportView(j);
         JLabel costLabel = new JLabel("Total Cost: $" + totalCost);
         costLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
         
@@ -77,7 +82,7 @@ public class ActivityPlan
               });
           
         activityPlanFrame.setVisible(true);
-    
+  
     GroupLayout layout = new GroupLayout(activityPlanFrame.getContentPane());
     activityPlanFrame.getContentPane().setLayout(layout);
     
@@ -87,11 +92,11 @@ public class ActivityPlan
     	       //      .addGap(25,25,25)
     	             .addComponent(header))
     			.addGroup(layout.createParallelGroup()
-    					.addGap(75,75,75)
-    					.addComponent(j))
+    					.addGap(100,100,100)
+    					.addComponent(scrollPane))
     			.addComponent(costLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
     			.addGroup(layout.createParallelGroup()
-    					.addGap(75,75,75))
+    					.addGap(80,80,80))
     					//.addComponent(sp))
     				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
     				.addComponent(save))
@@ -103,19 +108,14 @@ public class ActivityPlan
                 layout.createSequentialGroup()
                 .addGroup(layout.createSequentialGroup()
                 		.addContainerGap()
-                        //.addGap(100,100,100)
                 .addComponent(header))
                 .addGroup(layout.createSequentialGroup()
-          	           //  .addGap(50,50,50)
-          	             .addComponent(j))
+          	             .addComponent(scrollPane))
                 .addComponent(costLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
+                .addGroup(layout.createSequentialGroup())
                 .addGroup(layout.createSequentialGroup()
-         	             .addGap(150,150,150))
-         	           //  .addComponent(sp))
-                .addGroup(layout.createSequentialGroup()
-                		.addGap(250,250,250)
+                		.addGap(100,100,100)
                  .addComponent(save))
-                //.addComponent(sp))
             		);
             
             
