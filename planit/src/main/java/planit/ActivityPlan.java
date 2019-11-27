@@ -58,7 +58,7 @@ public class ActivityPlan
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
         JButton save = new JButton("Save Plan");
         save.setFont(new Font("Helvetica", 1, 14));
-       save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png")));
+        //save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png")));
         JLabel timeLabel = new JLabel("Total Time: " + doubleToTime(totalTime));
         timeLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
         String dataTable[][] = makeAndDisplayPlanTable(activityList);  

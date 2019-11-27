@@ -113,7 +113,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         
         timeSelector = new JComboBox(timeOptions);
         timeSelector.addItemListener(this);
-        JLabel userTime = new JLabel("Select amount of free hours:");
+        JLabel userTime = new JLabel("Select number of free hours:");
         inputPanel.add(userTime);
         inputPanel.add(timeSelector);
         userTime.setForeground(Color.WHITE);
@@ -121,7 +121,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         
         moneySelector = new JComboBox(costOptions);
         moneySelector.addItemListener(this);
-        JLabel userMoney = new JLabel("     Select current budget  $");
+        JLabel userMoney = new JLabel("    Select current budget: $");
         inputPanel.add(userMoney);
         inputPanel.add(moneySelector);
         userMoney.setForeground(Color.WHITE);
