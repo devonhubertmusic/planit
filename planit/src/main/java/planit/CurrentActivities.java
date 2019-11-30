@@ -16,18 +16,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
    // public boolean windowIsOpen;
     private MainWindow mWindow;
 
-  /**
-   * @param args the command line arguments
-   */
-    // public CurrentActivities() {
-    //     toggleTrue = true;
-    //     addWindowListener(this);
-    //     initComponents();
-    //     Show_Activities_In_JTable();
-
-    //     setVisible(true);
-    // }
-
         public CurrentActivities(MainWindow mWindow) {
         this.mWindow = mWindow;
         toggleTrue = true;
@@ -479,6 +467,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         jButton_Update.setEnabled(false);
         jButton_Create.setEnabled(true);
         executeSQlQuery(query, "Updated");
+        PlanitRunner.updateActivityList();
     }
 
 

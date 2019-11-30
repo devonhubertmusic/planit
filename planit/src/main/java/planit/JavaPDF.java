@@ -36,7 +36,7 @@ public class JavaPDF extends JComponent implements Accessible {
   }
   public void printPdf(ArrayList<Activity> myActivityList) {
     
-        JFileChooser chooser = new JFileChooser();
+       JFileChooser chooser = new JFileChooser();
        chooser.setCurrentDirectory(new java.io.File("."));
        chooser.setDialogTitle("Save Backup");
        chooser.setApproveButtonText("Save");

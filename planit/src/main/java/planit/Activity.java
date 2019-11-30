@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Activity implements Comparable<Activity>
 {
-
 	//Fields
 	private String name; //Activity name
     private String activityType; //Activity type
@@ -12,8 +11,6 @@ public class Activity implements Comparable<Activity>
 	private double idealTime; //Ideal time for the activity
     private double actualTime; //Actual time activity will take
 	private double maxCost; //Upper bound of cost for this activity
-	
-	//Future field ideas: location, funLevel, etc.
 	
 	//Default constructor
 	public Activity() {
@@ -37,6 +34,7 @@ public class Activity implements Comparable<Activity>
     
     }
 
+    /*
     public Activity(String name, int maxTime, int idealTime, int maxCost){
         //Set fields based on explicit data
         //Overload for option without activityType
@@ -46,6 +44,7 @@ public class Activity implements Comparable<Activity>
         this.idealTime = idealTime;
         this.maxCost = maxCost;
     }
+     */
     
     //Methods:
     
@@ -58,9 +57,7 @@ public class Activity implements Comparable<Activity>
             return false;
         }
         
-        if((this.name).equalsIgnoreCase(that.name) /*&& this.maxTime == that.maxTime
-           && this.idealTime == that.idealTime && this.actualTime == that.actualTime
-           && this.maxCost == that.maxCost */) {
+        if((this.name).equalsIgnoreCase(that.name)) {
             return true;
         } else {
             return false;
@@ -71,6 +68,7 @@ public class Activity implements Comparable<Activity>
     public Activity copy() {
         Activity copy = new Activity();
         copy.setName(this.name);
+        copy.setActivityType(this.activityType);
         copy.setMaxTime(this.maxTime);
         copy.setIdealTime(this.idealTime);
         copy.setMaxCost(this.maxCost);
