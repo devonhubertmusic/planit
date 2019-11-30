@@ -28,7 +28,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
 
     }
 
-     // get the connection
+   // get the connection
    public Connection getConnection()
    {
        Connection con;
@@ -43,7 +43,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
    }
 
 
- // get a list of activities from mysql database
+   // get a list of activities from mysql database
    public ArrayList<Activity> getactivityList()
    {
        ArrayList<Activity> activityList = new ArrayList<Activity>();
@@ -189,6 +189,8 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             }
         };
 
+        //Design of labels, buttons, input fields, and table
+
         jTable_Display_Activities.setFont(new java.awt.Font("Helvetica", 0, 13));
         jTable_Display_Activities.setRowHeight(30);
 
@@ -257,9 +259,13 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             }
         );
 
+        // Allow table to scroll
+
         jScrollPane1.setViewportView(jTable_Display_Activities);
 
-        jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        //Set the design of the create button
+
+        jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14));
         jButton_Create.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png")));
         jButton_Create.setText("Create Activity");
         jButton_Create.addActionListener(new java.awt.event.ActionListener() {
@@ -267,6 +273,8 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                 jButton_CreateActionPerformed(evt);
             }
         });
+
+        //Set the design of the update button
 
         jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14));
         jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png")));
@@ -278,14 +286,16 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             }
         });
 
+        //Java swing to create group layout for the horizantal and vertical components
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
+        //Horizantal group layout. Determines the horizantal placement of different components
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addGap(33, 33, 33) //Gap between each component
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -316,6 +326,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, Short.MAX_VALUE)
                 .addContainerGap())
         );
+        //Vertical group layout. Determines the vertical placement for each component
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -352,6 +363,8 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        //Sets the horizantal and vertical group layouts for display
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -414,6 +427,8 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         }
     }
 
+    // Reset text fields/clears the text fields
+
     public void resetTextFields() {
         jComboBox_MaxTime.setSelectedIndex(0);
 
@@ -427,11 +442,11 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     }
 
 
- // Button Create
+ // Button to create new activites
     private void jButton_CreateActionPerformed(java.awt.event.ActionEvent evt) {
         String query = "INSERT INTO `activities` (name,maxtime,idealtime,maxcost,activityType) VALUES ('"
                         + jTextField_Name.getText() + "', " + jComboBox_MaxTime.getSelectedItem()
-                        + ", " + jComboBox_IdealTime.getSelectedItem() + ", " 
+                        + ", " + jComboBox_IdealTime.getSelectedItem() + ", "
                         + jComboBox_MaxCost.getSelectedItem() + ", '" + jComboBox_ActivityType.getSelectedItem() + "')";
         String newActName = jTextField_Name.getText();
         double newActMaxTime = Double.parseDouble("" + jComboBox_MaxTime.getSelectedItem());
@@ -458,7 +473,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         }
     }
 
- // Button Update
+ // Button to update activities
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
         String query = "UPDATE `activities` SET `name`='"+jTextField_Name.getText()+"',`maxtime`='"
         +jComboBox_MaxTime.getSelectedItem()+"',`idealtime`='"+jComboBox_IdealTime.getSelectedItem()+"',`maxcost`='"
@@ -471,7 +486,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     }
 
 
- // Button Delete
+ // Button delete activities
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
         jButton_Update.setEnabled(false);
         jButton_Create.setEnabled(true);
