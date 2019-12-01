@@ -111,7 +111,8 @@ public class JavaPDF extends JComponent implements Accessible {
            writer.close();
         } catch (Exception e)
         { 
-          e.printStackTrace();
+        	   JOptionPane.showMessageDialog(null, "PDF is currently opened by another application. \n" 
+        			   +"Please close the PDF and try again.");
         }
   }
   }
