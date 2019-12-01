@@ -88,6 +88,9 @@ public class JavaPDF extends JComponent implements Accessible {
         cell.setRowspan(2);
         table.addCell(cell);
 
+ double totalTime = 0.0;
+        double totalCost = 0.0;
+
  
 
            for(int row = 0; row < size; row++) {
@@ -95,14 +98,23 @@ public class JavaPDF extends JComponent implements Accessible {
                  String tmp = temp.toString();
                  table.addCell(tmp);
                   double tempTime = myActivityList.get(row).getActualTime();
+                  totalTime += tempTime;
                   String tmpTime = Double.valueOf(tempTime).toString();
                   table.addCell(tmpTime + " minutes");
                   double tempCost = myActivityList.get(row).getMaxCost();
+                  totalCost += tempCost;
                   String tmpCost = Double.valueOf(tempCost).toString();
                   table.addCell("$" + tmpCost);
                }
 
             document.add(table);
+
+            String tmpTotalTime = Double.valueOf(totalTime).toString();
+            String tmpTotalCost = Double.valueOf(totalCost).toString();
+
+            document.add(new Paragraph("Total Time: " + tmpTotalTime + " minutes"));
+
+            document.add(new Paragraph("Total Cost: $" + tmpTotalCost));  
          //TODO
            //message box when pdf is currently open or 
            //make each pdf be named something differe
