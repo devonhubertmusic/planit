@@ -219,6 +219,15 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         jLabel5.setForeground(java.awt.Color.WHITE);
 
         jTextField_Name.setFont(new java.awt.Font("Helvetica", 0, 14));
+        
+        //Limits text field input to 25 characters
+        jTextField_Name.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                if (jTextField_Name.getText().length() == 25) {
+                    e.consume();
+                }
+            }
+        });
 
         jComboBox_MaxTime.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
