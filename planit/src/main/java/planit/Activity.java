@@ -2,6 +2,10 @@ package planit;
 
 import java.util.*;
 
+/**
+* Activity is a mutable object that describes 
+* a certain activity.
+*/
 public class Activity implements Comparable<Activity>
 {
 	//Fields

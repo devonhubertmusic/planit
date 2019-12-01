@@ -10,6 +10,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.*;
 
+/**
+* CurrentActivities handles the creation and editing
+* of the activities in the database.
+*/
 public class CurrentActivities extends javax.swing.JFrame implements WindowListener{
 
     public boolean toggleTrue;
@@ -24,6 +28,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         Show_Activities_In_JTable();
 
         setMinimumSize(getSize());
+        setTitle("Edit Acitivities");
         setVisible(true);
 
     }
@@ -154,7 +159,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jTextField_Name = new javax.swing.JTextField();
         jComboBox_MaxTime = new javax.swing.JComboBox(timeOption);
         jComboBox_IdealTime = new javax.swing.JComboBox(timeOption);
@@ -213,9 +217,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         jLabel5.setFont(new java.awt.Font("Helvetica", 0, 18));
         jLabel5.setText("Activity Type:");
         jLabel5.setForeground(java.awt.Color.WHITE);
-
-        jLabel6.setFont(new java.awt.Font("Helvetica", 0, 18));
-        jLabel6.setText("Test:");
 
         jTextField_Name.setFont(new java.awt.Font("Helvetica", 0, 14));
 
@@ -321,10 +322,10 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                         .addGap(18, 18, 18)
                         .addComponent(jButton_Create)
                         .addComponent(jButton_Update)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, 20)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(40, 40, 40))
         );
         //Vertical group layout. Determines the vertical placement for each component
         jPanel1Layout.setVerticalGroup(
@@ -359,7 +360,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                     .addComponent(jButton_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(192, 192, 192))
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(40, 40, 40)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -417,11 +418,15 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             jComboBox_ActivityType.setSelectedItem(list.get(actionIndex).getActivityType());
 
             toggleTrue = false;
+            jLabel1.setText("NOW EDITING:");
+            jLabel1.setForeground(java.awt.Color.RED);
             jButton_Update.setEnabled(true);
             jButton_Create.setEnabled(false);
         } else {
             resetTextFields();
             toggleTrue = true;
+            jLabel1.setText("Name:");
+            jLabel1.setForeground(java.awt.Color.WHITE);
             jButton_Update.setEnabled(false);
             jButton_Create.setEnabled(true);
         }
@@ -502,7 +507,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Display_Activities;

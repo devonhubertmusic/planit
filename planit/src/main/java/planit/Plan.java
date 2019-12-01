@@ -10,6 +10,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.event.*;
+
+/**
+* Plan is the main algorithm behind generating a plan
+*/
 public class Plan {
 
 	//Fields

@@ -18,13 +18,17 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
+/**
+* ActivityPlan handles displaying generated plans
+* with an option to save the information as pdf.
+*/
 public class ActivityPlan
 {
     JFrame activityPlanFrame;
     double availableTime;
     double availableMoney;
-     double totalTime;
-     double totalCost;
+    double totalTime;
+    double totalCost;
     
     //Default constructor
     public ActivityPlan() {
@@ -32,95 +36,103 @@ public class ActivityPlan
         this.availableTime = 0.0;
         this.availableMoney = 0.0;
         double totalTime = 0.0;
-        double totalCost = 0.0;
-        
+        double totalCost = 0.0; 
     }
     
     //Explicit constructor
     public ActivityPlan(double availableTime, double availableMoney){
         this.availableTime = availableTime;
         this.availableMoney = availableMoney;
-       
-      ArrayList<Activity> myList = getPlanList(0.75);
-      this.activityPlanFrame = makeWindow(myList);
+        ArrayList<Activity> myList = getPlanList(0.75);
+        this.activityPlanFrame = makeWindow(myList);
     }
     
     //Returns a JFrame window with size, titles, and layout, etc. set
     public JFrame makeWindow(final ArrayList<Activity> activityList) {
-  
     	JFrame activityPlanFrame = new JFrame(); //Window
+        //Set background image of window
+        try {
+            final Image backgroundImage = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/images/space.jpg"));
+            activityPlanFrame.setContentPane(new JPanel(new BorderLayout()) {
+                @Override public void paintComponent(Graphics g) {
+                    Dimension d = getSize();
+                    g.drawImage(backgroundImage, 2, 2, d.width-4, d.height-4, null);
+                }
+            });
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
     	activityPlanFrame.setLayout(new FlowLayout()); //Layout
         activityPlanFrame.setTitle("Plan Generator"); //Window title
         activityPlanFrame.setSize(600, 700); //Size
         
+        String dataTable[][] = makeAndDisplayPlanTable(activityList);  
+        String[] columnNames = {"Activity", "Time", "Cost"};
+        JTable j = new JTable(dataTable, columnNames);
+        j.setFont(new java.awt.Font("Helvetica", Font.PLAIN,15));
+        j.setRowHeight(30);
+        j.getColumnModel().getColumn(0).setPreferredWidth(200);
+        j.setBounds(30, 40, 200, 300);
+        JScrollPane scrollPane = new JScrollPane(j);
+        scrollPane.setViewportView(j);
+
         JLabel header = new JLabel("My Activity Plan"); //Title
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
+        header.setForeground(java.awt.Color.WHITE);
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
         JButton save = new JButton("Save Plan");
         save.setFont(new Font("Helvetica", 1, 14));
         save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png")));
         JLabel timeLabel = new JLabel("Total Time: " + doubleToTime(totalTime));
         timeLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
-        String dataTable[][] = makeAndDisplayPlanTable(activityList);  
-    String[] columnNames = {"Activity", "Time", "Cost"};
-        
-        JTable j = new JTable(dataTable, columnNames);
-        j.setFont(new java.awt.Font("Helvetica", Font.PLAIN,15));
-      //  j.setBackground(new java.awt.Color(40,40,40));
-        j.setRowHeight(30);
-        j.setBounds(30, 40, 200, 300);
-        JScrollPane scrollPane = new JScrollPane(j);
-     //  scrollPane.setViewportView(j);
+        timeLabel.setForeground(java.awt.Color.WHITE);
         JLabel costLabel = new JLabel("Total Cost: $" + totalCost);
         costLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        costLabel.setForeground(java.awt.Color.WHITE);
         
-          save.addActionListener( new ActionListener() {
-              public void actionPerformed(ActionEvent evt) {
-              	JavaPDF PlanPdf = new JavaPDF();
-              	PlanPdf.printPdf(activityList);
-              }
-              });
+        save.addActionListener( new ActionListener() {
+          public void actionPerformed(ActionEvent evt) {
+          	JavaPDF PlanPdf = new JavaPDF();
+          	PlanPdf.printPdf(activityList);
+          }
+        });
           
         activityPlanFrame.setVisible(true);
   
-    GroupLayout layout = new GroupLayout(activityPlanFrame.getContentPane());
-    activityPlanFrame.getContentPane().setLayout(layout);
-    
-    layout.setHorizontalGroup(
+        GroupLayout layout = new GroupLayout(activityPlanFrame.getContentPane());
+        activityPlanFrame.getContentPane().setLayout(layout);
+        
+        layout.setHorizontalGroup(
     		layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
     		.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-    	       //      .addGap(25,25,25)
-    	             .addComponent(header))
-    			.addGroup(layout.createParallelGroup()
-    					.addGap(100,100,100)
-    					.addComponent(scrollPane))
+                .addComponent(header)             
+    			.addGroup(layout.createSequentialGroup()
+    					.addGap(50,50,50)
+    					.addComponent(scrollPane)
+                        .addGap(50,50,50))
     			.addComponent(costLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
-    			.addGroup(layout.createParallelGroup()
-    					.addGap(80,80,80))
-    					//.addComponent(sp))
-    				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-    				.addComponent(save))
-    				//.addComponent(sp))
-    				);
+                .addComponent(timeLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
+    			.addComponent(save))
+    	);
 
-  //--NEED TO ADD SCROLL PANE STILL
-            layout.setVerticalGroup( 
-                layout.createSequentialGroup()
-                .addGroup(layout.createSequentialGroup()
-                		.addContainerGap()
-                .addComponent(header))
-                .addGroup(layout.createSequentialGroup()
-          	             .addComponent(scrollPane))
+        layout.setVerticalGroup( 
+            layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20,20,20)
+                .addComponent(header)
+                .addGap(20,20,20)
+                .addContainerGap()
+                .addComponent(scrollPane)
+                .addGap(30,30,30)
                 .addComponent(costLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
-                .addGroup(layout.createSequentialGroup())
-                .addGroup(layout.createSequentialGroup()
-                		.addGap(100,100,100)
-                 .addComponent(save))
-            		);
+                .addComponent(timeLabel,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE,javax.swing.GroupLayout.DEFAULT_SIZE)
+                .addGap(60,60,60)
+                .addComponent(save)
+                .addGap(30,30,30))
+        );
             
             
-          //activityPlanFrame.pack();
-      //  activityPlan.getContentPane().setBackground(Color.GRAY);
+        activityPlanFrame.pack();
 
         return activityPlanFrame;
     }
@@ -184,7 +196,6 @@ public class ActivityPlan
         if(minutes > 0) {
             timeString += "" + minutes + " minutes";
         }
-        
         return timeString;
     }
 }

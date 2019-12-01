@@ -11,7 +11,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.io.*;
 import java.sql.*;
-
+/**
+* MainWindow is the main screen of the plan it
+* application.
+*/
 public class MainWindow extends JFrame implements WindowListener, ItemListener
 {   
     //User availablity information
@@ -70,7 +73,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JLabel text = new JLabel("Welcome to Plan-it!");
         add(text);
         text.setForeground(Color.WHITE);
-        text.setFont(new Font("Rockwell", Font.ITALIC + Font.BOLD, 35));
+        text.setFont(new Font("Rockwell", Font.ITALIC + Font.BOLD, 38));
         text.setMinimumSize(new Dimension(400, 150));
         text.setPreferredSize(new Dimension(400, 150));
         text.setMaximumSize(new Dimension(400, 150));
@@ -109,7 +112,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         newActivityPlan.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(newActivityPlan);
         newActivityPlan.setForeground(Color.WHITE);
-        newActivityPlan.setFont(new Font("Helvetica", Font.BOLD, 20));
+        newActivityPlan.setFont(new Font("Helvetica", Font.BOLD, 24));
         
         timeSelector = new JComboBox(timeOptions);
         timeSelector.addItemListener(this);
@@ -117,7 +120,8 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         inputPanel.add(userTime);
         inputPanel.add(timeSelector);
         userTime.setForeground(Color.WHITE);
-        userTime.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        userTime.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        timeSelector.setFont(new Font("Helvetica", Font.PLAIN, 16));
         
         moneySelector = new JComboBox(costOptions);
         moneySelector.addItemListener(this);
@@ -125,7 +129,8 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         inputPanel.add(userMoney);
         inputPanel.add(moneySelector);
         userMoney.setForeground(Color.WHITE);
-        userMoney.setFont(new Font("Helvetica", Font.PLAIN, 16));
+        userMoney.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        moneySelector.setFont(new Font("Helvetica", Font.PLAIN, 16));
  
         add(inputPanel);
         inputPanel.setOpaque(false);

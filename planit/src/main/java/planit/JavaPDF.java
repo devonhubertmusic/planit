@@ -25,6 +25,10 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.BaseColor;
 
+/**
+* JavaPDF handles the saving of a generated plan
+* as a pdf.
+*/
 public class JavaPDF extends JComponent implements Accessible {
 
   private ArrayList<Activity> myActivityList;

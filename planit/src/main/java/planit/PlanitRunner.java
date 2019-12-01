@@ -7,6 +7,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+/**
+* PlanitRunner is the main class that creates
+* the main window.
+*/
 public class PlanitRunner
 {
 	//Fields

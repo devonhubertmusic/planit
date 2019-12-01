@@ -1,15 +1,5 @@
 # planit
 
-To run/test file, navigate to the planit repo folder on your console/terminal and type:
- 
-	make
-
-and then:
-
-	java PlanitRunner
-
-to run the code.
-
 To build maven project, navigate to the planit folder with pom.xml file and on your console/terminal and type:
  
 	mvn clean compile assembly:single
@@ -19,6 +9,11 @@ and then:
 	java -jar target/planit-1.0-SNAPSHOT-jar-with-dependencies.jar 
 
 to run the jar file.
+
+
+Build HTML JavaDoc using:
+ 
+	mvn clean site
 
 **************************************************************************************
 
