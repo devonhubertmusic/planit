@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.Component;
 import java.awt.Container;
-import javax.swing.GroupLayout.Alignment.*; //
+import javax.swing.GroupLayout.Alignment.*; 
 import javax.swing.*;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -64,7 +64,7 @@ public class ActivityPlan
         }
     	activityPlanFrame.setLayout(new FlowLayout()); //Layout
         activityPlanFrame.setTitle("Plan Generator"); //Window title
-        activityPlanFrame.setSize(600, 700); //Size
+        activityPlanFrame.setSize(700, 800); //Size
         
         String dataTable[][] = makeAndDisplayPlanTable(activityList);  
         String[] columnNames = {"Activity", "Time", "Cost"};

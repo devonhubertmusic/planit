@@ -139,24 +139,24 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         //"Generate Activity Plan" button
-        JButton b = new JButton("Generate Plan");
-        b.setFont(new Font("Helvetica", Font.PLAIN, 18));
-        b.setPreferredSize(new Dimension(150, 50));
-        b.addActionListener( new ActionListener() {
+        JButton generatePlan = new JButton("Generate Plan");
+        generatePlan.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        generatePlan.setPreferredSize(new Dimension(150, 50));
+        generatePlan.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new ActivityPlan(availableTime, availableMoney);
             }
         });
-        viewButtons.add(b);
+        viewButtons.add(generatePlan);
 
         //"View Current Activities" button
-        final JButton vb = new JButton("Edit Activities");
-        vb.setFont(new Font("Helvetica", Font.PLAIN, 18));
-        vb.setPreferredSize(new Dimension(150, 50));
-        vb.addActionListener( new ActionListener() {
+        final JButton editActivities = new JButton("Edit Activities");
+        editActivities.setFont(new Font("Helvetica", Font.PLAIN, 18));
+        editActivities.setPreferredSize(new Dimension(150, 50));
+        editActivities.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showCurrentActivities();
-               windowLinker = vb;
+               windowLinker = editActivities;
                // actWindowIsOpen = true;
                // if(actWindowIsOpen){
                //      vb.setEnabled(false);
@@ -164,7 +164,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
 
             }
         });
-        viewButtons.add(vb);
+        viewButtons.add(editActivities);
     
         add(viewButtons);
     
