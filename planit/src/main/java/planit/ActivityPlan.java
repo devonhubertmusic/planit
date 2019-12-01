@@ -44,7 +44,9 @@ public class ActivityPlan
         this.availableTime = availableTime;
         this.availableMoney = availableMoney;
         ArrayList<Activity> myList = getPlanList(0.75);
-        this.activityPlanFrame = makeWindow(myList);
+        if(myList.size() > 0) {
+            this.activityPlanFrame = makeWindow(myList);
+        }
     }
     
     //Returns a JFrame window with size, titles, and layout, etc. set
@@ -140,8 +142,11 @@ public class ActivityPlan
     //Returns a new activity plan ArrayList, given a minimum desired percent of available money
     public ArrayList<Activity> getPlanList(double minCostPercent) {
         Plan myPlan = new Plan();
-        myPlan.generatePlan(PlanitRunner.database, this.availableTime, this.availableMoney, minCostPercent);
-        ArrayList<Activity> myActivityList = myPlan.getActivityList();
+        boolean generated = myPlan.generatePlan(PlanitRunner.database, this.availableTime, this.availableMoney, minCostPercent);
+        ArrayList<Activity> myActivityList = new ArrayList<Activity>();
+        if(generated) {
+            myActivityList = myPlan.getActivityList();
+        }
         return myActivityList;
     }
     
