@@ -24,6 +24,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         Show_Activities_In_JTable();
 
         setMinimumSize(getSize());
+        setTitle("Edit Acitivities");
         setVisible(true);
 
     }
