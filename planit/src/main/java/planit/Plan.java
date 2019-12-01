@@ -71,13 +71,13 @@ public class Plan {
             Activity currentActivity = databaseCopy.get(activityIndex);
             
             String activityType = currentActivity.getActivityType();
-            System.out.println("Activity type of current activity is " + activityType);
+            //System.out.println("Activity type of current activity is " + activityType);
             
             if(activityType == null || activityType.equalsIgnoreCase("Misc") || activityType.equals("")) {
                 leftOverActivities.add(currentActivity);
-                System.out.println("Activity added to leftovers");
+                //System.out.println("Activity added to leftovers");
             } else {
-                System.out.println("Activity type is not null, it is " + activityType);
+                //System.out.println("Activity type is not null, it is " + activityType);
                 boolean activityGroupFound = false;
                 for(int activityGroupIndex = 0; activityGroupIndex < activityGroups.size(); activityGroupIndex++) {
                     ArrayList<Activity> currentActivityGroup = activityGroups.get(activityGroupIndex);
@@ -89,11 +89,11 @@ public class Plan {
                             break;
                         }
                     } else {
-                        displayErrorMessage("Something went wrong, blame Devon");
+                        displayErrorMessage("Activity Type Error. Please try again.");
                     }
                 }
                 if(!activityGroupFound) {
-                    System.out.println("New activity group created");
+                    //System.out.println("New activity group created");
                     ArrayList<Activity> newActivityGroup = new ArrayList<Activity>();
                     newActivityGroup.add(currentActivity);
                     activityGroups.add(newActivityGroup);
@@ -108,11 +108,10 @@ public class Plan {
 	availableMoney, double costPercent){
         initializeActivityListAndUpdate();
         if(availableTime > findMaxPossibleActivityTime(database)) {
-            displayErrorMessage("Unable to generate a long enough plan with the given activities, " +
-                                "please choose a smaller time, or add longer activities!");
+            displayErrorMessage("Unable to generate a long enough plan with the given activities.");
             return false;
         } else if(availableMoney < findMinPossibleActivityCost(database)){
-            displayErrorMessage("Not enough money for any given activity");
+            displayErrorMessage("Budget too low for any given activity.");
             return false;
         } else {
             ArrayList<Activity> databaseCopy = copyDatabase(database);
@@ -272,7 +271,7 @@ public class Plan {
                         //System.out.println("The list size decreased, trying again");
                         generatePlan(databaseCopy, availableTime, availableMoney, costPercent);
                     } else {
-                        displayErrorMessage("Unable to generate activity plan with given parameters");
+                        displayErrorMessage("Unable to generate activity plan to fit all parameters");
                         return false;
                     }
                 }
