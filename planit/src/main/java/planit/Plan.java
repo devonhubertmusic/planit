@@ -70,13 +70,13 @@ public class Plan {
             Activity currentActivity = databaseCopy.get(activityIndex);
             
             String activityType = currentActivity.getActivityType();
-            //System.out.println("Activity type of current activity is " + activityType);
+            System.out.println("Activity type of current activity is " + activityType);
             
             if(activityType == null || activityType.equalsIgnoreCase("Misc") || activityType.equals("")) {
                 leftOverActivities.add(currentActivity);
-                //System.out.println("Activity added to leftovers");
+                System.out.println("Activity added to leftovers");
             } else {
-                //System.out.println("Activity type is not null, it is " + activityType);
+                System.out.println("Activity type is not null, it is " + activityType);
                 boolean activityGroupFound = false;
                 for(int activityGroupIndex = 0; activityGroupIndex < activityGroups.size(); activityGroupIndex++) {
                     ArrayList<Activity> currentActivityGroup = activityGroups.get(activityGroupIndex);
@@ -92,7 +92,7 @@ public class Plan {
                     }
                 }
                 if(!activityGroupFound) {
-                    //System.out.println("New activity group created");
+                    System.out.println("New activity group created");
                     ArrayList<Activity> newActivityGroup = new ArrayList<Activity>();
                     newActivityGroup.add(currentActivity);
                     activityGroups.add(newActivityGroup);
@@ -118,56 +118,77 @@ public class Plan {
             
             ArrayList<ArrayList<Activity>> activityGroups = divideByActivityType(databaseCopy);
             
-            ArrayList<Activity> leftOverActivities = activityGroups.get(0);
+            //misc1, misc2
+            
+            ArrayList<Activity> leftOverActivities = activityGroups.get(0); //leftovers = misc1, misc2
             activityGroups.remove(0);
             
                 double totalTime = 0.0;
                 double totalCost = 0.0;
                 double minCost = costPercent * availableMoney; //Change?
             
-                ArrayList<Integer> usedActivityGroupIndices = new ArrayList<Integer>();
+                ArrayList<Integer> usedActivityGroupIndices = new ArrayList<Integer>(); //[]
                 int currentActivityGroupIndex = 0;
-                    while(activityGroups.size() > 0 && leftOverActivities.size() > 0 && totalTime < availableTime) {
-                        if(usedActivityGroupIndices.size() >= activityGroups.size()) {
-                            //System.out.println("All indices used");
-                            usedActivityGroupIndices = new ArrayList<Integer>();
-                            Random nextRand = new Random();
-                            currentActivityGroupIndex = nextRand.nextInt(activityGroups.size());
-                            usedActivityGroupIndices.add(currentActivityGroupIndex);
+                    while((activityGroups.size() > 0 || leftOverActivities.size() > 0) && totalTime < availableTime) {
+                        ArrayList<Activity> currentActivityGroup;
+                        if(activityGroups.size() == 0 && leftOverActivities.size() > 0) {
+                            currentActivityGroup = new ArrayList<Activity>();
+                            if(leftOverActivities.size() == 1) {
+                                System.out.println("Ended up here");
+                                /*
+                                Activity lastActivity = leftOverActivities.get(0);
+                                if(lastActivity.getIdealTime() <= remainingTime
+                                   && lastActivity.getMaxCost() <= remainingMoney) {
+                                    
+                                }
+                                 */
+                            }
                         } else {
-                            //System.out.println("Not all indices used");
-                            boolean nextIndexFound = false;
-                            while(!nextIndexFound) {
+                            if(usedActivityGroupIndices.size() >= activityGroups.size()) {
+                                System.out.println("All indices used");
+                                usedActivityGroupIndices = new ArrayList<Integer>();
                                 Random nextRand = new Random();
-                                int tempIndex = nextRand.nextInt(activityGroups.size());
-                                if(!usedActivityGroupIndices.contains(tempIndex)) {
-                                    currentActivityGroupIndex = tempIndex;
-                                    usedActivityGroupIndices.add(tempIndex);
-                                    nextIndexFound = true;
-                                    //System.out.println("New index is " + tempIndex);
+                                currentActivityGroupIndex = nextRand.nextInt(activityGroups.size());
+                                usedActivityGroupIndices.add(currentActivityGroupIndex);
+                            } else {
+                                System.out.println("Not all indices used");
+                                boolean nextIndexFound = false;
+                                while(!nextIndexFound) {
+                                    Random nextRand = new Random();
+                                    int tempIndex = nextRand.nextInt(activityGroups.size());
+                                    if(!usedActivityGroupIndices.contains(tempIndex)) {
+                                        currentActivityGroupIndex = tempIndex;
+                                        usedActivityGroupIndices.add(tempIndex);
+                                        nextIndexFound = true;
+                                        System.out.println("New index is " + tempIndex);
+                                    }
                                 }
                             }
+                            currentActivityGroup = activityGroups.get(currentActivityGroupIndex);
                         }
                         
-                        ArrayList<Activity> currentActivityGroup = activityGroups.get(currentActivityGroupIndex);
-                        //System.out.println("Current act group is " + currentActivityGroup);
+                        if(currentActivityGroup.size() > 0) {
+                            System.out.println("Current act group is " + currentActivityGroup);
+                        } else {
+                            System.out.println("Current act group is null");
+                        }
                         
                         int randomRange = currentActivityGroup.size() + leftOverActivities.size();
                         Random rn = new Random();
                         int randomIndex = rn.nextInt(randomRange);
                         
-                        //System.out.println("size of current act group is " + currentActivityGroup.size()); //1
-                        //System.out.println("number of remaining activity types is " + activityGroups.size());
-                        //System.out.println("size of leftover acts is " + leftOverActivities.size()); //16
-                        //System.out.println("random range is " + randomRange); //17
-                        //System.out.println("random index is " + randomIndex); //14
+                        System.out.println("size of current act group is " + currentActivityGroup.size()); //1
+                        System.out.println("number of remaining activity types is " + activityGroups.size());
+                        System.out.println("size of leftover acts is " + leftOverActivities.size()); //16
+                        System.out.println("random range is " + randomRange); //17
+                        System.out.println("random index is " + randomIndex); //14
                         
                         Activity currentActivity;
                         if(randomIndex < currentActivityGroup.size()) {
-                            //System.out.println("Drawing from currentActivityGroup");
+                            System.out.println("Drawing from currentActivityGroup");
                             currentActivity = currentActivityGroup.get(randomIndex);
                         } else {
-                            //System.out.println("Drawing from leftover activities");
+                            System.out.println("Drawing from leftover activities");
                             currentActivity = leftOverActivities.get(randomIndex - currentActivityGroup.size());
                         }
                         
@@ -175,37 +196,37 @@ public class Plan {
                         double remainingMoney = availableMoney - totalCost;
                         
                         
-                        //System.out.println("Ideal time for act is " + currentActivity.getIdealTime());
-                        //System.out.println("Remaining time is " + remainingTime);
+                        System.out.println("Ideal time for act is " + currentActivity.getIdealTime());
+                        System.out.println("Remaining time is " + remainingTime);
                         
                         if(currentActivity.getIdealTime() <= remainingTime
                            && currentActivity.getMaxCost() <= remainingMoney) {
                             activityList.add(currentActivity);
-                            //System.out.println("Adding " + currentActivity + " to the activity list");
+                            System.out.println("Adding " + currentActivity + " to the activity list");
                             
                             totalTime += currentActivity.getIdealTime();
                             totalCost += currentActivity.getMaxCost();
-                            //System.out.println("Activity list is now " + activityList);
+                            System.out.println("Activity list is now " + activityList);
                         } else {
                             databaseCopy.remove(currentActivity); //works?
                             listSizeDecreased = true;
-                            //System.out.println("Activity " + currentActivity + " does not fit the parameters");
+                            System.out.println("Activity " + currentActivity + " does not fit the parameters");
                         }
                         if(randomIndex < currentActivityGroup.size()) {
-                            //System.out.println("Current activity group is " + currentActivityGroup);
+                            System.out.println("Current activity group is " + currentActivityGroup);
                             currentActivityGroup.remove(randomIndex);
-                            //System.out.println("Current activity group is now" + currentActivityGroup);
-                            //System.out.println("Number of activity groups is " + activityGroups.size());
+                            System.out.println("Current activity group is now" + currentActivityGroup);
+                            System.out.println("Number of activity groups is " + activityGroups.size());
                             if(currentActivityGroup.size() <= 0) {
                                 activityGroups.remove(currentActivityGroupIndex);
-                                //System.out.println("Number of activity groups is now " + activityGroups.size());
+                                System.out.println("Number of activity groups is now " + activityGroups.size());
                             }
                         } else {
                             leftOverActivities.remove(randomIndex - currentActivityGroup.size());
-                            //System.out.println("Removing " + currentActivity + " from leftovers");
+                            System.out.println("Removing " + currentActivity + " from leftovers");
                         }
                     }
-                //System.out.println("Out of while loop");
+                System.out.println("Out of while loop");
             
                 double remainingTime = availableTime - totalTime;
                 double remainingMoney = availableMoney - totalCost;
@@ -215,27 +236,42 @@ public class Plan {
                     Activity temp = activityList.get(i);
                     potentialStretch += temp.getTimeGap();
                 }
-                //System.out.println("Potential stretch is " + potentialStretch);
+                System.out.println("Potential stretch is " + potentialStretch);
             
                 double maxStretch;
                 if(activityList.size() == 0) {
+                    System.out.println("Max stretch is -1");
                     maxStretch = -1;
                 } else {
                     //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
-                    maxStretch = (1/activityList.size()) * potentialStretch;
+                    System.out.println("Size of activity list is " + activityList.size());
+                    System.out.println("1/actlistsize is " + 1/(double)activityList.size());
+                    maxStretch = (1/(double)activityList.size()) * potentialStretch;
+                    System.out.println("Max stretch is " + maxStretch);
                 }
+                System.out.println("Max stretch is " + maxStretch);
+                System.out.println("Remaining time is " + remainingTime);
+                System.out.println("Total cost is " + totalCost);
+                System.out.println("Min cost is " + minCost);
+            
                 if(maxStretch >= remainingTime && (totalCost >= minCost || availableMoney == 0)) {
                     double stretchPercent = remainingTime/potentialStretch;
+                    System.out.println("Stretch percent is " + stretchPercent);
                     for(int i = 0; i < activityList.size(); i++) {
                         Activity temp = activityList.get(i);
                         temp.setActualTime(temp.getIdealTime() + (stretchPercent * temp.getTimeGap()));
                     }
+                    
                 } else if((totalCost < minCost) && costPercent > 0 && availableMoney > 0) {
-                    //System.out.println("Plan could not be created the first time");
-                    generatePlan(databaseCopy, availableTime, availableMoney, Math.abs(costPercent - 0.05));
+                    System.out.println("Plan could not be created the first time");
+                    if(minCost >= 5.0) { //minimum cost other than free
+                        generatePlan(databaseCopy, availableTime, availableMoney, Math.abs(costPercent/2)); //log decrease
+                    } else {
+                        generatePlan(databaseCopy, availableTime, availableMoney, 0.0); //goes to 0
+                    }
                 } else {
                     if(listSizeDecreased) {
-                        //System.out.println("The list size decreased, trying again");
+                        System.out.println("The list size decreased, trying again");
                         generatePlan(databaseCopy, availableTime, availableMoney, costPercent);
                     } else {
                         displayErrorMessage("Unable to generate activity plan with given parameters");
