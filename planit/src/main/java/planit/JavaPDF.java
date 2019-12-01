@@ -39,7 +39,7 @@ public class JavaPDF extends JComponent implements Accessible {
     this.myActivity = new Activity();
   }
   public void printPdf(ArrayList<Activity> myActivityList) {
-    
+	   boolean isOpened = false;
        JFileChooser chooser = new JFileChooser();
        chooser.setCurrentDirectory(new java.io.File("."));
        chooser.setDialogTitle("Save Backup");
@@ -53,7 +53,7 @@ public class JavaPDF extends JComponent implements Accessible {
     Document document = new Document(pagesize); //(PageSize.A4, 20, 20, 20,20)
         try
         {
-           JOptionPane.showMessageDialog(null, "PDF Saved.");
+
            Font fontSizeTitle =  FontFactory.getFont(FontFactory.HELVETICA, 30f);
            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "MyPlan.pdf")));//"MyPlan.pdf"));
            document.open();
@@ -75,6 +75,7 @@ public class JavaPDF extends JComponent implements Accessible {
         PdfPTable table = new PdfPTable(3);
         // the cell object
         PdfPCell cell;
+        //let change the font for this shit
         cell = new PdfPCell(new Phrase("Activity"));
         cell.setRowspan(2);
         table.addCell(cell);
@@ -109,10 +110,17 @@ public class JavaPDF extends JComponent implements Accessible {
 
            document.close();
            writer.close();
+           
         } catch (Exception e)
         { 
-        	   JOptionPane.showMessageDialog(null, "PDF is currently opened by another application. \n" 
+     	   isOpened = true;
+        	   JOptionPane.showMessageDialog(null, "MyPlan.pdf is currently opened by another application. \n" 
         			   +"Please close the PDF and try again.");
+        }
+        
+        if(isOpened = false) {
+            //this means there wasn't an error and the PDF successfully saved
+            JOptionPane.showMessageDialog(null, "PDF Saved.");
         }
   }
   }
