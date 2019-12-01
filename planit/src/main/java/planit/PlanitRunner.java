@@ -24,7 +24,11 @@ public class PlanitRunner
     {
         
         try {
-            updateActivityList();
+            boolean updated = false;
+            do {
+                updated = updateActivityList();
+            } while(!updated);
+            
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets user's screen size
             int width = screenSize.width; //width of user's screen
             int height = screenSize.height; //height of user's screen
@@ -52,29 +56,35 @@ public class PlanitRunner
   }
 
 // update current list of activities from mysql database
-  public static void updateActivityList()
+  public static boolean updateActivityList()
   {
       database = new ArrayList<Activity>();
       ArrayList<Activity> activityList = new ArrayList<Activity>();
       Connection connection = getConnection();
       
-      String query = "SELECT * FROM  activities";
-      Statement st;
-      ResultSet rs;
+      if(connection != null) {
+          String query = "SELECT * FROM  activities";
+          Statement st;
+          ResultSet rs;
 
-      try {
-          st = connection.createStatement();
-          rs = st.executeQuery(query);
-          Activity activity;
-          while(rs.next())
-          {
-              activity = new Activity(rs.getString("name"), rs.getString("activityType"),
-                         rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
-              activityList.add(activity);
+          try {
+              st = connection.createStatement();
+              rs = st.executeQuery(query);
+              Activity activity;
+              while(rs.next())
+              {
+                  activity = new Activity(rs.getString("name"), rs.getString("activityType"),
+                             rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
+                  activityList.add(activity);
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
           }
-      } catch (Exception e) {
-          e.printStackTrace();
+          database = activityList;
+          return true;
+      } else {
+          JOptionPane.showMessageDialog(null, "Unable to connect to Database. Please check internet connection.");
+          return false;
       }
-      database = activityList;
   }
 }
