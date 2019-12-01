@@ -510,6 +510,11 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
 
  // Button to update activities
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
+        jLabel1.setText("Name:");
+        jLabel1.setForeground(java.awt.Color.WHITE);
+        jButton_Update.setEnabled(false);
+        jButton_Create.setEnabled(true);
+        
         boolean updated = false;
         do {
             updated = PlanitRunner.updateActivityList();
