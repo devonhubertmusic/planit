@@ -192,9 +192,9 @@ public class Plan {
                         
                         
                         //System.out.println("Ideal time for act is " + currentActivity.getIdealTime());
-                        System.out.println("Remaining time is " + remainingTime);
+                        //System.out.println("Remaining time is " + remainingTime);
                         
-                        //if(currentActivity.getIdealTime() <= remainingTime
+                        if(currentActivity.getIdealTime() <= remainingTime
                            && currentActivity.getMaxCost() <= remainingMoney) {
                             activityList.add(currentActivity);
                             //System.out.println("Adding " + currentActivity + " to the activity list");

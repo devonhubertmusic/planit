@@ -25,11 +25,13 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         toggleTrue = true;
         addWindowListener(this);
         initComponents();
-        Show_Activities_In_JTable();
+        boolean tableLoaded = Show_Activities_In_JTable();
 
-        setMinimumSize(getSize());
-        setTitle("Edit Acitivities");
-        setVisible(true);
+        if(tableLoaded) {
+            setMinimumSize(getSize());
+            setTitle("Edit Acitivities");
+            setVisible(true);
+        }
 
     }
 
@@ -54,49 +56,58 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
        ArrayList<Activity> activityList = new ArrayList<Activity>();
        idList = new ArrayList<Integer>();
        Connection connection = getConnection();
+       if(connection != null) {
+           String query = "SELECT * FROM  activities";
+           Statement st;
+           ResultSet rs;
 
-       String query = "SELECT * FROM  activities";
-       Statement st;
-       ResultSet rs;
-
-       try {
-           st = connection.createStatement();
-           rs = st.executeQuery(query);
-           Activity activity;
-           while(rs.next())
-           {
-               activity = new Activity(rs.getString("name"),rs.getString("activityType"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
-               activityList.add(activity);
-               idList.add(rs.getInt("id"));
+           try {
+               st = connection.createStatement();
+               rs = st.executeQuery(query);
+               Activity activity;
+               while(rs.next())
+               {
+                   activity = new Activity(rs.getString("name"),rs.getString("activityType"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
+                   activityList.add(activity);
+                   idList.add(rs.getInt("id"));
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
            }
-       } catch (Exception e) {
-           e.printStackTrace();
+           return activityList;
+       } else {
+           return null;
        }
-       return activityList;
    }
 
    // Display Data In JTable
-   public void Show_Activities_In_JTable()
+   public boolean Show_Activities_In_JTable()
    {
        ArrayList<Activity> list = getactivityList();
-       DefaultTableModel model = (DefaultTableModel)jTable_Display_Activities.getModel();
-       //Add JScrollPane?
-       Object[] row = new Object[6];
-       for(int i = 0; i < list.size(); i++)
-       {
-           row[0] = list.get(i).getName();
-           row[1] = (int)list.get(i).getMaxTime();
-           row[2] = (int)list.get(i).getIdealTime();
-           row[3] = (int)list.get(i).getMaxCost();
-           row[4] = "Edit";
-           row[5] = "Delete";
+       if(list != null) {
+           DefaultTableModel model = (DefaultTableModel)jTable_Display_Activities.getModel();
+           //Add JScrollPane?
+           Object[] row = new Object[6];
+           for(int i = 0; i < list.size(); i++)
+           {
+               row[0] = list.get(i).getName();
+               row[1] = (int)list.get(i).getMaxTime();
+               row[2] = (int)list.get(i).getIdealTime();
+               row[3] = (int)list.get(i).getMaxCost();
+               row[4] = "Edit";
+               row[5] = "Delete";
 
-           model.addRow(row);
+               model.addRow(row);
+           }
+           jTable_Display_Activities.getColumnModel().getColumn(0).setPreferredWidth(200);
+
+           editButtonColumn = new ButtonColumn(jTable_Display_Activities, edit_action, 4);
+           deleteButtonColumn = new ButtonColumn(jTable_Display_Activities, delete_action, 5);
+           return true;
+       } else {
+           JOptionPane.showMessageDialog(null, "Could not connect to Database. Please check internet connection.");
+           return false;
        }
-       jTable_Display_Activities.getColumnModel().getColumn(0).setPreferredWidth(200);
-
-       editButtonColumn = new ButtonColumn(jTable_Display_Activities, edit_action, 4);
-       deleteButtonColumn = new ButtonColumn(jTable_Display_Activities, delete_action, 5);
     }
 
    // Execute The Insert Update And Delete Querys
@@ -458,6 +469,11 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
 
  // Button to create new activites
     private void jButton_CreateActionPerformed(java.awt.event.ActionEvent evt) {
+        boolean updated = false;
+        do {
+            updated = PlanitRunner.updateActivityList();
+        } while(!updated);
+        
         String query = "INSERT INTO `activities` (name,maxtime,idealtime,maxcost,activityType) VALUES ('"
                         + jTextField_Name.getText() + "', " + jComboBox_MaxTime.getSelectedItem()
                         + ", " + jComboBox_IdealTime.getSelectedItem() + ", "
@@ -485,10 +501,19 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             resetTextFields();
             executeSQlQuery(query, "Inserted");
         }
+        
+        updated = false;
+        do {
+            updated = PlanitRunner.updateActivityList();
+        } while(!updated);
     }
 
  // Button to update activities
     private void jButton_UpdateActionPerformed(java.awt.event.ActionEvent evt) {
+        boolean updated = false;
+        do {
+            updated = PlanitRunner.updateActivityList();
+        } while(!updated);
         String query = "UPDATE `activities` SET `name`='"+jTextField_Name.getText()+"',`maxtime`='"
         +jComboBox_MaxTime.getSelectedItem()+"',`idealtime`='"+jComboBox_IdealTime.getSelectedItem()+"',`maxcost`='"
         +jComboBox_MaxCost.getSelectedItem()+"', `activityType`='"+jComboBox_ActivityType.getSelectedItem()+"' WHERE `id` = "+currentID;
@@ -496,16 +521,28 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         jButton_Update.setEnabled(false);
         jButton_Create.setEnabled(true);
         executeSQlQuery(query, "Updated");
-        PlanitRunner.updateActivityList();
+        
+        updated = false;
+        do {
+            updated = PlanitRunner.updateActivityList();
+        } while(!updated);
     }
 
 
  // Button delete activities
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        boolean updated = false;
+        do {
+            updated = PlanitRunner.updateActivityList();
+        } while(!updated);
         jButton_Update.setEnabled(false);
         jButton_Create.setEnabled(true);
         String query = "DELETE FROM `activities` WHERE id = "+currentID;
          executeSQlQuery(query, "Deleted");
+        updated = false;
+        do {
+            updated = PlanitRunner.updateActivityList();
+        } while(!updated);
     }
 
     // Variables declaration - do not modify

@@ -3,6 +3,7 @@ package planit;
 import java.util.*;
 import java.awt.Toolkit;
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
