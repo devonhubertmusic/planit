@@ -257,6 +257,7 @@ public class Plan {
                     for(int i = 0; i < activityList.size(); i++) {
                         Activity temp = activityList.get(i);
                        temp.setActualTime(15 *(Math.round((temp.getIdealTime() + (stretchPercent * temp.getTimeGap()))/15)));
+                   }
                     
                 } else if((totalCost < minCost) && costPercent > 0 && availableMoney > 0) {
                     //System.out.println("Plan could not be created the first time");
