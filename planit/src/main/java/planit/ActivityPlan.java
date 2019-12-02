@@ -69,21 +69,25 @@ public class ActivityPlan
         activityPlanFrame.setTitle("Plan Generator"); //Window title
         activityPlanFrame.setSize(windowHeight, windowHeight); //Size
         activityPlanFrame.setMinimumSize(new Dimension(windowHeight, windowHeight));
-        
+     
+        //creates the table with data from generated plan
         String dataTable[][] = makeAndDisplayPlanTable(activityList);  
         String[] columnNames = {"Activity", "Time", "Cost"};
-        JTable j = new JTable(dataTable, columnNames);
-        j.setFont(new java.awt.Font("Helvetica", Font.PLAIN,15));
-        j.setRowHeight(30);
-        j.getColumnModel().getColumn(0).setPreferredWidth(200);
-        j.setBounds(30, 40, 200, 300);
-        JScrollPane scrollPane = new JScrollPane(j);
-        scrollPane.setViewportView(j);
+        JTable displayPlan = new JTable(dataTable, columnNames);
+        displayPlan.setFont(new java.awt.Font("Helvetica", Font.PLAIN,15));
+        displayPlan.setRowHeight(30);
+        displayPlan.getColumnModel().getColumn(0).setPreferredWidth(200);
+        displayPlan.setBounds(30, 40, 200, 300);
+        JScrollPane scrollPane = new JScrollPane(displayPlan);
+        scrollPane.setViewportView(displayPlan);
 
-        JLabel header = new JLabel("My Activity Plan"); //Title
+       //creates title for the page and sets its size,title, color,etc.
+        JLabel header = new JLabel("My Activity Plan");
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
         header.setForeground(java.awt.Color.WHITE);
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
+        
+        //sets up the save button that will call JFileChooser and iText functions
         JButton save = new JButton("Save Plan");
         save.setFont(new Font("Helvetica", 1, 14));
         save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png")));
@@ -103,6 +107,7 @@ public class ActivityPlan
           
         activityPlanFrame.setVisible(true);
   
+        //sets the layout to add the components, so that they are neatly placed.
         GroupLayout layout = new GroupLayout(activityPlanFrame.getContentPane());
         activityPlanFrame.getContentPane().setLayout(layout);
         
