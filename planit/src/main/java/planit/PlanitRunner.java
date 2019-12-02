@@ -31,8 +31,8 @@ public class PlanitRunner
             } while(!updated);
             
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //gets user's screen size
-            int width = screenSize.width; //width of user's screen
-            int height = screenSize.height; //height of user's screen
+            final int width = screenSize.width; //width of user's screen
+            final int height = screenSize.height; //height of user's screen
             mainWindow = new MainWindow("Plan-it", height); //creates main window for user
             mainWindow.setSize(width, height); //sets size of main window
             mainWindow.setResizable(true); //allows user to resize main window

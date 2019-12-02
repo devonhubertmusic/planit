@@ -29,7 +29,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     //Labels to display maxTime, idealTime, maxCost, and availableMoney user input
     private JLabel time, money;
 
-    public MainWindow(String title, int screenHeight) {
+    public MainWindow(String title, final int screenHeight) {
         super(title); //Add title to window
         
         availableTime = 30.0;
@@ -144,7 +144,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         generatePlan.setPreferredSize(new Dimension(150, 50));
         generatePlan.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new ActivityPlan(availableTime, availableMoney);
+                new ActivityPlan(availableTime, availableMoney, screenHeight);
             }
         });
         viewButtons.add(generatePlan);
@@ -157,11 +157,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
             public void actionPerformed(ActionEvent e) {
                 showCurrentActivities();
                windowLinker = editActivities;
-               // actWindowIsOpen = true;
-               // if(actWindowIsOpen){
-               //      vb.setEnabled(false);
-               // }
-
             }
         });
         viewButtons.add(editActivities);

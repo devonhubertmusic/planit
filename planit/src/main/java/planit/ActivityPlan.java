@@ -40,17 +40,17 @@ public class ActivityPlan
     }
     
     //Explicit constructor
-    public ActivityPlan(double availableTime, double availableMoney){
+    public ActivityPlan(double availableTime, double availableMoney, final int screenHeight){
         this.availableTime = availableTime;
         this.availableMoney = availableMoney;
-        ArrayList<Activity> myList = getPlanList(0.75);
+        ArrayList<Activity> myList = getPlanList(0.75); //Not a magic number, I swear
         if(myList.size() > 0) {
-            this.activityPlanFrame = makeWindow(myList);
+            this.activityPlanFrame = makeWindow(myList, screenHeight);
         }
     }
     
     //Returns a JFrame window with size, titles, and layout, etc. set
-    public JFrame makeWindow(final ArrayList<Activity> activityList) {
+    public JFrame makeWindow(final ArrayList<Activity> activityList, final int screenHeight) {
     	JFrame activityPlanFrame = new JFrame(); //Window
         //Set background image of window
         try {
@@ -64,9 +64,11 @@ public class ActivityPlan
         } catch (java.io.IOException e) {
             throw new RuntimeException(e);
         }
+        int windowHeight = (7*screenHeight)/8;
     	activityPlanFrame.setLayout(new FlowLayout()); //Layout
         activityPlanFrame.setTitle("Plan Generator"); //Window title
-        activityPlanFrame.setSize(700, 800); //Size
+        activityPlanFrame.setSize(windowHeight, windowHeight); //Size
+        activityPlanFrame.setMinimumSize(new Dimension(windowHeight, windowHeight));
         
         String dataTable[][] = makeAndDisplayPlanTable(activityList);  
         String[] columnNames = {"Activity", "Time", "Cost"};
