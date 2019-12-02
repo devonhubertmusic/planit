@@ -7,7 +7,7 @@ Welcome to Plan-it, activity planning on a budget!
 
 In the parent folder (Planit) you will find a pre-compiled executable .jar file named "plan-it.jar." Ensure you have a current version of Java running on your system, navigate to the parent folder from the command line, then run:
 
-    ./ plan-it.jar
+    java -jar plan-it.jar
 
 Alternately, you can just double click on the .jar file if you are a pointy-clicky type of person.
 
