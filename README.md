@@ -33,7 +33,7 @@ All Maven dependencies are specified in the /Planit/planit/pom.xml file.
 *******************************************************************************************************************************
 # Documentation and Testing
 
-Documentation and testing can be found in the /Planit/Documentation_and_Testing/ folder.
+Documentation and testing can be found in the /Planit/Docs_and_Testing/ folder.
 
 *******************************************************************************************************************************
 # Source Files
