@@ -206,7 +206,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
 
         //Design of labels, buttons, input fields, and table
 
-        jTable_Display_Activities.setFont(new java.awt.Font("Helvetica", 0, 13));
+        jTable_Display_Activities.setFont(new java.awt.Font("Helvetica", 0, 15));
         jTable_Display_Activities.setRowHeight(30);
 
         jLabel1.setFont(new java.awt.Font("Helvetica", 0, 18));
