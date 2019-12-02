@@ -39,6 +39,7 @@ public class JavaPDF extends JComponent implements Accessible {
     this.myActivity = new Activity();
   }
   public void printPdf(ArrayList<Activity> myActivityList) {
+	  
 	   boolean isOpened = false;
        JFileChooser chooser = new JFileChooser();
        chooser.setCurrentDirectory(new java.io.File("."));
@@ -50,7 +51,7 @@ public class JavaPDF extends JComponent implements Accessible {
        if(chooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
        
         Rectangle pagesize = new Rectangle(612, 792);
-    Document document = new Document(pagesize); //(PageSize.A4, 20, 20, 20,20)
+        Document document = new Document(pagesize);
         try
         {
 
@@ -75,7 +76,6 @@ public class JavaPDF extends JComponent implements Accessible {
         PdfPTable table = new PdfPTable(3);
         // the cell object
         PdfPCell cell;
-        //let change the font for this shit
         cell = new PdfPCell(new Phrase("Activity"));
         cell.setRowspan(2);
         table.addCell(cell);
@@ -88,11 +88,11 @@ public class JavaPDF extends JComponent implements Accessible {
         cell.setRowspan(2);
         table.addCell(cell);
 
- double totalTime = 0.0;
+        double totalTime = 0.0;
         double totalCost = 0.0;
 
  
-
+        //fills the table with information of each activity
            for(int row = 0; row < size; row++) {
                    Activity temp = myActivityList.get(row);
                  String tmp = temp.toString();
@@ -112,13 +112,12 @@ public class JavaPDF extends JComponent implements Accessible {
             String tmpTotalTime = Double.valueOf(totalTime).toString();
             String tmpTotalCost = Double.valueOf(totalCost).toString();
 
-            document.add(new Paragraph("Total Time: " + tmpTotalTime + " minutes"));
-
-            document.add(new Paragraph("Total Cost: $" + tmpTotalCost));  
-         //TODO
-           //message box when pdf is currently open or 
-           //make each pdf be named something differe
-           
+            Paragraph totals = new Paragraph();
+            totals.setAlignment(Paragraph.ALIGN_CENTER);
+            totals.add("\n");
+            totals.add("Total Time: " + tmpTotalTime + " minutes\n");
+            totals.add("Total Cost: $" + tmpTotalCost);  
+            document.add(totals);
 
            document.close();
            writer.close();
@@ -126,6 +125,7 @@ public class JavaPDF extends JComponent implements Accessible {
         } catch (Exception e)
         { 
      	   isOpened = true;
+     	   //this means the pdf is opened by another app, it wont be able to be saved
         	   JOptionPane.showMessageDialog(null, "MyPlan.pdf is currently opened by another application. \n" 
         			   +"Please close the PDF and try again.");
         }
