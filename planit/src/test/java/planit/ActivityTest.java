@@ -99,7 +99,7 @@ public class ActivityTest
 
     @Test
     public void testCompare() {
-        System.out.println("Testing setActivcompareTo function");
+        System.out.println("Testing compareTo function");
     	Activity copy = activity.copy();
     	copy.setIdealTime(40);
  
