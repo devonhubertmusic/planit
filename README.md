@@ -31,9 +31,46 @@ to run the .jar file.
 All Maven dependencies are specified in the /Planit/planit/pom.xml file.
 
 *******************************************************************************************************************************
-# Documentation and Testing
+# Testing
 
-Documentation and testing can be found in the /Planit/Docs_and_Testing/ folder.
+We used Maven to handle JUnit test dependencies, so Maven must first be installed in order to run unit testing. Once installed, navigate to the inner project folder (Planit/planit/). Then run:
+
+    mvn -Dtest=TestAll test
+
+Testing documentation and JUnit test sample output can also be found in the /Planit/Testing/ folder.
+
+*******************************************************************************************************************************
+# Documentation
+
+The team used Clubhouse.io as our virtual scrumboard/environment. Here is the link to our project on Clubhouse:
+
+    https://app.clubhouse.io/teamrock/epic/37/plan-it
+
+In addition, records of all documentation can be found in the /Planit/Documentation/ folder.
+
+Current contents:
+
+Plan-it Release Plan.pdf
+Working Prototype Report.pdf
+System and Unit Test Report.pdf
+/Sprint\ Plans/
+    Sprint 1 Plan.docx
+    Sprint 1 Tasks - Sheet1.pdf (before we started using clubhouse)
+    Sprint 2 Plan.docx
+    Sprint 3 Plan.docx
+    Sprint 4 Plan.docx
+/Sprint\ Reports/
+    Sprint 1 Report.docx
+    Sprint 2 Report.docx
+    Sprint 3 Report.docx
+    Sprint 4 Report.docx
+/Software\ Guides\ and\ Requirements/
+    Definition of Done.docx
+    Definition of Done.pdf
+    Google Java Style Guide.pdf
+/Presentations/
+    Plan-it Presentation.pptx
+    Plan-it Final Presentation.pptx
 
 *******************************************************************************************************************************
 # Source Files
