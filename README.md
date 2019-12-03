@@ -46,7 +46,7 @@ The team used Clubhouse.io as our virtual scrumboard/environment. Here is the li
 
     https://app.clubhouse.io/teamrock/epic/37/plan-it
 
-In addition, records of all documentation can be found in the /Planit/Documentation/ folder.
+A Clubhouse account may be necessary to view the project online. However, records of all written documentation can be found in the /Planit/Documentation/ folder.
 
 Current contents:
 
