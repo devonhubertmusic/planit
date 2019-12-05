@@ -121,16 +121,26 @@ public class Plan {
                         double remainingTime = availableTime - totalTime;
                         double remainingMoney = availableMoney - totalCost;
                         
+                        //Checks if current activity will fit remaining time and cost
                         if(currentActivity.getIdealTime() <= remainingTime
                            && currentActivity.getMaxCost() <= remainingMoney) {
+                            //If it fits, add it!
                             activityList.add(currentActivity);
                             
+                            //Update remaining time and cost based on new activity
                             totalTime += currentActivity.getIdealTime();
                             totalCost += currentActivity.getMaxCost();
                         } else {
-                            databaseCopy.remove(currentActivity);
-                            listSizeDecreased = true;
+                            //If it doesn't fit given time and budget, removes activity from database copy
+                            if(currentActivity.getIdealTime() > availableTime || currentActivity.getMaxCost() > availableMoney) {
+                                databaseCopy.remove(currentActivity);
+                                
+                                //List size was decreased
+                                listSizeDecreased = true;
+                            }
                         }
+                        
+                        //Remove current activity from correct group (whether or not it was chosen)
                         if(randomIndex < currentActivityGroup.size()) {
                             currentActivityGroup.remove(randomIndex);
                             if(currentActivityGroup.size() <= 0) {
@@ -141,16 +151,20 @@ public class Plan {
                         }
                     }
             
+                //update remaining time and money
                 double remainingTime = availableTime - totalTime;
                 double remainingMoney = availableMoney - totalCost;
             
-            
+                //initialize potential time stretch to 0.0
                 double potentialStretch = 0.0;
+            
+                //sum possible time increases (max time - ideal time) of all activities
                 for(int i = 0; i < activityList.size(); i++) {
                     Activity temp = activityList.get(i);
                     potentialStretch += temp.getTimeGap();
                 }
             
+                //find max "stretch"
                 double maxStretch;
                 if(activityList.size() == 0) {
                     maxStretch = -1;
@@ -158,8 +172,8 @@ public class Plan {
                     //% DECIDES HOW FAR FROM IDEAL TIME WE ARE WILLING TO STRETCH
                     maxStretch = (1/(double)activityList.size()) * potentialStretch;
                 }
-                //*/
-            
+    
+                //suitable stretch is found!
                 if(maxStretch >= remainingTime && (totalCost >= minCost || availableMoney == 0)) {
                     double stretchPercent = remainingTime/potentialStretch;
                     for(int i = 0; i < activityList.size(); i++) {
@@ -167,6 +181,7 @@ public class Plan {
                        temp.setActualTime(5 *(Math.round((temp.getIdealTime() + (stretchPercent * temp.getTimeGap()))/5)));
                    }
                     
+                //if no solution found, recurse with more lenient minimum cost percent
                 } else if((totalCost < minCost) && costPercent > 0 && availableMoney > 0) {
                     if(minCost >= 5.0) { //minimum cost other than free
                         generatePlan(databaseCopy, availableTime, availableMoney, Math.abs(costPercent/2)); //log decrease
@@ -175,9 +190,11 @@ public class Plan {
                     }
                 } else {
                     if(listSizeDecreased) {
-                        //System.out.println("The list size decreased, trying again");
+                        //if still no solution found, recurse only if running on a smaller list
+                        //(prevents infinite loop!)
                         generatePlan(databaseCopy, availableTime, availableMoney, costPercent);
                     } else {
+                        //It cannot be done :(
                         displayErrorMessage("Unable to generate activity plan to fit all parameters");
                         return false;
                     }
