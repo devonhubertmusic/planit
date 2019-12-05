@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import java.io.*;
 import java.sql.*;
 /**
-* MainWindow is the main screen of the plan it
+* MainWindow is the main screen of the Plan-it
 * application.
 */
 public class MainWindow extends JFrame implements WindowListener, ItemListener
@@ -20,7 +20,6 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     //User availablity information
     public double availableTime;
     public double availableMoney;
-    //public boolean actWindowIsOpen;
     public JButton windowLinker;
 
     //Dropdown boxes for user input
@@ -32,40 +31,51 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
     public MainWindow(String title, final int screenHeight) {
         super(title); //Add title to window
         
+        //initialize available time to half hour
         availableTime = 30.0;
+        
+        //initialize available money to 0.0
         availableMoney = 0.0;
 
-        //Set Look and Feel
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        updateLookAndFeel();
         
-        //Set background image of window
-        try {
-            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("/images/space.jpg"));
-            setContentPane(new JPanel(new BorderLayout()) {
-                @Override public void paintComponent(Graphics g) {
-                    Dimension d = getSize();
-                    g.drawImage(backgroundImage, 0, 0, d.width, d.height, null);
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        setBackgroundImage();
         
+        createHeader(screenHeight);
+
+        addLogo();
+        
+        addButtonsAndComponents(screenHeight);
+        
+        createFooter();
+    }
+
+     public void enableMyButton(){
+        windowLinker.setEnabled(true);
+    }
+
+    public void disableMyButton(){
+        windowLinker.setEnabled(false);
+    }
+
+    public void itemStateChanged(ItemEvent e) 
+    { 
+        // if the state combobox is changed 
+        if (e.getSource() == timeSelector) {
+            //Update user's availableTime variable based on current selection
+            availableTime = 60.0 * Double.parseDouble("" + timeSelector.getSelectedItem());
+        }
+        else if (e.getSource() == moneySelector) {            
+            //Update user's availableMoney variable based on current selection
+            availableMoney = Double.parseDouble("" + moneySelector.getSelectedItem());
+        }
+    }
+
+    public void showCurrentActivities(){
+        CurrentActivities a = new CurrentActivities(this);
+    }
+    
+    public void createHeader(final int screenHeight) {
         //Create and format header
         setMinimumSize(new Dimension(screenHeight, screenHeight));
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
@@ -80,28 +90,80 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         text.setAlignmentX(Component.CENTER_ALIGNMENT);
         text.setHorizontalAlignment(SwingConstants.CENTER);
         text.setVerticalAlignment(SwingConstants.CENTER);
-
-        //Add logo
+    }
+    
+    public void createFooter() {
+        //Footer label
+        JLabel label3 = new JLabel("Developed by Team Rocket");
+        add(label3);
+        label3.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
+        add(Box.createVerticalGlue());
+    }
+    
+    public void setBackgroundImage() {
+        //Set background image of window
         try {
-        JLabel picture = new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/images/Planit.png"))));
-        picture.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(picture);
+            final Image backgroundImage = ImageIO.read(getClass().getResourceAsStream("/images/space.jpg"));
+            setContentPane(new JPanel(new BorderLayout()) {
+                @Override public void paintComponent(Graphics g) {
+                    Dimension d = getSize();
+                    g.drawImage(backgroundImage, 0, 0, d.width, d.height, null);
+                }
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+    }
+    
+    public void addLogo() {
+        //Add logo
+        try {
+            JLabel picture = new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/images/Planit.png"))));
+            picture.setAlignmentX(Component.CENTER_ALIGNMENT);
+            add(picture);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         add(Box.createVerticalGlue());
-
+    }
+    
+    public void updateLookAndFeel(){
+        //Set Look and Feel
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+            
+            //Exception handling
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CurrentActivities.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addButtonsAndComponents(final int screenHeight) {
+        //Initialize and format all remaining components/buttons
+        
         //time options (in hours)
-        String timeOptions[] = { "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" }; 
+        String timeOptions[] = { "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6" };
         String[] costOptions = new String[100];
         for (int i = 0, j = 0; i < 100; ++i, j+=5) {
             costOptions[i] = Integer.toString(j);
         }
-
+        
         //Get user information to generate new activity plan
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         
+        // Create and format all window components
         JLabel spacer = new JLabel("                                      ");
         spacer.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(spacer);
@@ -131,13 +193,13 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         userMoney.setForeground(Color.WHITE);
         userMoney.setFont(new Font("Helvetica", Font.PLAIN, 20));
         moneySelector.setFont(new Font("Helvetica", Font.PLAIN, 16));
- 
+        
         add(inputPanel);
         inputPanel.setOpaque(false);
         add(Box.createVerticalGlue());
-
+        
         JPanel viewButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
+        
         //"Generate Activity Plan" button
         JButton generatePlan = new JButton("Generate Plan");
         generatePlan.setFont(new Font("Helvetica", Font.PLAIN, 18));
@@ -148,7 +210,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
             }
         });
         viewButtons.add(generatePlan);
-
+        
         //"View Current Activities" button
         final JButton editActivities = new JButton("Edit Activities");
         editActivities.setFont(new Font("Helvetica", Font.PLAIN, 18));
@@ -156,48 +218,15 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         editActivities.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showCurrentActivities();
-               windowLinker = editActivities;
+                windowLinker = editActivities;
             }
         });
         viewButtons.add(editActivities);
-    
+        
         add(viewButtons);
-    
+        
         viewButtons.setOpaque(false);
-            add(Box.createVerticalGlue());
-
-        //Footer label
-        JLabel label3 = new JLabel("Developed by Team Rocket");
-        add(label3);
-        label3.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label3.setFont(new Font("Helvetica", Font.PLAIN, 14));
         add(Box.createVerticalGlue());
-    }
-
-     public void enableMyButton(){
-        windowLinker.setEnabled(true);
-    }
-
-    public void disableMyButton(){
-        windowLinker.setEnabled(false);
-    }
-
-    public void itemStateChanged(ItemEvent e) 
-    { 
-        // if the state combobox is changed 
-        if (e.getSource() == timeSelector) {
-            //Update user's availableTime variable based on current selection
-            availableTime = 60.0 * Double.parseDouble("" + timeSelector.getSelectedItem());
-        }
-        else if (e.getSource() == moneySelector) {            
-            //Update user's availableMoney variable based on current selection
-            availableMoney = Double.parseDouble("" + moneySelector.getSelectedItem());
-        }
-    }
-
-    public void showCurrentActivities(){
-        CurrentActivities a = new CurrentActivities(this);
-
     }
 
     //Handles the closing of the Main window, re-setting settings to their defaults
@@ -211,6 +240,7 @@ public class MainWindow extends JFrame implements WindowListener, ItemListener
         }
     }
 
+    //Overridden methods
     public void windowOpened(WindowEvent e) {}
     public void windowActivated(WindowEvent e) {}
     public void windowIconified(WindowEvent e) {}

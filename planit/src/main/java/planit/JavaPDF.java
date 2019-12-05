@@ -56,7 +56,7 @@ public class JavaPDF extends JComponent implements Accessible {
         {
 
            Font fontSizeTitle =  FontFactory.getFont(FontFactory.HELVETICA, 30f);
-           PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "MyPlan.pdf")));//"MyPlan.pdf"));
+           PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "MyPlan.pdf")));
            document.open();
 
            Paragraph header = new Paragraph();

@@ -3,8 +3,7 @@ package planit;
 import java.util.*;
 
 /**
-* Activity is a mutable object that describes 
-* a certain activity.
+* A single activity, used to populate activity plans
 */
 public class Activity implements Comparable<Activity>
 {
@@ -37,18 +36,6 @@ public class Activity implements Comparable<Activity>
         this.maxCost = maxCost;
     
     }
-
-    /*
-    public Activity(String name, int maxTime, int idealTime, int maxCost){
-        //Set fields based on explicit data
-        //Overload for option without activityType
-        this.actualTime = 0.0;
-        this.name = name;
-        this.maxTime = maxTime;
-        this.idealTime = idealTime;
-        this.maxCost = maxCost;
-    }
-     */
     
     //Methods:
     
@@ -144,6 +131,7 @@ public class Activity implements Comparable<Activity>
         return (this.maxCost/this.idealTime)/60.0;
     }
     
+    //Compare to another activity (based on cost per hour) for sorting
     public int compareTo(Activity that) {
         if (this.getCostPerHour() == that.getCostPerHour()) {
             return 0;

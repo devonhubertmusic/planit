@@ -12,7 +12,7 @@ import javax.swing.table.TableModel;
 import java.awt.event.*;
 
 /**
-* Plan is the main algorithm behind generating a plan
+* Plan contains the main algorithm behind generating a plan
 */
 public class Plan {
 
@@ -27,82 +27,10 @@ public class Plan {
 	}
 	
 	//Methods
-    
-    public void displayErrorMessage(String errorMessage) {
-        JOptionPane.showMessageDialog(null, errorMessage);
-    }
-    
-    public double findMaxPossibleActivityTime(ArrayList<Activity> activities) {
-        double totalTime = 0.0;
-        for(int index = 0; index < activities.size(); index++) {
-            Activity currentActivity = activities.get(index);
-            totalTime += currentActivity.getMaxTime();
-        }
-        return totalTime;
-    }
-    
-    public double findMinPossibleActivityCost(ArrayList<Activity> activities) {
-        double minCost = 1000000.0;
-        for(int index = 0; index < activities.size(); index++) {
-            Activity currentActivity = activities.get(index);
-            double cost = currentActivity.getMaxCost();
-            if(cost < minCost){
-                minCost = cost;
-            }
-        }
-        return minCost;
-    }
-    
-    public void initializeActivityListAndUpdate() {
-        this.activityList = new ArrayList<Activity>();
-        boolean updated = false;
-        do {
-            updated = PlanitRunner.updateActivityList();
-        } while(!updated);
-    }
-    
-    
-    //Divide activities into groups by activity type
-    public ArrayList<ArrayList<Activity>> divideByActivityType(ArrayList<Activity> databaseCopy) {
-        ArrayList<ArrayList<Activity>> activityGroups = new ArrayList<ArrayList<Activity>>();
-        ArrayList<Activity> leftOverActivities = new ArrayList<Activity>();
-        
-        for(int activityIndex = 0; activityIndex < databaseCopy.size(); activityIndex++) {
-            Activity currentActivity = databaseCopy.get(activityIndex);
-            
-            String activityType = currentActivity.getActivityType();
-            
-            if(activityType == null || activityType.equalsIgnoreCase("Misc") || activityType.equals("")) {
-                leftOverActivities.add(currentActivity);
-            } else {
-                boolean activityGroupFound = false;
-                for(int activityGroupIndex = 0; activityGroupIndex < activityGroups.size(); activityGroupIndex++) {
-                    ArrayList<Activity> currentActivityGroup = activityGroups.get(activityGroupIndex);
-                    if(currentActivityGroup.size() > 0) {
-                        String tempActivityType = currentActivityGroup.get(0).getActivityType();
-                        if(tempActivityType.equalsIgnoreCase(activityType)) {
-                            activityGroupFound = true;
-                            currentActivityGroup.add(currentActivity);
-                            break;
-                        }
-                    } else {
-                        displayErrorMessage("Activity Type Error. Please try again.");
-                    }
-                }
-                if(!activityGroupFound) {
-                    ArrayList<Activity> newActivityGroup = new ArrayList<Activity>();
-                    newActivityGroup.add(currentActivity);
-                    activityGroups.add(newActivityGroup);
-                }
-            }
-        }
-        activityGroups.add(0, leftOverActivities);
-        return activityGroups;
-    }
-    
 	public boolean generatePlan(ArrayList<Activity> database, double availableTime, double
 	availableMoney, double costPercent){
         initializeActivityListAndUpdate();
+        
         if(availableTime > findMaxPossibleActivityTime(database)) {
             displayErrorMessage("Unable to generate a long enough plan with the given activities.");
             return false;
@@ -110,49 +38,78 @@ public class Plan {
             displayErrorMessage("Budget too low for any given activity.");
             return false;
         } else {
-            ArrayList<Activity> databaseCopy = copyDatabase(database);
-            boolean listSizeDecreased = false;
+            //List of cost/length is possible, but not necessarily with given parameters...
             
+            //Deep copy of database, can be deleted from
+            ArrayList<Activity> databaseCopy = copyDatabase(database);
+            boolean listSizeDecreased = false; //Checks for list length decrease for recursion handling
+            
+            //Divides all activities into group by activity type
             ArrayList<ArrayList<Activity>> activityGroups = divideByActivityType(databaseCopy);
             
+            //Remaining activities (no specified activity type, or "misc")
             ArrayList<Activity> leftOverActivities = activityGroups.get(0);
             activityGroups.remove(0);
             
-                double totalTime = 0.0;
-                double totalCost = 0.0;
-                double minCost = costPercent * availableMoney;
+                double totalTime = 0.0; //Total activity plan time
+                double totalCost = 0.0; //Total activity plan cost
+                double minCost = costPercent * availableMoney; //Ideal minimum cost of plan, starting at 75% of max cost
             
+                //indices of "used" activity types (will cycle through when all used)
                 ArrayList<Integer> usedActivityGroupIndices = new ArrayList<Integer>();
-                int currentActivityGroupIndex = 0;
+            
+                int currentActivityGroupIndex = 0; //initialize to 0
+            
+                    //While there are still remaining activities to draw from
                     while((activityGroups.size() > 0 || leftOverActivities.size() > 0) && totalTime < availableTime) {
+                        
+                        //Current activity type group
                         ArrayList<Activity> currentActivityGroup;
+                        
+                        //If activity group activities run out, use a blank list in its place
                         if(activityGroups.size() == 0 && leftOverActivities.size() > 0) {
                             currentActivityGroup = new ArrayList<Activity>();
                         } else {
+                            //If all activity group indices have been used...
                             if(usedActivityGroupIndices.size() >= activityGroups.size()) {
+                                //Reset list of used indices
                                 usedActivityGroupIndices = new ArrayList<Integer>();
+                                
+                                //Find a new random index to start at
                                 Random nextRand = new Random();
                                 currentActivityGroupIndex = nextRand.nextInt(activityGroups.size());
+                                
+                                //Add the new current index to the list of used indices
                                 usedActivityGroupIndices.add(currentActivityGroupIndex);
                             } else {
-                                boolean nextIndexFound = false;
+                                //Not all indices have been used, finds a new one
+                                
+                                boolean nextIndexFound = false; //flag for finding new index
                                 while(!nextIndexFound) {
                                     Random nextRand = new Random();
+        
+                                    //new random index to try (in range)
                                     int tempIndex = nextRand.nextInt(activityGroups.size());
+                                    
+                                    //If this index has not been used this time around
                                     if(!usedActivityGroupIndices.contains(tempIndex)) {
+                                        //Index has been found!
                                         currentActivityGroupIndex = tempIndex;
                                         usedActivityGroupIndices.add(tempIndex);
                                         nextIndexFound = true;
                                     }
                                 }
                             }
+                            //Find the next activity group to pull from!
                             currentActivityGroup = activityGroups.get(currentActivityGroupIndex);
                         }
                     
+                        //range of random integer for picking next activity
                         int randomRange = currentActivityGroup.size() + leftOverActivities.size();
                         Random rn = new Random();
                         int randomIndex = rn.nextInt(randomRange);
                         
+                        //depending on the random number, draw from current activity group, or misc group
                         Activity currentActivity;
                         if(randomIndex < currentActivityGroup.size()) {
                             currentActivity = currentActivityGroup.get(randomIndex);
@@ -160,6 +117,7 @@ public class Plan {
                             currentActivity = leftOverActivities.get(randomIndex - currentActivityGroup.size());
                         }
                         
+                        //time and money left over after activity is added
                         double remainingTime = availableTime - totalTime;
                         double remainingMoney = availableMoney - totalCost;
                         
@@ -228,6 +186,80 @@ public class Plan {
         return true;
 	}
     
+    //Display the given error message as an alert
+    public void displayErrorMessage(String errorMessage) {
+        JOptionPane.showMessageDialog(null, errorMessage);
+    }
+    
+    //Maximum time possible for an activity list
+    public double findMaxPossibleActivityTime(ArrayList<Activity> activities) {
+        double totalTime = 0.0;
+        for(int index = 0; index < activities.size(); index++) {
+            Activity currentActivity = activities.get(index);
+            totalTime += currentActivity.getMaxTime();
+        }
+        return totalTime;
+    }
+    
+    //Minimum possible cost for an activity list
+    public double findMinPossibleActivityCost(ArrayList<Activity> activities) {
+        double minCost = 1000000.0;
+        for(int index = 0; index < activities.size(); index++) {
+            Activity currentActivity = activities.get(index);
+            double cost = currentActivity.getMaxCost();
+            if(cost < minCost){
+                minCost = cost;
+            }
+        }
+        return minCost;
+    }
+    
+    //Initiliazes the activity list, and updates the database
+    public void initializeActivityListAndUpdate() {
+        this.activityList = new ArrayList<Activity>();
+        boolean updated = false;
+        do {
+            updated = PlanitRunner.updateActivityList();
+        } while(!updated);
+    }
+    
+    //Divide activities into groups by activity type
+    public ArrayList<ArrayList<Activity>> divideByActivityType(ArrayList<Activity> databaseCopy) {
+        ArrayList<ArrayList<Activity>> activityGroups = new ArrayList<ArrayList<Activity>>();
+        ArrayList<Activity> leftOverActivities = new ArrayList<Activity>();
+        
+        for(int activityIndex = 0; activityIndex < databaseCopy.size(); activityIndex++) {
+            Activity currentActivity = databaseCopy.get(activityIndex);
+            
+            String activityType = currentActivity.getActivityType();
+            
+            if(activityType == null || activityType.equalsIgnoreCase("Misc") || activityType.equals("")) {
+                leftOverActivities.add(currentActivity);
+            } else {
+                boolean activityGroupFound = false;
+                for(int activityGroupIndex = 0; activityGroupIndex < activityGroups.size(); activityGroupIndex++) {
+                    ArrayList<Activity> currentActivityGroup = activityGroups.get(activityGroupIndex);
+                    if(currentActivityGroup.size() > 0) {
+                        String tempActivityType = currentActivityGroup.get(0).getActivityType();
+                        if(tempActivityType.equalsIgnoreCase(activityType)) {
+                            activityGroupFound = true;
+                            currentActivityGroup.add(currentActivity);
+                            break;
+                        }
+                    } else {
+                        displayErrorMessage("Activity Type Error. Please try again.");
+                    }
+                }
+                if(!activityGroupFound) {
+                    ArrayList<Activity> newActivityGroup = new ArrayList<Activity>();
+                    newActivityGroup.add(currentActivity);
+                    activityGroups.add(newActivityGroup);
+                }
+            }
+        }
+        activityGroups.add(0, leftOverActivities);
+        return activityGroups;
+    }
     
     //Makes a deep copy of an Arraylist<Activity>
     public ArrayList<Activity> copyDatabase(ArrayList<Activity> database) {

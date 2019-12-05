@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
 
+//CODE BORROWED FROM https://stackoverflow.com/questions/33264723/how-to-use-jbutton-in-jtable
+//ButtonColumn is a general class that overwrites default GUI button features ^^^
+
 /**
  *  The ButtonColumn class provides a renderer and an editor that looks like a
  *  JButton. The renderer and editor will then be used for a specified column

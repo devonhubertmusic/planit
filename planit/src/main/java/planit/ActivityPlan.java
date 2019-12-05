@@ -24,11 +24,11 @@ import javax.swing.JOptionPane;
 */
 public class ActivityPlan
 {
-    JFrame activityPlanFrame;
-    double availableTime;
-    double availableMoney;
-    double totalTime;
-    double totalCost;
+    JFrame activityPlanFrame; //Window frame
+    double availableTime; //Time user has available for plan
+    double availableMoney; //Money user has available for plan
+    double totalTime; //Total time of plan
+    double totalCost; //Total cost of plan
     
     //Default constructor
     public ActivityPlan() {
@@ -43,8 +43,12 @@ public class ActivityPlan
     public ActivityPlan(double availableTime, double availableMoney, final int screenHeight){
         this.availableTime = availableTime;
         this.availableMoney = availableMoney;
-        ArrayList<Activity> myList = getPlanList(0.75); //Not a magic number, I swear
+        
+        //0.75 represents a range of total costs, with the minimum boundary of 75% of the max cost
+        ArrayList<Activity> myList = getPlanList(0.75); //Not a "magic number," I swear! ^^^
+        
         if(myList.size() > 0) {
+            //create window if list has been generated
             this.activityPlanFrame = makeWindow(myList, screenHeight);
         }
     }
@@ -64,7 +68,8 @@ public class ActivityPlan
         } catch (java.io.IOException e) {
             throw new RuntimeException(e);
         }
-        int windowHeight = (7*screenHeight)/8;
+        
+        int windowHeight = (7*screenHeight)/8; //window ratio of height to width is 7/8
     	activityPlanFrame.setLayout(new FlowLayout()); //Layout
         activityPlanFrame.setTitle("Plan Generator"); //Window title
         activityPlanFrame.setSize(windowHeight, windowHeight); //Size
@@ -81,7 +86,7 @@ public class ActivityPlan
         JScrollPane scrollPane = new JScrollPane(displayPlan);
         scrollPane.setViewportView(displayPlan);
 
-       //creates title for the page and sets its size,title, color,etc.
+       //creates title for the page and sets its size, title, color,etc.
         JLabel header = new JLabel("My Activity Plan");
         header.setFont(new Font("Helvetica", Font.PLAIN, 25));
         header.setForeground(java.awt.Color.WHITE);
@@ -98,6 +103,7 @@ public class ActivityPlan
         costLabel.setFont(new Font("Helvetica", Font.PLAIN, 18));
         costLabel.setForeground(java.awt.Color.WHITE);
         
+        //PDF save action added
         save.addActionListener( new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
           	JavaPDF PlanPdf = new JavaPDF();

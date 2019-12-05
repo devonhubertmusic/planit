@@ -16,15 +16,18 @@ import java.awt.event.*;
 */
 public class CurrentActivities extends javax.swing.JFrame implements WindowListener{
 
-    public boolean toggleTrue;
-   // public boolean windowIsOpen;
-    private MainWindow mWindow;
+    public boolean toggleTrue; //Global boolean for toggle event
+    private MainWindow mWindow; //Main activity editing window
 
-        public CurrentActivities(MainWindow mWindow) {
+    //Constructor
+    public CurrentActivities(MainWindow mWindow) {
+        //initialize fields
         this.mWindow = mWindow;
         toggleTrue = true;
         addWindowListener(this);
-        initComponents();
+        initComponents(); //initialize components
+        
+        //checks that table is loaded correctly
         boolean tableLoaded = Show_Activities_In_JTable();
 
         if(tableLoaded) {
@@ -35,7 +38,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
 
     }
 
-   // get the connection
+   // get the connection to server
    public Connection getConnection()
    {
        Connection con;
@@ -57,14 +60,20 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
        idList = new ArrayList<Integer>();
        Connection connection = getConnection();
        if(connection != null) {
+       //connection worked!
+           
+           //Get data from database
            String query = "SELECT * FROM  activities";
            Statement st;
            ResultSet rs;
 
            try {
+               //create and execute a series of MySQL queries
                st = connection.createStatement();
                rs = st.executeQuery(query);
                Activity activity;
+               
+               //Loop through all activities in the database, and convert to java Activity(fields)
                while(rs.next())
                {
                    activity = new Activity(rs.getString("name"),rs.getString("activityType"),rs.getInt("maxTime"),rs.getInt("idealTime"),rs.getInt("maxCost"));
@@ -74,8 +83,10 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
            } catch (Exception e) {
                e.printStackTrace();
            }
+           
            return activityList;
        } else {
+           //connection didn't work :(
            return null;
        }
    }
@@ -85,11 +96,12 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
    {
        ArrayList<Activity> list = getactivityList();
        if(list != null) {
+           //new table to fill
            DefaultTableModel model = (DefaultTableModel)jTable_Display_Activities.getModel();
-           //Add JScrollPane?
            Object[] row = new Object[6];
            for(int i = 0; i < list.size(); i++)
            {
+               //get table information from list
                row[0] = list.get(i).getName();
                row[1] = (int)list.get(i).getMaxTime();
                row[2] = (int)list.get(i).getIdealTime();
@@ -97,20 +109,25 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                row[4] = "Edit";
                row[5] = "Delete";
 
+               //add row to the table
                model.addRow(row);
            }
+           
+           //set width of cells
            jTable_Display_Activities.getColumnModel().getColumn(0).setPreferredWidth(200);
 
+           //Add edit and delete buttons to the end of the table
            editButtonColumn = new ButtonColumn(jTable_Display_Activities, edit_action, 4);
            deleteButtonColumn = new ButtonColumn(jTable_Display_Activities, delete_action, 5);
            return true;
        } else {
+           //No internet case
            JOptionPane.showMessageDialog(null, "Could not connect to Database. Please check internet connection.");
            return false;
        }
     }
 
-   // Execute The Insert Update And Delete Querys
+   // Execute The Insert Update And Delete Queries
    public void executeSQlQuery(String query, String message)
    {
        Connection con = getConnection();
@@ -239,7 +256,9 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                 }
             }
         });
-
+        
+        //Add item listener to each combo box for action event handling:
+        
         jComboBox_MaxTime.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_MaxTimeActionPerformed(evt);
@@ -264,6 +283,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             }
         });
 
+        //Set default model of activities display on jTable
         jTable_Display_Activities.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -274,18 +294,16 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             {
                @Override
                public boolean isCellEditable(int row, int column) {
-                   //Only the fourth and fifth column
+                   //Only the fourth or fifth column are editable
                    return column == 4 || column == 5;
                }
             }
         );
 
         // Allow table to scroll
-
         jScrollPane1.setViewportView(jTable_Display_Activities);
 
         //Set the design of the create button
-
         jButton_Create.setFont(new java.awt.Font("Helvetica", 1, 14));
         jButton_Create.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png")));
         jButton_Create.setText("Create Activity");
@@ -296,7 +314,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         });
 
         //Set the design of the update button
-
         jButton_Update.setFont(new java.awt.Font("Helvetica", 1, 14));
         jButton_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png")));
         jButton_Update.setText("Update Activity");
@@ -310,7 +327,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         //Java swing to create group layout for the horizantal and vertical components
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
-        //Horizantal group layout. Determines the horizantal placement of different components
+        //Horizantal group layout. Determines the horizontal placement of different components
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -347,6 +364,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, Short.MAX_VALUE)
                 .addGap(40, 40, 40))
         );
+        
         //Vertical group layout. Determines the vertical placement for each component
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +404,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
         );
 
         //Sets the horizantal and vertical group layouts for display
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -402,39 +419,47 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     }// </editor-fold>
 
     private void jComboBox_MaxTimeActionPerformed(java.awt.event.ItemEvent evt) {
-        // TODO add your handling code here:
+        // Not used, simply overriding
     }
 
     private void jComboBox_IdealTimeActionPerformed(java.awt.event.ItemEvent evt) {
-        // TODO add your handling code here:
+        // Not used, simply overriding
     }
 
     private void jComboBox_MaxCostActionPerformed(java.awt.event.ItemEvent evt) {
-        // TODO add your handling code here:
+        // Not used, simply overriding
     }
 
     private void jComboBox_ActivityTypeActionPerformed(java.awt.event.ItemEvent evt) {
-        // TODO add your handling code here:
+        // Not used, simply overriding
     }
 
 // show jtable row data in jtextfields in the button clicked event
     private void jTable_Display_ActivitiesButtonClicked(int actionIndex, boolean differentSelection) {
 
+        // if "edit mode" is true, or selecting different activity from table,
+        // Update displayed data in left fields of edit window
         if(toggleTrue || differentSelection) {
             // Get The Index Of The Slected Row
 
             TableModel model = jTable_Display_Activities.getModel();
             ArrayList<Activity> list = getactivityList();
 
-             // Display Slected Row In JTextFields
+            // Display Selected Row In JTextFields
+            
+            // set name field
             jTextField_Name.setText(model.getValueAt(actionIndex,0).toString());
 
+            // set max time field
             jComboBox_MaxTime.setSelectedItem(model.getValueAt(actionIndex,1).toString());
 
+            // set ideal time field
             jComboBox_IdealTime.setSelectedItem(model.getValueAt(actionIndex,2).toString());
 
+            // set max cost field
             jComboBox_MaxCost.setSelectedItem(model.getValueAt(actionIndex,3).toString());
 
+            // set activity type field
             jComboBox_ActivityType.setSelectedItem(list.get(actionIndex).getActivityType());
 
             toggleTrue = false;
@@ -442,6 +467,8 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             jLabel1.setForeground(java.awt.Color.RED);
             jButton_Update.setEnabled(true);
             jButton_Create.setEnabled(false);
+            
+        // Edit toggled off, reset fields to blank for creating a new activity
         } else {
             resetTextFields();
             toggleTrue = true;
@@ -453,7 +480,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     }
 
     // Reset text fields/clears the text fields
-
     public void resetTextFields() {
         jComboBox_MaxTime.setSelectedIndex(0);
 
@@ -469,11 +495,13 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
 
  // Button to create new activites
     private void jButton_CreateActionPerformed(java.awt.event.ActionEvent evt) {
+        // Check for internet connection/succesful database update
         boolean updated = false;
         do {
             updated = PlanitRunner.updateActivityList();
         } while(!updated);
         
+        // Execute MySQL insert statement for new activity
         String query = "INSERT INTO `activities` (name,maxtime,idealtime,maxcost,activityType) VALUES ('"
                         + jTextField_Name.getText() + "', " + jComboBox_MaxTime.getSelectedItem()
                         + ", " + jComboBox_IdealTime.getSelectedItem() + ", "
@@ -502,6 +530,7 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
             executeSQlQuery(query, "Inserted");
         }
         
+        // Check for internet connection/succesful database update
         updated = false;
         do {
             updated = PlanitRunner.updateActivityList();
@@ -592,7 +621,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     }
 
     public void windowOpened(WindowEvent e) {
-     // windowIsOpen = true;
       this.mWindow.disableMyButton();
     }
     public void windowActivated(WindowEvent e) {}
@@ -600,7 +628,6 @@ public class CurrentActivities extends javax.swing.JFrame implements WindowListe
     public void windowDeiconified(WindowEvent e) {}
     public void windowDeactivated(WindowEvent e) {}
     public void windowClosed(WindowEvent e) {
-      //windowIsOpen = false;
       this.mWindow.enableMyButton();
     }
 }
